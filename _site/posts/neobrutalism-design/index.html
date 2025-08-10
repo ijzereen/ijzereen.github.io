@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네오브루탈리즘 웹디자인의 새로운 물결 - Ijzereen</title>
+    <meta name="description" content="디지털 시대의 반란: 네오브루탈리즘">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+        
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+        
+        .brutal-shadow {
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area h1, .content-area h2, .content-area h3, .content-area h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .content-area h1 {
+            font-size: 2.5rem;
+            border: 4px solid #000;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 8px 8px 0 0 #000;
+            transform: rotate(-1deg);
+        }
+        
+        .content-area h2 {
+            font-size: 1.8rem;
+            border-left: 8px solid #000;
+            padding-left: 1rem;
+            background: linear-gradient(90deg, #f1f1f1 0%, transparent 100%);
+        }
+        
+        .content-area h3 {
+            font-size: 1.4rem;
+            text-decoration: underline;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #000;
+        }
+        
+        .content-area p {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .content-area blockquote {
+            border: 4px solid #000;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            transform: rotate(0.5deg);
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            font-weight: 900;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            line-height: 1;
+        }
+        
+        .content-area code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: #fff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0;
+            font-weight: 700;
+        }
+        
+        .content-area pre {
+            border: 4px solid #000;
+            background: #000;
+            color: #fff;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 6px 6px 0 0 #666;
+        }
+        
+        .content-area ul, .content-area ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .content-area li {
+            margin: 0.5rem 0;
+            position: relative;
+        }
+        
+        .content-area ul li::before {
+            content: '▶';
+            position: absolute;
+            left: -1.5rem;
+            font-weight: 900;
+        }
+        
+        .content-area a {
+            color: #000;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-decoration-color: #ff0080;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .content-area a:hover {
+            background: #ff0080;
+            color: #fff;
+            padding: 0.2rem 0.4rem;
+            text-decoration: none;
+        }
+        
+        .content-area img {
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0 0 #000;
+            margin: 2rem 0;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .content-area table {
+            border: 4px solid #000;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            width: 100%;
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area th, .content-area td {
+            border: 2px solid #000;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .content-area th {
+            background: #000;
+            color: #fff;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        
+        .content-area td {
+            background: #fff;
+        }
+        
+        .content-area tr:nth-child(even) td {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-black">
+    
+    <!-- Back button -->
+    <div class="fixed top-4 left-4 z-[1000]">
+        <a href="/" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">← BACK</a>
+    </div>
+    
+    <!-- Floating elements for decoration -->
+    <div class="fixed top-20 right-10 w-16 h-16 border-4 border-black bg-pink-200 rotate-45 opacity-60 pointer-events-none"></div>
+    <div class="fixed bottom-20 left-10 w-12 h-12 border-4 border-black bg-yellow-200 rounded-full opacity-60 pointer-events-none"></div>
+    <div class="fixed top-1/2 right-20 w-8 h-20 border-4 border-black bg-blue-200 rotate-12 opacity-60 pointer-events-none"></div>
+    
+    <main class="max-w-4xl mx-auto px-4 py-20">
+        <!-- Post header -->
+        <header class="mb-12">
+            <div class="border-4 border-black bg-white p-6 brutal-shadow transform -rotate-1 mb-8">
+                <div class="text-sm font-mono uppercase tracking-widest mb-2">
+                    2025.08.10
+                    
+                    • Design / Web
+                    
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">네오브루탈리즘 웹디자인의 새로운 물결</h1>
+                
+                <div class="mt-4 text-lg font-mono">by Ijzereen</div>
+                
+            </div>
+            
+            
+            <div class="flex flex-wrap gap-2 mb-8">
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">neobrutalism</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">design</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">web</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">ui</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">ux</span>
+                
+            </div>
+            
+        </header>
+        
+        <!-- Post content -->
+        <article class="content-area">
+            <h1 id="디지털-시대의-반란-네오브루탈리즘">디지털 시대의 반란: 네오브루탈리즘</h1>
+
+<p>네오브루탈리즘은 <strong>완벽함에 대한 반역</strong>이다. 매끄럽고 둥근 모서리, 그라데이션, 부드러운 애니메이션으로 가득한 현대 웹에서 거칠고 각진 형태로 돌아가는 것.</p>
+
+<h2 id="왜-지금-브루탈리즘인가">왜 지금 브루탈리즘인가?</h2>
+
+<blockquote>
+  <p>“Beauty is not pretty. Beauty is something else entirely.”</p>
+  <ul>
+    <li>어느 디자이너의 고백</li>
+  </ul>
+</blockquote>
+
+<p>현대 웹디자인의 <strong>동질화</strong>에 대한 피로감이 크다:</p>
+
+<ul>
+  <li>모든 사이트가 비슷해 보임</li>
+  <li>개성의 부재</li>
+  <li>기술적 완벽함의 추구가 창의성을 억압</li>
+</ul>
+
+<h3 id="네오브루탈리즘의-특징">네오브루탈리즘의 특징</h3>
+
+<ol>
+  <li><strong>굵은 테두리와 그림자</strong>
+    <ul>
+      <li>4px 이상의 두꺼운 border</li>
+      <li>Drop shadow가 아닌 flat shadow 사용</li>
+    </ul>
+  </li>
+  <li><strong>원색과 대비</strong>
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nc">.brutal-element</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nx">#ff0080</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">4px</span> <span class="nb">solid</span> <span class="nx">#000</span><span class="p">;</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">8px</span> <span class="m">8px</span> <span class="m">0</span> <span class="m">0</span> <span class="nx">#000</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li><strong>타이포그래피의 실험</strong>
+    <ul>
+      <li>시스템 폰트 사용</li>
+      <li>대문자 남용</li>
+      <li>글자 간격 조정으로 긴장감 조성</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="구현에서의-고려사항">구현에서의 고려사항</h2>
+
+<h3 id="접근성을-해치지-않기">접근성을 해치지 않기</h3>
+
+<p>브루탈한 디자인이 사용자 경험을 해치면 안 된다:</p>
+
+<ul>
+  <li><strong>색대비 비율</strong> 4.5:1 이상 유지</li>
+  <li><strong>키보드 네비게이션</strong> 가능하도록</li>
+  <li><strong>모바일 터치</strong> 영역 44px 이상</li>
+</ul>
+
+<h3 id="성능-최적화">성능 최적화</h3>
+
+<p>거친 디자인이라고 해서 무거워서는 안 된다:</p>
+
+<ul>
+  <li>CSS만으로 효과 구현</li>
+  <li>불필요한 JavaScript 애니메이션 지양</li>
+  <li>웹폰트 로딩 최적화</li>
+</ul>
+
+<h2 id="미래의-방향">미래의 방향</h2>
+
+<p>네오브루탈리즘은 단순한 트렌드가 아니라 <strong>인간성 회복</strong>의 움직임이다. 완벽한 기계가 아닌, 불완전한 인간이 만드는 웹을 추구한다.</p>
+
+<hr />
+
+<p><em>이 글은 실험적인 디자인으로 작성되었습니다. 브라우저가 깨져 보인다면 그것이 의도된 것입니다.</em></p>
+
+        </article>
+        
+        <!-- Post navigation -->
+        <nav class="mt-16 grid md:grid-cols-2 gap-4">
+            
+            <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
+                <div class="text-sm font-mono uppercase tracking-widest mb-2">Previous Post</div>
+                <a href="/posts/digital-chaos-blog/" class="font-bold text-lg hover:underline">디지털 혼돈 속에서 찾는 질서</a>
+            </div>
+            
+            
+            
+        </nav>
+    </main>
+    
+    <!-- Global CHAOS toggle button -->
+    <div id="chaos-btn" class="fixed bottom-8 right-8 w-16 h-16 border-4 border-black bg-pink-200 cursor-pointer brutal-shadow hover:bg-pink-300 transition-colors flex items-center justify-center font-mono font-bold text-xs rotate-12">
+        CHAOS
+    </div>
+    
+    <script>
+        // Global CHAOS mode functionality
+        let chaosMode = localStorage.getItem('chaos-mode') === 'true';
+        let chaosInterval = null;
+        
+        function rand(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        
+        function toggleChaosMode() {
+            chaosMode = !chaosMode;
+            localStorage.setItem('chaos-mode', chaosMode.toString());
+            
+            const btn = document.getElementById('chaos-btn');
+            btn.textContent = chaosMode ? 'STOP CHAOS' : 'CHAOS';
+            btn.style.background = chaosMode ? '#ff0080' : '#ffc0cb';
+            
+            if (chaosMode) {
+                document.body.classList.add('glitch');
+                
+                // Continuous STRONG chaos mode for post page
+                chaosInterval = setInterval(() => {
+                    // Strong random glitch effects (더 자주 발생)
+                    if (Math.random() < 0.8) {
+                        document.body.style.filter = `hue-rotate(${rand(0, 360)}deg) saturate(${rand(0.3, 3)}) contrast(${rand(0.5, 2)}) brightness(${rand(0.7, 1.3)})`;
+                        setTimeout(() => {
+                            document.body.style.filter = '';
+                        }, rand(100, 500));
+                    }
+                    
+                    // More aggressive decorative elements movement
+                    const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                    decorativeElements.forEach(el => {
+                        if (Math.random() < 0.7) {
+                            const randomRotation = rand(-90, 90);
+                            const randomX = rand(-50, 50);
+                            const randomY = rand(-50, 50);
+                            const randomScale = rand(0.5, 1.5);
+                            el.style.transform = `rotate(${randomRotation}deg) translate(${randomX}px, ${randomY}px) scale(${randomScale})`;
+                        }
+                    });
+                    
+                    // Strong content area effects
+                    const content = document.querySelector('.content-area');
+                    if (content && Math.random() < 0.6) {
+                        content.style.transform = `skew(${rand(-5, 5)}deg, ${rand(-3, 3)}deg) rotate(${rand(-2, 2)}deg)`;
+                        setTimeout(() => {
+                            content.style.transform = '';
+                        }, rand(50, 200));
+                    }
+                    
+                    // Random header effects
+                    const header = document.querySelector('header');
+                    if (header && Math.random() < 0.4) {
+                        header.style.transform = `translate(${rand(-10, 10)}px, ${rand(-5, 5)}px) rotate(${rand(-3, 3)}deg)`;
+                        setTimeout(() => {
+                            header.style.transform = '';
+                        }, rand(100, 300));
+                    }
+                    
+                    // Random element color changes
+                    if (Math.random() < 0.3) {
+                        const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                        elements.forEach(el => {
+                            if (Math.random() < 0.2) {
+                                const colors = ['#ff0080', '#00ff80', '#8000ff', '#ffff00', '#ff8000'];
+                                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                                el.style.borderColor = randomColor;
+                                setTimeout(() => {
+                                    el.style.borderColor = '#000';
+                                }, rand(200, 800));
+                            }
+                        });
+                    }
+                    
+                    // Extreme text shake
+                    if (Math.random() < 0.3) {
+                        const textElements = document.querySelectorAll('h1, h2, h3, p');
+                        textElements.forEach(el => {
+                            if (Math.random() < 0.1) {
+                                el.style.animation = 'glitch 0.5s ease-in-out';
+                                setTimeout(() => {
+                                    el.style.animation = '';
+                                }, 500);
+                            }
+                        });
+                    }
+                    
+                }, rand(300, 800)); // 더 빠른 간격
+                
+            } else {
+                document.body.classList.remove('glitch');
+                document.body.style.filter = '';
+                if (chaosInterval) {
+                    clearInterval(chaosInterval);
+                    chaosInterval = null;
+                }
+                
+                // Reset ALL transformations and styles
+                const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                decorativeElements.forEach(el => {
+                    el.style.transform = '';
+                    el.style.borderColor = '#000';
+                });
+                
+                const content = document.querySelector('.content-area');
+                if (content) {
+                    content.style.transform = '';
+                }
+                
+                const header = document.querySelector('header');
+                if (header) {
+                    header.style.transform = '';
+                }
+                
+                // Reset all text animations
+                const textElements = document.querySelectorAll('h1, h2, h3, p');
+                textElements.forEach(el => {
+                    el.style.animation = '';
+                });
+                
+                // Reset all border colors
+                const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                elements.forEach(el => {
+                    el.style.borderColor = '#000';
+                });
+            }
+        }
+        
+        // Initialize CHAOS mode on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('chaos-btn');
+            
+            // Set initial button state
+            if (chaosMode) {
+                btn.textContent = 'STOP CHAOS';
+                btn.style.background = '#ff0080';
+                document.body.classList.add('glitch');
+                
+                // Start STRONG chaos interval
+                chaosInterval = setInterval(() => {
+                    // Strong random glitch effects
+                    if (Math.random() < 0.8) {
+                        document.body.style.filter = `hue-rotate(${rand(0, 360)}deg) saturate(${rand(0.3, 3)}) contrast(${rand(0.5, 2)}) brightness(${rand(0.7, 1.3)})`;
+                        setTimeout(() => {
+                            document.body.style.filter = '';
+                        }, rand(100, 500));
+                    }
+                    
+                    // More aggressive decorative elements movement
+                    const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                    decorativeElements.forEach(el => {
+                        if (Math.random() < 0.7) {
+                            const randomRotation = rand(-90, 90);
+                            const randomX = rand(-50, 50);
+                            const randomY = rand(-50, 50);
+                            const randomScale = rand(0.5, 1.5);
+                            el.style.transform = `rotate(${randomRotation}deg) translate(${randomX}px, ${randomY}px) scale(${randomScale})`;
+                        }
+                    });
+                    
+                    // Strong content area effects
+                    const content = document.querySelector('.content-area');
+                    if (content && Math.random() < 0.6) {
+                        content.style.transform = `skew(${rand(-5, 5)}deg, ${rand(-3, 3)}deg) rotate(${rand(-2, 2)}deg)`;
+                        setTimeout(() => {
+                            content.style.transform = '';
+                        }, rand(50, 200));
+                    }
+                    
+                    // Random header effects
+                    const header = document.querySelector('header');
+                    if (header && Math.random() < 0.4) {
+                        header.style.transform = `translate(${rand(-10, 10)}px, ${rand(-5, 5)}px) rotate(${rand(-3, 3)}deg)`;
+                        setTimeout(() => {
+                            header.style.transform = '';
+                        }, rand(100, 300));
+                    }
+                    
+                    // Random element color changes
+                    if (Math.random() < 0.3) {
+                        const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                        elements.forEach(el => {
+                            if (Math.random() < 0.2) {
+                                const colors = ['#ff0080', '#00ff80', '#8000ff', '#ffff00', '#ff8000'];
+                                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                                el.style.borderColor = randomColor;
+                                setTimeout(() => {
+                                    el.style.borderColor = '#000';
+                                }, rand(200, 800));
+                            }
+                        });
+                    }
+                    
+                    // Extreme text shake
+                    if (Math.random() < 0.3) {
+                        const textElements = document.querySelectorAll('h1, h2, h3, p');
+                        textElements.forEach(el => {
+                            if (Math.random() < 0.1) {
+                                el.style.animation = 'glitch 0.5s ease-in-out';
+                                setTimeout(() => {
+                                    el.style.animation = '';
+                                }, 500);
+                            }
+                        });
+                    }
+                    
+                }, rand(300, 800)); // 더 빠른 간격
+            }
+            
+            btn.addEventListener('click', toggleChaosMode);
+        });
+        
+        // Add reading progress
+        const progressBar = document.createElement('div');
+        progressBar.className = 'fixed top-0 left-0 h-2 bg-black z-[1001] transition-all duration-100';
+        document.body.appendChild(progressBar);
+        
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+    </script>
+</body>
+</html>

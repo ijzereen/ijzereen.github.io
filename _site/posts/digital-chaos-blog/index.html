@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 혼돈 속에서 찾는 질서 - Ijzereen</title>
+    <meta name="description" content="혼돈의 미학">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+        
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+        
+        .brutal-shadow {
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area h1, .content-area h2, .content-area h3, .content-area h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .content-area h1 {
+            font-size: 2.5rem;
+            border: 4px solid #000;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 8px 8px 0 0 #000;
+            transform: rotate(-1deg);
+        }
+        
+        .content-area h2 {
+            font-size: 1.8rem;
+            border-left: 8px solid #000;
+            padding-left: 1rem;
+            background: linear-gradient(90deg, #f1f1f1 0%, transparent 100%);
+        }
+        
+        .content-area h3 {
+            font-size: 1.4rem;
+            text-decoration: underline;
+            text-decoration-thickness: 4px;
+            text-decoration-color: #000;
+        }
+        
+        .content-area p {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .content-area blockquote {
+            border: 4px solid #000;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            transform: rotate(0.5deg);
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            font-weight: 900;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            line-height: 1;
+        }
+        
+        .content-area code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: #fff;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0;
+            font-weight: 700;
+        }
+        
+        .content-area pre {
+            border: 4px solid #000;
+            background: #000;
+            color: #fff;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 6px 6px 0 0 #666;
+        }
+        
+        .content-area ul, .content-area ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .content-area li {
+            margin: 0.5rem 0;
+            position: relative;
+        }
+        
+        .content-area ul li::before {
+            content: '▶';
+            position: absolute;
+            left: -1.5rem;
+            font-weight: 900;
+        }
+        
+        .content-area a {
+            color: #000;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-decoration-color: #ff0080;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .content-area a:hover {
+            background: #ff0080;
+            color: #fff;
+            padding: 0.2rem 0.4rem;
+            text-decoration: none;
+        }
+        
+        .content-area img {
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0 0 #000;
+            margin: 2rem 0;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .content-area table {
+            border: 4px solid #000;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            width: 100%;
+            box-shadow: 6px 6px 0 0 #000;
+        }
+        
+        .content-area th, .content-area td {
+            border: 2px solid #000;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .content-area th {
+            background: #000;
+            color: #fff;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        
+        .content-area td {
+            background: #fff;
+        }
+        
+        .content-area tr:nth-child(even) td {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-black">
+    
+    <!-- Back button -->
+    <div class="fixed top-4 left-4 z-[1000]">
+        <a href="/" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">← BACK</a>
+    </div>
+    
+    <!-- Floating elements for decoration -->
+    <div class="fixed top-20 right-10 w-16 h-16 border-4 border-black bg-pink-200 rotate-45 opacity-60 pointer-events-none"></div>
+    <div class="fixed bottom-20 left-10 w-12 h-12 border-4 border-black bg-yellow-200 rounded-full opacity-60 pointer-events-none"></div>
+    <div class="fixed top-1/2 right-20 w-8 h-20 border-4 border-black bg-blue-200 rotate-12 opacity-60 pointer-events-none"></div>
+    
+    <main class="max-w-4xl mx-auto px-4 py-20">
+        <!-- Post header -->
+        <header class="mb-12">
+            <div class="border-4 border-black bg-white p-6 brutal-shadow transform -rotate-1 mb-8">
+                <div class="text-sm font-mono uppercase tracking-widest mb-2">
+                    2025.08.09
+                    
+                    • Philosophy / Digital
+                    
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">디지털 혼돈 속에서 찾는 질서</h1>
+                
+                <div class="mt-4 text-lg font-mono">by Ijzereen</div>
+                
+            </div>
+            
+            
+            <div class="flex flex-wrap gap-2 mb-8">
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">chaos</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">order</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">digital</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">art</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">philosophy</span>
+                
+            </div>
+            
+        </header>
+        
+        <!-- Post content -->
+        <article class="content-area">
+            <h1 id="혼돈의-미학">혼돈의 미학</h1>
+
+<p>디지털 세계에서 <strong>완벽한 픽셀</strong>들이 줄지어 서 있다. 모든 것이 계산되고, 측정되고, 최적화되어 있다. 그런데 왜 우리는 여전히 <strong>불완전함</strong>에 끌리는 걸까?</p>
+
+<h2 id="의도적인-오류">의도적인 오류</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1">// 때로는 버그가 더 아름답다</span>
+<span class="kd">function</span> <span class="nf">glitchEffect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">randomOffset</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="nx">element</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span> <span class="s2">`translate(</span><span class="p">${</span><span class="nx">randomOffset</span><span class="p">}</span><span class="s2">px, </span><span class="p">${</span><span class="nx">randomOffset</span><span class="p">}</span><span class="s2">px)`</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>이 코드는 <strong>완벽하지 않다</strong>. 예측할 수 없는 움직임을 만들어낸다. 하지만 이런 예측불가능성이 디지털 아트에 생명을 불어넣는다.</p>
+
+<h2 id="노이즈의-철학">노이즈의 철학</h2>
+
+<blockquote>
+  <p>노이즈는 정보의 반대가 아니라, 다른 종류의 정보다.</p>
+</blockquote>
+
+<h3 id="세-가지-관점">세 가지 관점</h3>
+
+<ol>
+  <li><strong>기술적 관점</strong>: 노이즈는 신호의 방해요소</li>
+  <li><strong>예술적 관점</strong>: 노이즈는 창작의 도구</li>
+  <li><strong>철학적 관점</strong>: 노이즈는 존재의 증거</li>
+</ol>
+
+<h2 id="실험-움직이는-요소들">실험: 움직이는 요소들</h2>
+
+<p>이 블로그의 배경에서 움직이는 기하학적 도형들을 봤는가? 그것들은:</p>
+
+<ul>
+  <li><strong>무작위성</strong>과 <strong>규칙성</strong>의 결합</li>
+  <li>사용자 상호작용에 <strong>반응</strong></li>
+  <li>시간에 따라 <strong>변화</strong></li>
+</ul>
+
+<h3 id="코드로-표현한-철학">코드로 표현한 철학</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">@keyframes</span> <span class="n">digital-chaos</span> <span class="p">{</span>
+  <span class="m">0%</span> <span class="p">{</span> <span class="nl">transform</span><span class="p">:</span> <span class="nf">translate</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="nf">rotate</span><span class="p">(</span><span class="m">0deg</span><span class="p">);</span> <span class="p">}</span>
+  <span class="m">25%</span> <span class="p">{</span> <span class="nl">transform</span><span class="p">:</span> <span class="nf">translate</span><span class="p">(</span><span class="m">-5px</span><span class="p">,</span> <span class="m">5px</span><span class="p">)</span> <span class="nf">rotate</span><span class="p">(</span><span class="m">90deg</span><span class="p">);</span> <span class="p">}</span>
+  <span class="m">50%</span> <span class="p">{</span> <span class="nl">transform</span><span class="p">:</span> <span class="nf">translate</span><span class="p">(</span><span class="m">5px</span><span class="p">,</span> <span class="m">-5px</span><span class="p">)</span> <span class="nf">rotate</span><span class="p">(</span><span class="m">180deg</span><span class="p">);</span> <span class="p">}</span>
+  <span class="m">75%</span> <span class="p">{</span> <span class="nl">transform</span><span class="p">:</span> <span class="nf">translate</span><span class="p">(</span><span class="m">-5px</span><span class="p">,</span> <span class="m">-5px</span><span class="p">)</span> <span class="nf">rotate</span><span class="p">(</span><span class="m">270deg</span><span class="p">);</span> <span class="p">}</span>
+  <span class="m">100%</span> <span class="p">{</span> <span class="nl">transform</span><span class="p">:</span> <span class="nf">translate</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="nf">rotate</span><span class="p">(</span><span class="m">360deg</span><span class="p">);</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="결론-불완전한-완벽함">결론: 불완전한 완벽함</h2>
+
+<p>디지털 혼돈은 새로운 질서의 시작이다. 기계의 정확성과 인간의 불완전성이 만나는 지점에서, 진정한 <strong>디지털 아트</strong>가 탄생한다.</p>
+
+<hr />
+
+<p><em>“혼돈 속에서도 패턴이 있고, 질서 속에서도 무작위성이 있다.”</em></p>
+
+        </article>
+        
+        <!-- Post navigation -->
+        <nav class="mt-16 grid md:grid-cols-2 gap-4">
+            
+            
+            
+            <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
+                <div class="text-sm font-mono uppercase tracking-widest mb-2">Next Post</div>
+                <a href="/posts/neobrutalism-design/" class="font-bold text-lg hover:underline">네오브루탈리즘 웹디자인의 새로운 물결</a>
+            </div>
+            
+        </nav>
+    </main>
+    
+    <!-- Global CHAOS toggle button -->
+    <div id="chaos-btn" class="fixed bottom-8 right-8 w-16 h-16 border-4 border-black bg-pink-200 cursor-pointer brutal-shadow hover:bg-pink-300 transition-colors flex items-center justify-center font-mono font-bold text-xs rotate-12">
+        CHAOS
+    </div>
+    
+    <script>
+        // Global CHAOS mode functionality
+        let chaosMode = localStorage.getItem('chaos-mode') === 'true';
+        let chaosInterval = null;
+        
+        function rand(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        
+        function toggleChaosMode() {
+            chaosMode = !chaosMode;
+            localStorage.setItem('chaos-mode', chaosMode.toString());
+            
+            const btn = document.getElementById('chaos-btn');
+            btn.textContent = chaosMode ? 'STOP CHAOS' : 'CHAOS';
+            btn.style.background = chaosMode ? '#ff0080' : '#ffc0cb';
+            
+            if (chaosMode) {
+                document.body.classList.add('glitch');
+                
+                // Continuous STRONG chaos mode for post page
+                chaosInterval = setInterval(() => {
+                    // Strong random glitch effects (더 자주 발생)
+                    if (Math.random() < 0.8) {
+                        document.body.style.filter = `hue-rotate(${rand(0, 360)}deg) saturate(${rand(0.3, 3)}) contrast(${rand(0.5, 2)}) brightness(${rand(0.7, 1.3)})`;
+                        setTimeout(() => {
+                            document.body.style.filter = '';
+                        }, rand(100, 500));
+                    }
+                    
+                    // More aggressive decorative elements movement
+                    const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                    decorativeElements.forEach(el => {
+                        if (Math.random() < 0.7) {
+                            const randomRotation = rand(-90, 90);
+                            const randomX = rand(-50, 50);
+                            const randomY = rand(-50, 50);
+                            const randomScale = rand(0.5, 1.5);
+                            el.style.transform = `rotate(${randomRotation}deg) translate(${randomX}px, ${randomY}px) scale(${randomScale})`;
+                        }
+                    });
+                    
+                    // Strong content area effects
+                    const content = document.querySelector('.content-area');
+                    if (content && Math.random() < 0.6) {
+                        content.style.transform = `skew(${rand(-5, 5)}deg, ${rand(-3, 3)}deg) rotate(${rand(-2, 2)}deg)`;
+                        setTimeout(() => {
+                            content.style.transform = '';
+                        }, rand(50, 200));
+                    }
+                    
+                    // Random header effects
+                    const header = document.querySelector('header');
+                    if (header && Math.random() < 0.4) {
+                        header.style.transform = `translate(${rand(-10, 10)}px, ${rand(-5, 5)}px) rotate(${rand(-3, 3)}deg)`;
+                        setTimeout(() => {
+                            header.style.transform = '';
+                        }, rand(100, 300));
+                    }
+                    
+                    // Random element color changes
+                    if (Math.random() < 0.3) {
+                        const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                        elements.forEach(el => {
+                            if (Math.random() < 0.2) {
+                                const colors = ['#ff0080', '#00ff80', '#8000ff', '#ffff00', '#ff8000'];
+                                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                                el.style.borderColor = randomColor;
+                                setTimeout(() => {
+                                    el.style.borderColor = '#000';
+                                }, rand(200, 800));
+                            }
+                        });
+                    }
+                    
+                    // Extreme text shake
+                    if (Math.random() < 0.3) {
+                        const textElements = document.querySelectorAll('h1, h2, h3, p');
+                        textElements.forEach(el => {
+                            if (Math.random() < 0.1) {
+                                el.style.animation = 'glitch 0.5s ease-in-out';
+                                setTimeout(() => {
+                                    el.style.animation = '';
+                                }, 500);
+                            }
+                        });
+                    }
+                    
+                }, rand(300, 800)); // 더 빠른 간격
+                
+            } else {
+                document.body.classList.remove('glitch');
+                document.body.style.filter = '';
+                if (chaosInterval) {
+                    clearInterval(chaosInterval);
+                    chaosInterval = null;
+                }
+                
+                // Reset ALL transformations and styles
+                const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                decorativeElements.forEach(el => {
+                    el.style.transform = '';
+                    el.style.borderColor = '#000';
+                });
+                
+                const content = document.querySelector('.content-area');
+                if (content) {
+                    content.style.transform = '';
+                }
+                
+                const header = document.querySelector('header');
+                if (header) {
+                    header.style.transform = '';
+                }
+                
+                // Reset all text animations
+                const textElements = document.querySelectorAll('h1, h2, h3, p');
+                textElements.forEach(el => {
+                    el.style.animation = '';
+                });
+                
+                // Reset all border colors
+                const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                elements.forEach(el => {
+                    el.style.borderColor = '#000';
+                });
+            }
+        }
+        
+        // Initialize CHAOS mode on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('chaos-btn');
+            
+            // Set initial button state
+            if (chaosMode) {
+                btn.textContent = 'STOP CHAOS';
+                btn.style.background = '#ff0080';
+                document.body.classList.add('glitch');
+                
+                // Start STRONG chaos interval
+                chaosInterval = setInterval(() => {
+                    // Strong random glitch effects
+                    if (Math.random() < 0.8) {
+                        document.body.style.filter = `hue-rotate(${rand(0, 360)}deg) saturate(${rand(0.3, 3)}) contrast(${rand(0.5, 2)}) brightness(${rand(0.7, 1.3)})`;
+                        setTimeout(() => {
+                            document.body.style.filter = '';
+                        }, rand(100, 500));
+                    }
+                    
+                    // More aggressive decorative elements movement
+                    const decorativeElements = document.querySelectorAll('.fixed:not(#chaos-btn)');
+                    decorativeElements.forEach(el => {
+                        if (Math.random() < 0.7) {
+                            const randomRotation = rand(-90, 90);
+                            const randomX = rand(-50, 50);
+                            const randomY = rand(-50, 50);
+                            const randomScale = rand(0.5, 1.5);
+                            el.style.transform = `rotate(${randomRotation}deg) translate(${randomX}px, ${randomY}px) scale(${randomScale})`;
+                        }
+                    });
+                    
+                    // Strong content area effects
+                    const content = document.querySelector('.content-area');
+                    if (content && Math.random() < 0.6) {
+                        content.style.transform = `skew(${rand(-5, 5)}deg, ${rand(-3, 3)}deg) rotate(${rand(-2, 2)}deg)`;
+                        setTimeout(() => {
+                            content.style.transform = '';
+                        }, rand(50, 200));
+                    }
+                    
+                    // Random header effects
+                    const header = document.querySelector('header');
+                    if (header && Math.random() < 0.4) {
+                        header.style.transform = `translate(${rand(-10, 10)}px, ${rand(-5, 5)}px) rotate(${rand(-3, 3)}deg)`;
+                        setTimeout(() => {
+                            header.style.transform = '';
+                        }, rand(100, 300));
+                    }
+                    
+                    // Random element color changes
+                    if (Math.random() < 0.3) {
+                        const elements = document.querySelectorAll('.brutal-shadow, .border-4');
+                        elements.forEach(el => {
+                            if (Math.random() < 0.2) {
+                                const colors = ['#ff0080', '#00ff80', '#8000ff', '#ffff00', '#ff8000'];
+                                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                                el.style.borderColor = randomColor;
+                                setTimeout(() => {
+                                    el.style.borderColor = '#000';
+                                }, rand(200, 800));
+                            }
+                        });
+                    }
+                    
+                    // Extreme text shake
+                    if (Math.random() < 0.3) {
+                        const textElements = document.querySelectorAll('h1, h2, h3, p');
+                        textElements.forEach(el => {
+                            if (Math.random() < 0.1) {
+                                el.style.animation = 'glitch 0.5s ease-in-out';
+                                setTimeout(() => {
+                                    el.style.animation = '';
+                                }, 500);
+                            }
+                        });
+                    }
+                    
+                }, rand(300, 800)); // 더 빠른 간격
+            }
+            
+            btn.addEventListener('click', toggleChaosMode);
+        });
+        
+        // Add reading progress
+        const progressBar = document.createElement('div');
+        progressBar.className = 'fixed top-0 left-0 h-2 bg-black z-[1001] transition-all duration-100';
+        document.body.appendChild(progressBar);
+        
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+    </script>
+</body>
+</html>
