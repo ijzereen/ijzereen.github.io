@@ -234,9 +234,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '{{ "/assets/img/floating/sample1.svg" | relative_url }}',
-                '{{ "/assets/img/floating/sample2.svg" | relative_url }}',
-                '{{ "/assets/img/floating/sample3.svg" | relative_url }}'
+                '{{ "/assets/img/floating/sample1.svg" | relative_url }}?v={{ site.time | date: '%s' }}',
+                '{{ "/assets/img/floating/sample2.svg" | relative_url }}?v={{ site.time | date: '%s' }}',
+                '{{ "/assets/img/floating/sample3.svg" | relative_url }}?v={{ site.time | date: '%s' }}'
             ],
             
             // 창 크기 범위
@@ -499,7 +499,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('{{ "/assets/js/search-data.json" | relative_url }}');
+                const response = await fetch('{{ "/assets/js/search-data.json" | relative_url }}?v={{ site.time | date: '%s' }}');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
