@@ -355,11 +355,15 @@
             return window;
         }
         
-        // Check if there's enough space for floating windows (mobile check)
+        // Check if there's enough space for floating windows
         function hasEnoughSpace() {
             const screenWidth = window.innerWidth;
-            const minSpace = 768; // Tablet breakpoint
-            return screenWidth >= minSpace;
+            const contentWidth = Math.min(screenWidth * 0.8, 1200); // 콘텐츠 최대 너비
+            const sideMargin = (screenWidth - contentWidth) / 2;
+            const minWindowWidth = imageConfig.width.min; // 최소 도형 너비
+            
+            // 좌우 여백이 도형 너비보다 작으면 공간이 부족
+            return sideMargin >= minWindowWidth;
         }
 
         // Generate floating windows
@@ -367,8 +371,12 @@
             const container = document.getElementById('floating-windows');
             container.innerHTML = '';
             
-            // Don't show floating windows on mobile unless CHAOS mode is active
-            if (!hasEnoughSpace() && !chaosMode) {
+            // Check if on mobile (모바일 감지)
+            const isMobile = window.innerWidth < 768;
+            
+            // On mobile, only show floating windows when CHAOS mode is ON
+            // On PC, always show floating windows (regardless of CHAOS mode)
+            if (isMobile && !chaosMode) {
                 return;
             }
             
@@ -719,6 +727,14 @@
         
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize CHAOS mode button state first
+            const globalBtn = document.getElementById('global-chaos-btn');
+            if (chaosMode && globalBtn) {
+                globalBtn.textContent = '{{ site.ui.nav.chaos_stop | default: "STOP" }}';
+                globalBtn.style.background = '#ff0080';
+                document.body.classList.add('glitch');
+            }
+            
             // Show popups only if they weren't closed in the last hour
             if (!isPopupHidden('text_window')) {
                 document.getElementById('text-window').style.display = 'block';
@@ -729,6 +745,7 @@
             
             // 기본 창 개수 설정
             windowCount = imageConfig.defaultCount;
+            // Generate windows based on current CHAOS mode state
             generateWindows();
             
             // Add initial draggable functionality to static elements
@@ -737,15 +754,8 @@
             // Load search data
             loadSearchData();
             
-            // Initialize CHAOS mode if it was previously active
+            // Start chaos interval if CHAOS mode was previously active
             if (chaosMode) {
-                const globalBtn = document.getElementById('global-chaos-btn');
-                if (globalBtn) {
-                    globalBtn.textContent = '{{ site.ui.nav.chaos_stop | default: "STOP" }}';
-                    globalBtn.style.background = '#ff0080';
-                }
-                
-                document.body.classList.add('glitch');
                 
                 // Start chaos interval
                 chaosInterval = setInterval(() => {

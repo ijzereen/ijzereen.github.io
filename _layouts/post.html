@@ -189,10 +189,10 @@
         <a href="{{ '/' | relative_url }}" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">{{ site.ui.nav.back | default: "← BACK" }}</a>
     </div>
     
-    <!-- Floating elements for decoration -->
-    <div class="fixed top-20 right-10 w-16 h-16 border-4 border-black bg-pink-200 rotate-45 opacity-60 pointer-events-none"></div>
-    <div class="fixed bottom-20 left-10 w-12 h-12 border-4 border-black bg-yellow-200 rounded-full opacity-60 pointer-events-none"></div>
-    <div class="fixed top-1/2 right-20 w-8 h-20 border-4 border-black bg-blue-200 rotate-12 opacity-60 pointer-events-none"></div>
+    <!-- Floating elements for decoration - only visible in CHAOS mode -->
+    <div id="floating-shape-1" class="fixed top-20 right-10 w-16 h-16 border-4 border-black bg-pink-200 rotate-45 opacity-60 pointer-events-none" style="display: none;"></div>
+    <div id="floating-shape-2" class="fixed bottom-20 left-10 w-12 h-12 border-4 border-black bg-yellow-200 rounded-full opacity-60 pointer-events-none" style="display: none;"></div>
+    <div id="floating-shape-3" class="fixed top-1/2 right-20 w-8 h-20 border-4 border-black bg-blue-200 rotate-12 opacity-60 pointer-events-none" style="display: none;"></div>
     
     <main class="max-w-4xl mx-auto px-4 py-20">
         <!-- Post header -->
@@ -263,6 +263,15 @@
             const btn = document.getElementById('chaos-btn');
             btn.textContent = chaosMode ? 'STOP CHAOS' : 'CHAOS';
             btn.style.background = chaosMode ? '#ff0080' : '#ffc0cb';
+            
+            // Show/hide floating shapes based on CHAOS mode
+            const shapes = ['floating-shape-1', 'floating-shape-2', 'floating-shape-3'];
+            shapes.forEach(id => {
+                const shape = document.getElementById(id);
+                if (shape) {
+                    shape.style.display = chaosMode ? 'block' : 'none';
+                }
+            });
             
             if (chaosMode) {
                 document.body.classList.add('glitch');
@@ -379,6 +388,15 @@
         // Initialize CHAOS mode on page load
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('chaos-btn');
+            
+            // Initialize floating shapes visibility based on CHAOS mode
+            const shapes = ['floating-shape-1', 'floating-shape-2', 'floating-shape-3'];
+            shapes.forEach(id => {
+                const shape = document.getElementById(id);
+                if (shape) {
+                    shape.style.display = chaosMode ? 'block' : 'none';
+                }
+            });
             
             // Set initial button state
             if (chaosMode) {

@@ -351,9 +351,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '/assets/img/floating/sample1.svg?v=1754874317',
-                '/assets/img/floating/sample2.svg?v=1754874317',
-                '/assets/img/floating/sample3.svg?v=1754874317'
+                '/assets/img/floating/sample1.svg?v=1754882994',
+                '/assets/img/floating/sample2.svg?v=1754882994',
+                '/assets/img/floating/sample3.svg?v=1754882994'
             ],
             
             // 창 크기 범위
@@ -420,10 +420,30 @@
             return window;
         }
         
+        // Check if there's enough space for floating windows
+        function hasEnoughSpace() {
+            const screenWidth = window.innerWidth;
+            const contentWidth = Math.min(screenWidth * 0.8, 1200); // 콘텐츠 최대 너비
+            const sideMargin = (screenWidth - contentWidth) / 2;
+            const minWindowWidth = imageConfig.width.min; // 최소 도형 너비
+            
+            // 좌우 여백이 도형 너비보다 작으면 공간이 부족
+            return sideMargin >= minWindowWidth;
+        }
+
         // Generate floating windows
         function generateWindows() {
             const container = document.getElementById('floating-windows');
             container.innerHTML = '';
+            
+            // Check if on mobile (모바일 감지)
+            const isMobile = window.innerWidth < 768;
+            
+            // On mobile, only show floating windows when CHAOS mode is ON
+            // On PC, always show floating windows (regardless of CHAOS mode)
+            if (isMobile && !chaosMode) {
+                return;
+            }
             
             const shuffledImages = shuffle(imageConfig.sources);
             
@@ -638,7 +658,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('/assets/js/search-data.json?v=1754874317');
+                const response = await fetch('/assets/js/search-data.json?v=1754882994');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
@@ -772,6 +792,14 @@
         
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize CHAOS mode button state first
+            const globalBtn = document.getElementById('global-chaos-btn');
+            if (chaosMode && globalBtn) {
+                globalBtn.textContent = 'STOP';
+                globalBtn.style.background = '#ff0080';
+                document.body.classList.add('glitch');
+            }
+            
             // Show popups only if they weren't closed in the last hour
             if (!isPopupHidden('text_window')) {
                 document.getElementById('text-window').style.display = 'block';
@@ -782,26 +810,17 @@
             
             // 기본 창 개수 설정
             windowCount = imageConfig.defaultCount;
+            // Generate windows based on current CHAOS mode state
             generateWindows();
             
             // Add initial draggable functionality to static elements
             initializeDraggables();
             
-            // Initial mobile optimization
-            optimizeForMobile();
-            
             // Load search data
             loadSearchData();
             
-            // Initialize CHAOS mode if it was previously active
+            // Start chaos interval if CHAOS mode was previously active
             if (chaosMode) {
-                const globalBtn = document.getElementById('global-chaos-btn');
-                if (globalBtn) {
-                    globalBtn.textContent = 'STOP';
-                    globalBtn.style.background = '#ff0080';
-                }
-                
-                document.body.classList.add('glitch');
                 
                 // Start chaos interval
                 chaosInterval = setInterval(() => {
@@ -891,6 +910,8 @@
                 }
             });
             
+            // Regenerate windows based on screen size
+            generateWindows();
             optimizeForMobile();
         });
         

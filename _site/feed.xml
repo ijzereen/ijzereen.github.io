@@ -1,115 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" hreflang="ko" /><updated>2025-08-11T10:12:42+09:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">PlayGround</title><subtitle>PlayGround</subtitle><author><name>Ijzereen</name></author><entry><title type="html">네오브루탈리즘 웹디자인의 새로운 물결</title><link href="http://0.0.0.0:4000/posts/neobrutalism-design/" rel="alternate" type="text/html" title="네오브루탈리즘 웹디자인의 새로운 물결" /><published>2025-08-10T15:30:00+09:00</published><updated>2025-08-10T15:30:00+09:00</updated><id>http://0.0.0.0:4000/posts/neobrutalism-design</id><content type="html" xml:base="http://0.0.0.0:4000/posts/neobrutalism-design/"><![CDATA[# 디지털 시대의 반란: 네오브루탈리즘
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="ko" /><updated>2025-08-11T12:29:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">PlayGround</title><subtitle>PlayGround</subtitle><author><name>Ijzereen</name></author><entry><title type="html">네오브루탈리즘 웹디자인의 새로운 물결</title><link href="http://localhost:4000/posts/neobrutalism-design/" rel="alternate" type="text/html" title="네오브루탈리즘 웹디자인의 새로운 물결" /><published>2025-08-10T15:30:00+09:00</published><updated>2025-08-10T15:30:00+09:00</updated><id>http://localhost:4000/posts/neobrutalism-design</id><content type="html" xml:base="http://localhost:4000/posts/neobrutalism-design/"><![CDATA[<h1 id="디지털-시대의-반란-네오브루탈리즘">디지털 시대의 반란: 네오브루탈리즘</h1>
 
-네오브루탈리즘은 **완벽함에 대한 반역**이다. 매끄럽고 둥근 모서리, 그라데이션, 부드러운 애니메이션으로 가득한 현대 웹에서 거칠고 각진 형태로 돌아가는 것.
+<p>네오브루탈리즘은 <strong>완벽함에 대한 반역</strong>이다. 매끄럽고 둥근 모서리, 그라데이션, 부드러운 애니메이션으로 가득한 현대 웹에서 거칠고 각진 형태로 돌아가는 것.</p>
 
-## 왜 지금 브루탈리즘인가?
+<h2 id="왜-지금-브루탈리즘인가">왜 지금 브루탈리즘인가?</h2>
 
-> "Beauty is not pretty. Beauty is something else entirely." 
-> - 어느 디자이너의 고백
+<blockquote>
+  <p>“Beauty is not pretty. Beauty is something else entirely.”</p>
+  <ul>
+    <li>어느 디자이너의 고백</li>
+  </ul>
+</blockquote>
 
-현대 웹디자인의 **동질화**에 대한 피로감이 크다:
+<p>현대 웹디자인의 <strong>동질화</strong>에 대한 피로감이 크다:</p>
 
-- 모든 사이트가 비슷해 보임
-- 개성의 부재
-- 기술적 완벽함의 추구가 창의성을 억압
+<ul>
+  <li>모든 사이트가 비슷해 보임</li>
+  <li>개성의 부재</li>
+  <li>기술적 완벽함의 추구가 창의성을 억압</li>
+</ul>
 
-### 네오브루탈리즘의 특징
+<h3 id="네오브루탈리즘의-특징">네오브루탈리즘의 특징</h3>
 
-1. **굵은 테두리와 그림자**
-   - 4px 이상의 두꺼운 border
-   - Drop shadow가 아닌 flat shadow 사용
+<ol>
+  <li><strong>굵은 테두리와 그림자</strong>
+    <ul>
+      <li>4px 이상의 두꺼운 border</li>
+      <li>Drop shadow가 아닌 flat shadow 사용</li>
+    </ul>
+  </li>
+  <li><strong>원색과 대비</strong>
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nc">.brutal-element</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nx">#ff0080</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">4px</span> <span class="nb">solid</span> <span class="nx">#000</span><span class="p">;</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">8px</span> <span class="m">8px</span> <span class="m">0</span> <span class="m">0</span> <span class="nx">#000</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li><strong>타이포그래피의 실험</strong>
+    <ul>
+      <li>시스템 폰트 사용</li>
+      <li>대문자 남용</li>
+      <li>글자 간격 조정으로 긴장감 조성</li>
+    </ul>
+  </li>
+</ol>
 
-2. **원색과 대비**
-   ```css
-   .brutal-element {
-     background: #ff0080;
-     border: 4px solid #000;
-     box-shadow: 8px 8px 0 0 #000;
-   }
-   ```
+<h2 id="구현에서의-고려사항">구현에서의 고려사항</h2>
 
-3. **타이포그래피의 실험**
-   - 시스템 폰트 사용
-   - 대문자 남용
-   - 글자 간격 조정으로 긴장감 조성
+<h3 id="접근성을-해치지-않기">접근성을 해치지 않기</h3>
 
-## 구현에서의 고려사항
+<p>브루탈한 디자인이 사용자 경험을 해치면 안 된다:</p>
 
-### 접근성을 해치지 않기
+<ul>
+  <li><strong>색대비 비율</strong> 4.5:1 이상 유지</li>
+  <li><strong>키보드 네비게이션</strong> 가능하도록</li>
+  <li><strong>모바일 터치</strong> 영역 44px 이상</li>
+</ul>
 
-브루탈한 디자인이 사용자 경험을 해치면 안 된다:
+<h3 id="성능-최적화">성능 최적화</h3>
 
-- **색대비 비율** 4.5:1 이상 유지
-- **키보드 네비게이션** 가능하도록
-- **모바일 터치** 영역 44px 이상
+<p>거친 디자인이라고 해서 무거워서는 안 된다:</p>
 
-### 성능 최적화
+<ul>
+  <li>CSS만으로 효과 구현</li>
+  <li>불필요한 JavaScript 애니메이션 지양</li>
+  <li>웹폰트 로딩 최적화</li>
+</ul>
 
-거친 디자인이라고 해서 무거워서는 안 된다:
+<h2 id="미래의-방향">미래의 방향</h2>
 
-- CSS만으로 효과 구현
-- 불필요한 JavaScript 애니메이션 지양
-- 웹폰트 로딩 최적화
+<p>네오브루탈리즘은 단순한 트렌드가 아니라 <strong>인간성 회복</strong>의 움직임이다. 완벽한 기계가 아닌, 불완전한 인간이 만드는 웹을 추구한다.</p>
 
-## 미래의 방향
+<hr />
 
-네오브루탈리즘은 단순한 트렌드가 아니라 **인간성 회복**의 움직임이다. 완벽한 기계가 아닌, 불완전한 인간이 만드는 웹을 추구한다.
-
----
-
-*이 글은 실험적인 디자인으로 작성되었습니다. 브라우저가 깨져 보인다면 그것이 의도된 것입니다.*]]></content><author><name>Ijzereen</name></author><category term="Design" /><category term="Web" /><category term="neobrutalism" /><category term="design" /><category term="web" /><category term="ui" /><category term="ux" /><summary type="html"><![CDATA[디지털 시대의 반란: 네오브루탈리즘]]></summary></entry><entry><title type="html">디지털 혼돈 속에서 찾는 질서</title><link href="http://0.0.0.0:4000/posts/digital-chaos-blog/" rel="alternate" type="text/html" title="디지털 혼돈 속에서 찾는 질서" /><published>2025-08-09T18:45:00+09:00</published><updated>2025-08-09T18:45:00+09:00</updated><id>http://0.0.0.0:4000/posts/digital-chaos-blog</id><content type="html" xml:base="http://0.0.0.0:4000/posts/digital-chaos-blog/"><![CDATA[# 혼돈의 미학
-
-디지털 세계에서 **완벽한 픽셀**들이 줄지어 서 있다. 모든 것이 계산되고, 측정되고, 최적화되어 있다. 그런데 왜 우리는 여전히 **불완전함**에 끌리는 걸까?
-
-## 의도적인 오류
-
-```javascript
-// 때로는 버그가 더 아름답다
-function glitchEffect() {
-  const randomOffset = Math.random() * 10;
-  element.style.transform = `translate(${randomOffset}px, ${randomOffset}px)`;
-}
-```
-
-이 코드는 **완벽하지 않다**. 예측할 수 없는 움직임을 만들어낸다. 하지만 이런 예측불가능성이 디지털 아트에 생명을 불어넣는다.
-
-## 노이즈의 철학
-
-> 노이즈는 정보의 반대가 아니라, 다른 종류의 정보다.
-
-### 세 가지 관점
-
-1. **기술적 관점**: 노이즈는 신호의 방해요소
-2. **예술적 관점**: 노이즈는 창작의 도구
-3. **철학적 관점**: 노이즈는 존재의 증거
-
-## 실험: 움직이는 요소들
-
-이 블로그의 배경에서 움직이는 기하학적 도형들을 봤는가? 그것들은:
-
-- **무작위성**과 **규칙성**의 결합
-- 사용자 상호작용에 **반응**
-- 시간에 따라 **변화**
-
-### 코드로 표현한 철학
-
-```css
-@keyframes digital-chaos {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(-5px, 5px) rotate(90deg); }
-  50% { transform: translate(5px, -5px) rotate(180deg); }
-  75% { transform: translate(-5px, -5px) rotate(270deg); }
-  100% { transform: translate(0, 0) rotate(360deg); }
-}
-```
-
-## 결론: 불완전한 완벽함
-
-디지털 혼돈은 새로운 질서의 시작이다. 기계의 정확성과 인간의 불완전성이 만나는 지점에서, 진정한 **디지털 아트**가 탄생한다.
-
----
-
-*"혼돈 속에서도 패턴이 있고, 질서 속에서도 무작위성이 있다."*]]></content><author><name>Ijzereen</name></author><category term="Philosophy" /><category term="Digital" /><category term="chaos" /><category term="order" /><category term="digital" /><category term="art" /><category term="philosophy" /><summary type="html"><![CDATA[혼돈의 미학]]></summary></entry><entry><title type="html">한국어 토크나이저와 bm25s를 활용한 Lexical Search 구현</title><link href="http://0.0.0.0:4000/posts/Lexical-Search/" rel="alternate" type="text/html" title="한국어 토크나이저와 bm25s를 활용한 Lexical Search 구현" /><published>2025-08-09T18:45:00+09:00</published><updated>2025-08-09T18:45:00+09:00</updated><id>http://0.0.0.0:4000/posts/Lexical-Search</id><content type="html" xml:base="http://0.0.0.0:4000/posts/Lexical-Search/"><![CDATA[<h1 id="혼돈의-미학">혼돈의 미학</h1>
+<p><em>이 글은 실험적인 디자인으로 작성되었습니다. 브라우저가 깨져 보인다면 그것이 의도된 것입니다.</em></p>]]></content><author><name>Ijzereen</name></author><category term="Design" /><category term="Web" /><category term="neobrutalism" /><category term="design" /><category term="web" /><category term="ui" /><category term="ux" /><summary type="html"><![CDATA[디지털 시대의 반란: 네오브루탈리즘]]></summary></entry><entry><title type="html">디지털 혼돈 속에서 찾는 질서</title><link href="http://localhost:4000/posts/digital-chaos-blog/" rel="alternate" type="text/html" title="디지털 혼돈 속에서 찾는 질서" /><published>2025-08-09T18:45:00+09:00</published><updated>2025-08-09T18:45:00+09:00</updated><id>http://localhost:4000/posts/digital-chaos-blog</id><content type="html" xml:base="http://localhost:4000/posts/digital-chaos-blog/"><![CDATA[<h1 id="혼돈의-미학">혼돈의 미학</h1>
 
 <p>디지털 세계에서 <strong>완벽한 픽셀</strong>들이 줄지어 서 있다. 모든 것이 계산되고, 측정되고, 최적화되어 있다. 그런데 왜 우리는 여전히 <strong>불완전함</strong>에 끌리는 걸까?</p>
 
