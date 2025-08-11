@@ -12,6 +12,185 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- MathJax -->
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            packages: {'[+]': ['ams', 'newcommand', 'configmacros']},
+            tags: 'ams'
+        },
+        options: {
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+        },
+        startup: {
+            ready: function () {
+                MathJax.startup.defaultReady();
+                MathJax.startup.promise.then(function () {
+                    console.log('MathJax initial typesetting complete');
+                });
+            }
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* VSCode Dark Theme for Code Blocks */
+        .highlight {
+            background-color: #0d1117 !important;
+            color: #f0f6fc !important;
+            border-radius: 4px !important;
+            padding: 0.5rem !important;
+            margin: 0.8rem 0 !important;
+            overflow-x: auto !important;
+            border: 2px solid #21262d !important;
+            box-shadow: 3px 3px 0 0 #000 !important;
+        }
+
+        /* Override any white backgrounds in code blocks */
+        .highlight, .highlight * {
+            background-color: #0d1117 !important;
+        }
+
+        /* Line numbers styling */
+        .highlight .lineno {
+            color: #7d8590 !important;
+            background-color: #0d1117 !important;
+            padding-right: 0.2em !important;
+            border-right: 1px solid #30363d !important;
+            margin-right: 0.2em !important;
+        }
+
+        /* Force dark background for all code-related elements */
+        .highlight div, .highlight span, .highlight code, .highlight pre,
+        .highlighter-rouge .highlight, .highlighter-rouge {
+            background-color: #0d1117 !important;
+        }
+
+        /* Remove any duplicate borders/shadows from Jekyll's default styles */
+        .highlighter-rouge, .highlighter-rouge .highlight, 
+        pre.highlight, div.highlight {
+            border: none !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Ensure only .highlight has the styling */
+        .highlight {
+            display: block !important;
+        }
+
+        .highlight pre {
+            background-color: transparent !important;
+            color: inherit !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace !important;
+            font-size: 13px !important;
+            line-height: 1.3 !important;
+        }
+
+        .highlight code {
+            background-color: transparent !important;
+            color: inherit !important;
+            padding: 0 !important;
+            border: none !important;
+            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace !important;
+        }
+
+        /* Ensure inline code overrides any .highlight code styles */
+        :not(.highlight) > code,
+        p code, li code, td code,
+        h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+            background-color: #ffc0cb !important;
+            color: #000000 !important;
+            padding: 2px 6px !important;
+            border-radius: 0 !important;
+            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace !important;
+            font-size: 0.9em !important;
+            border: 2px solid #000000 !important;
+            font-weight: 700 !important;
+            box-shadow: 2px 2px 0 0 #000000 !important;
+        }
+
+        /* VSCode Dark Theme Token Colors */
+        .highlight .k,  /* Keywords */
+        .highlight .kn, /* Keyword.Namespace */
+        .highlight .kp, /* Keyword.Pseudo */
+        .highlight .kr, /* Keyword.Reserved */
+        .highlight .kt  /* Keyword.Type */
+        { color: #569cd6 !important; font-weight: normal !important; }
+
+        .highlight .s,  /* String */
+        .highlight .sb, /* String.Backtick */
+        .highlight .sc, /* String.Char */
+        .highlight .sd, /* String.Doc */
+        .highlight .s2, /* String.Double */
+        .highlight .se, /* String.Escape */
+        .highlight .sh, /* String.Heredoc */
+        .highlight .si, /* String.Interpol */
+        .highlight .sx, /* String.Other */
+        .highlight .sr, /* String.Regex */
+        .highlight .s1  /* String.Single */
+        { color: #ce9178 !important; }
+
+        .highlight .m,  /* Number */
+        .highlight .mb, /* Number.Bin */
+        .highlight .mf, /* Number.Float */
+        .highlight .mh, /* Number.Hex */
+        .highlight .mi, /* Number.Integer */
+        .highlight .mo  /* Number.Oct */
+        { color: #b5cea8 !important; }
+
+        .highlight .c,  /* Comment */
+        .highlight .c1, /* Comment.Single */
+        .highlight .cs, /* Comment.Special */
+        .highlight .cm  /* Comment.Multiline */
+        { color: #6a9955 !important; font-style: italic !important; }
+
+        .highlight .n,  /* Name */
+        .highlight .na, /* Name.Attribute */
+        .highlight .nb, /* Name.Builtin */
+        .highlight .nc, /* Name.Class */
+        .highlight .no, /* Name.Constant */
+        .highlight .nd, /* Name.Decorator */
+        .highlight .ne, /* Name.Exception */
+        .highlight .nf, /* Name.Function */
+        .highlight .nl, /* Name.Label */
+        .highlight .nn, /* Name.Namespace */
+        .highlight .nt, /* Name.Tag */
+        .highlight .nv, /* Name.Variable */
+        .highlight .nx  /* Name.Other */
+        { color: #e1bdf0 !important; font-weight: 400 !important; }
+
+        .highlight .o,  /* Operator */
+        .highlight .ow  /* Operator.Word */
+        { color: #d4d4d4 !important; }
+
+        .highlight .p   /* Punctuation */
+        { color: #d4d4d4 !important; }
+
+        .highlight .bp  /* Name.Builtin.Pseudo */
+        { color: #569cd6 !important; }
+
+        .highlight .vc, /* Name.Variable.Class */
+        .highlight .vg, /* Name.Variable.Global */
+        .highlight .vi  /* Name.Variable.Instance */
+        { color: #79c0ff !important; font-weight: 500 !important; }
+
+        .highlight .il  /* Number.Integer.Long */
+        { color: #b5cea8 !important; }
+
+        /* Remove old inline code styling - moved to more specific selector above */
+    </style>
+    
     <style>
         @keyframes glitch {
             0% { transform: translate(0); }
@@ -90,25 +269,9 @@
             line-height: 1;
         }
         
-        .content-area code {
-            font-family: 'JetBrains Mono', monospace;
-            background: #000;
-            color: #fff;
-            padding: 0.2rem 0.4rem;
-            border-radius: 0;
-            font-weight: 700;
-        }
+        /* Removed duplicate .content-area code styling that was overriding the proper syntax highlighting */
         
-        .content-area pre {
-            border: 4px solid #000;
-            background: #000;
-            color: #fff;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            overflow-x: auto;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow: 6px 6px 0 0 #666;
-        }
+        /* Removed duplicate pre styling - using .highlight styles only */
         
         .content-area ul, .content-area ol {
             margin: 1.5rem 0;
@@ -179,6 +342,11 @@
         
         .content-area tr:nth-child(even) td {
             background: #f1f1f1;
+        }
+        
+        /* Like and view stats styling */
+        .brutal-shadow-sm {
+            box-shadow: 2px 2px 0 0 #000;
         }
     </style>
 </head>
@@ -251,6 +419,35 @@
 <p><em>이 페이지는 자유롭게 편집할 수 있습니다. Markdown으로 작성하면 됩니다.</em></p>
 
         </article>
+        
+        <!-- Like and View Stats -->
+        <div class="mt-8 grid md:grid-cols-2 gap-4">
+            <div class="border-4 border-black bg-white p-4 brutal-shadow">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <button id="like-btn" class="bg-pink-200 border-2 border-black px-3 py-1 font-mono font-bold uppercase hover:bg-pink-300 transition-colors brutal-shadow-sm">
+                            ❤️ <span id="like-count">0</span>
+                        </button>
+                    </div>
+                    <div class="text-sm font-mono uppercase tracking-widest">
+                        LIKES
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-4 border-black bg-white p-4 brutal-shadow">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-blue-200 border-2 border-black px-3 py-1 font-mono font-bold uppercase brutal-shadow-sm">
+                            👁️ <span id="view-count">0</span>
+                        </div>
+                    </div>
+                    <div class="text-sm font-mono uppercase tracking-widest">
+                        TOTAL VIEWS
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Post navigation -->
         <nav class="mt-16 grid md:grid-cols-2 gap-4">
@@ -506,6 +703,63 @@
             const progress = (window.scrollY / totalHeight) * 100;
             progressBar.style.width = progress + '%';
         });
+        
+        // Like and View System
+        function initLikeAndViewSystem() {
+            const postUrl = window.location.pathname;
+            
+            // Get current counts from localStorage
+            const likeKey = `likes_${postUrl}`;
+            const viewKey = `views_${postUrl}`;
+            const userLikeKey = `user_liked_${postUrl}`;
+            
+            let likeCount = parseInt(localStorage.getItem(likeKey) || '0');
+            let viewCount = parseInt(localStorage.getItem(viewKey) || '0');
+            let userLiked = localStorage.getItem(userLikeKey) === 'true';
+            
+            // Increment view count on page load (cumulative, not daily)
+            viewCount++;
+            localStorage.setItem(viewKey, viewCount.toString());
+            
+            // Update UI
+            const likeBtn = document.getElementById('like-btn');
+            const likeCountEl = document.getElementById('like-count');
+            const viewCountEl = document.getElementById('view-count');
+            
+            likeCountEl.textContent = likeCount;
+            viewCountEl.textContent = viewCount;
+            
+            // Set initial like button state
+            if (userLiked) {
+                likeBtn.style.backgroundColor = '#ff0080';
+                likeBtn.style.color = '#fff';
+            }
+            
+            // Like button functionality
+            likeBtn.addEventListener('click', () => {
+                if (userLiked) {
+                    // Unlike
+                    likeCount--;
+                    userLiked = false;
+                    likeBtn.style.backgroundColor = '#ffc0cb';
+                    likeBtn.style.color = '#000';
+                    localStorage.setItem(userLikeKey, 'false');
+                } else {
+                    // Like
+                    likeCount++;
+                    userLiked = true;
+                    likeBtn.style.backgroundColor = '#ff0080';
+                    likeBtn.style.color = '#fff';
+                    localStorage.setItem(userLikeKey, 'true');
+                }
+                
+                localStorage.setItem(likeKey, likeCount.toString());
+                likeCountEl.textContent = likeCount;
+            });
+        }
+        
+        // Initialize on page load
+        initLikeAndViewSystem();
     </script>
 </body>
 </html>

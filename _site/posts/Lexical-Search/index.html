@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title | escape }} - {{ site.title | default: "PlayGround" | escape }}</title>
-    <meta name="description" content="{{ page.excerpt | default: site.description | default: 'PlayGround' | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+    <title>bm25와 한국어 토크나이저를 활용한 Lexical Search 개선 - PlayGround</title>
+    <meta name="description" content="Lexical Search">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -354,7 +354,7 @@
     
     <!-- Back button -->
     <div class="fixed top-4 left-4 z-[1000]">
-        <a href="{{ '/' | relative_url }}" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">{{ site.ui.nav.back | default: "← BACK" }}</a>
+        <a href="/" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">← BACK</a>
     </div>
     
     <!-- Floating elements for decoration - only visible in CHAOS mode -->
@@ -367,29 +367,330 @@
         <header class="mb-12">
             <div class="border-4 border-black bg-white p-6 brutal-shadow transform -rotate-1 mb-8">
                 <div class="text-sm font-mono uppercase tracking-widest mb-2">
-                    {{ page.date | date: "%Y.%m.%d" }}
-                    {% if page.categories.size > 0 %}
-                    • {{ page.categories | join: " / " }}
-                    {% endif %}
+                    2025.08.11
+                    
+                    • NLP / AI
+                    
                 </div>
-                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">{{ page.title }}</h1>
-                {% if page.author %}
-                <div class="mt-4 text-lg font-mono">by {{ page.author }}</div>
-                {% endif %}
+                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">bm25와 한국어 토크나이저를 활용한 Lexical Search 개선</h1>
+                
+                <div class="mt-4 text-lg font-mono">by Ijzereen</div>
+                
             </div>
             
-            {% if page.tags.size > 0 %}
+            
             <div class="flex flex-wrap gap-2 mb-8">
-                {% for tag in page.tags %}
-                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">{{ tag }}</span>
-                {% endfor %}
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">bm25s</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">Kkma</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">OKT</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">Kiwi</span>
+                
             </div>
-            {% endif %}
+            
         </header>
         
         <!-- Post content -->
         <article class="content-area">
-            {{ content }}
+            <h2 id="lexical-search">Lexical Search</h2>
+
+<p>Lexical Search는 기본적인 키워드 기반 검색 방법으로 문장 / 쿼리에 담긴 텍스트를 기반으로 검색한다.</p>
+
+<p>간단한 Lexical 검색 예시를 들어보면 다음과 같다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Query</code> : YSL 바지 하나 왜 좀 사입던지 해</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>문장</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>내 돈은 너무 깨끗해 내 두 손은 너무 더러워</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>다리를 뻗어 캐피털 바지에</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>내가 신은 신발은 YSL, 내 기분처럼 구두굽이 되게 높지</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>이번 신상 YSL 바지 예쁘더라, 하나 사야겠어.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>1번 문장 :  None<br />
+2번 문장 : <code class="language-plaintext highlighter-rouge">바지</code><br />
+3번 문장 :  <code class="language-plaintext highlighter-rouge">YSL</code><br />
+4번 문장 :  <code class="language-plaintext highlighter-rouge">YSL</code>, <code class="language-plaintext highlighter-rouge">바지</code>, <code class="language-plaintext highlighter-rouge">하나</code></p>
+
+<p>4번 문장이 가장 유사한 키워드가 많기 때문에 4번 문장을 선택한다.<br />
+이렇게 사용자의 쿼리와 문장을 키워드 단위로 분해하여 유사한 문장을 선택한다.</p>
+
+<h1 id="bm25">BM25</h1>
+
+<p>BM25는 Best Matching 25의 약자로 Lexical Search에서 사용되는 대표적인 알고리즘 중 하나이다.</p>
+
+<p>주어진 질의와 문서들 간의 관련성을 평가하는데 SOTA( State-of-the-art )의 성능을 보이며, <code class="language-plaintext highlighter-rouge">elastic search</code> 에서도 기본 유사도 검색 알고리즘으로 채택했다.</p>
+
+<p>TF(Term Frequency, 단어의 등장 빈도)와 IDF(Inverse Document Frequency, 역문서빈도)를 수식에서 이용하지만, 잘 알려진 TF-IDF 알고리즘의 수식과는 살짝 다르다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">TF</code> : 문서 안에 해당 단어가 몇번 등장했는지 의미한다.<br />
+예를 들어 <em>사과가 사과해</em>라는 문장에서는 사과의 <code class="language-plaintext highlighter-rouge">TF</code> 는 2이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">IDF</code> : 전체 문서 중 해당 단어가 얼마나 희귀한지를 나타낸다. 문서 빈도의 inverse 값이라 생각하면 좋다.<br />
+예를 들어 한국어에서 (이)가, 는 등의 흔한 단어는 많이 등장하므로 <code class="language-plaintext highlighter-rouge">IDF</code> 값이 낮다.</p>
+
+<p>여러 문서들 중 문서 $D$와 사용자 질의 $Q$의 연관성은 다음과 같이 계산한다.</p>
+
+<p>BM25s는 다음 조건을 만족할수록 더 큰 점수를 부여한다.</p>
+<ul>
+  <li>문서 내용에 검색어 출현 빈도가 높을수록</li>
+  <li>문서 내용이 짧을수록</li>
+  <li>다른 문서에 검색어가 출현하지 않을수록</li>
+</ul>
+
+<p>위에서 예시를 들었던 문서를 바탕으로 BM25를 설명해보겠다.</p>
+
+<p>\(\begin{align}
+\text{score}(D, Q) &amp;= \sum_{i=1}^{n} \text{IDF}(q_i) \cdot \text{TF}(q_i) \\
+&amp;= \sum_{i=1}^{n} \text{IDF}(q_i) \cdot \frac{f(q_i, D) \cdot (k_1 + 1)}{f(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{\lvert D \rvert}{\text{avgdl}}\right)} \\
+&amp;= \sum_{i=1}^{n} \log\left(1 + \frac{N - n_{q_i} + 0.5}{n_{q_i} + 0.5}\right) \cdot \frac{f(q_i, D) \cdot (k_1 + 1)}{f(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{\lvert D \rvert}{\text{avgdl}}\right)}
+\end{align}\)
+사용자의 질의 $Q$에 대해 문서(여기서는 문장)$D$와의 BM25 점수를 계산하는 공식이다.<br />
+질의와 문서들 모두 기본적인 토큰화는 된 후에 BM25 알고리즘을 작동시킨다.</p>
+
+<h3 id="tf">TF</h3>
+<ul>
+  <li>$f(q_i, D)$ : 사용자의 질의 $Q$의 $i$번째 단어인 $q_i$가 문서 $D$에 몇번 등장했는지 반환한다. (<strong>문서 내용에 검색어 출현 빈도가 높을수록</strong>)</li>
+  <li>$\frac{\lvert D \rvert}{\text{avgdl}}$ : 문서들의 평균 길이에 대한 현재 문서의 길이를 의미한다. (<strong>문서 내용이 짧을수록</strong>)</li>
+  <li>$b$, $k_1$ : 조정 가능하지만, 보통 상수로 고정되어있는 파라미터이다.</li>
+</ul>
+
+<h3 id="idf">IDF</h3>
+
+\[\text{IDF}(q_i) = \log\left(1 + \frac{N - n_{q_i} + 0.5}{n_{q_i} + 0.5}\right)\]
+
+<ul>
+  <li>$N$ : 전체 문서의 수</li>
+  <li>$n_{q_i}$ : $q_i$가 포함된 문서의 수</li>
+</ul>
+
+<p>따라서 $n_{q_i}$가 낮을수록 $IDF$값은 높아지기 때문에 <strong>다른 문서에 검색어($n_{q_i}$)가 출현하지 않을수록</strong> BM25 점수는 높아진다.</p>
+
+<h2 id="bm25s">BM25S</h2>
+
+<blockquote>
+  <p>BM25S is designed to provide a fast, low-dependency and low-memory implementation of BM25 algorithms in Python.</p>
+</blockquote>
+
+<p>BM25s 공식문서에 올라와있는 설명으로 파이썬에서 BM25로 키워드 검색을 할 수 있는 알고리즘이다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>pip <span class="nb">install </span>bm25s
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>BM25s 라이브러리를 설치한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="n">bm25s</span>
+
+<span class="n">말뭉치들</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sh">"</span><span class="s">고양이는 만족할 때 그르렁거린다.</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">개는 사람의 친구이며 놀이를 좋아한다.</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">새는 날개로 하늘을 난다.</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">물고기는 아가미로 호흡한다.</span><span class="sh">"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">물고기는 그르렁거리지 않는다.</span><span class="sh">"</span>
+<span class="p">]</span>
+
+<span class="c1"># 문서들을 토큰화 시킨 다음 저장한다.
+</span><span class="n">말뭉치_BM25토큰화</span> <span class="o">=</span> <span class="n">bm25s</span><span class="p">.</span><span class="nf">tokenize</span><span class="p">(</span><span class="n">말뭉치들</span><span class="p">)</span>
+<span class="n">검색기</span> <span class="o">=</span> <span class="n">bm25s</span><span class="p">.</span><span class="nc">BM25</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">말뭉치들</span><span class="p">)</span> <span class="c1">#검색 결과를 반환할 때 사용할 원문들을 저장한다.
+</span><span class="n">검색기</span><span class="p">.</span><span class="nf">index</span><span class="p">(</span><span class="n">말뭉치_BM25토큰화</span><span class="p">)</span> <span class="c1">#검색할 때 사용하기 위해 토큰 데이터 구조를 생성한다.
+</span>
+<span class="c1"># You can now search the corpus with a query
+</span><span class="n">질의</span> <span class="o">=</span> <span class="sh">"</span><span class="s">고양이는 만족할 때 뭐해?</span><span class="sh">"</span>
+<span class="n">질의_토큰화</span> <span class="o">=</span> <span class="n">bm25s</span><span class="p">.</span><span class="nf">tokenize</span><span class="p">(</span><span class="n">질의</span><span class="p">)</span>
+<span class="n">문서들</span><span class="p">,</span> <span class="n">점수들</span> <span class="o">=</span> <span class="n">검색기</span><span class="p">.</span><span class="nf">retrieve</span><span class="p">(</span><span class="n">질의_토큰화</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Best result (score: </span><span class="si">{</span><span class="n">점수들</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">문서들</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Happy with your index? Save it for later...
+</span><span class="n">검색기</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">"</span><span class="s">bm25s_index_animals</span><span class="sh">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>실행하면 다음 결과가 출력된다.</p>
+<blockquote>
+  <p>Best result (score: 1.1990): 고양이는 만족할 때 그르렁거린다.</p>
+</blockquote>
+
+<p>근데 여기서 토큰화된 결과를 살펴보면 다음과 같다.</p>
+<blockquote>
+  <p>질의_토큰화 = Tokenized(<br />
+    “ids”: [0: [0, 1, 2] ],<br />
+    “vocab”: [‘고양이는’: 0’만족할’: 1’뭐해’: 2],)</p>
+</blockquote>
+
+<blockquote>
+  <p>문서들[0,0]의 데이터 = Tokenized(<br />
+    “ids”: [ 0: [0, 1, 2] ],<br />
+    “vocab”: [ ‘고양이는’: 0 ‘만족할’: 1 ‘그르렁거린다’: 2 ],)</p>
+</blockquote>
+
+<p>토큰화의 결과가 단순 띄워쓰기 정도이다. 
+<code class="language-plaintext highlighter-rouge">고양이는</code> 은 <code class="language-plaintext highlighter-rouge">고양이</code> 와 <code class="language-plaintext highlighter-rouge">는</code> 으로 쪼개야한다.<br />
+<code class="language-plaintext highlighter-rouge">뭐해</code> 는 <code class="language-plaintext highlighter-rouge">뭐</code> + <code class="language-plaintext highlighter-rouge">하</code> + <code class="language-plaintext highlighter-rouge">어</code> 정도로 세부적으로쪼개야한다.</p>
+
+<p>따라서 한글 데이터를 바탕으로 BM25 알고리즘을 이용한 lexical 검색을 수행할 때는 추가적인 토크나이저가 필요하다.</p>
+
+<h1 id="한국어-토크나이저">한국어 토크나이저</h1>
+
+<p>한국어 토크나이저는 한국어의 특성에 알맞게 토큰화시킬 수 있어야한다.<br />
+우리가 학생 때 배운 것처럼 어간, 어미, 어근, 접사 등 형태소 단위의 토큰화가 가능해야한다는 것이다.</p>
+
+<p>이를 위해 우리는 세가지 토크나이저를 가지고 한번 테스트를 해보려한다.</p>
+
+<p><a href="https://github.com/open-korean-text/open-korean-text?tab=readme-ov-file" target="_blank">OpenKoreaText</a> : 트위터에서 개발한 오픈소스 한국어 토크나이저<br />
+<a href="https://github.com/YuJungChae/kkma_python" target="_blank">Kkma</a> : 서울대에서 개발한 한국어 토크나이저<br />
+<a href="https://github.com/bab2min/Kiwi" target="_blank">Kiwi(Korean Intelligent Word Identifier)</a> : 오픈소스 한국어 토크나이저</p>
+
+<p><code class="language-plaintext highlighter-rouge">Kiwi</code> 의 경우, <em>split_complex</em>라는 옵션을 통해 세부적인 토크나이징 여부를 설정할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="n">konlpy.tag</span> <span class="kn">import</span> <span class="n">Okt</span>
+<span class="kn">from</span> <span class="n">konlpy.tag</span> <span class="kn">import</span> <span class="n">Kkma</span>
+<span class="kn">from</span> <span class="n">kiwipiepy</span> <span class="kn">import</span> <span class="n">Kiwi</span>
+
+<span class="n">오텍코</span> <span class="o">=</span> <span class="nc">Okt</span><span class="p">()</span>
+<span class="n">꼬꼬마</span>  <span class="o">=</span> <span class="nc">Kkma</span><span class="p">()</span>
+<span class="n">키위</span> <span class="o">=</span> <span class="nc">Kiwi</span><span class="p">()</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">다음 휴가에는 부산국제락페스티벌을 가고싶어요.</span><span class="sh">"</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">오텍코 형태소 분석 :</span><span class="sh">'</span><span class="p">,</span><span class="n">오텍코</span><span class="p">.</span><span class="nf">morphs</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">꼬꼬마 형태소 분석 :</span><span class="sh">'</span><span class="p">,</span><span class="n">꼬꼬마</span><span class="p">.</span><span class="nf">morphs</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+<span class="n">키위_형태소_러프하게</span> <span class="o">=</span> <span class="n">키위</span><span class="p">.</span><span class="nf">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">split_complex</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">키위_형태소_세부적으로</span> <span class="o">=</span> <span class="n">키위</span><span class="p">.</span><span class="nf">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">split_complex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">키위_러프한_분석결과</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="p">.</span><span class="n">form</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">키위_형태소_러프하게</span><span class="p">]</span>
+<span class="n">키위_세부적인_분석결과</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="p">.</span><span class="n">form</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">키위_형태소_세부적으로</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">키위 형태소 분석(rough) :</span><span class="sh">'</span><span class="p">,</span> <span class="n">키위_러프한_분석결과</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">키위 형태소 분석(detail) :</span><span class="sh">'</span><span class="p">,</span> <span class="n">키위_세부적인_분석결과</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>결과는 다음과 같다.</p>
+<blockquote>
+  <p>오텍코 형태소 분석 : [‘다음’, ‘휴가’, ‘에는’, ‘부산’, ‘국제’, ‘락페스티벌’, ‘을’, ‘가고싶어요’, ‘.’]<br />
+꼬꼬마 형태소 분석 : [‘다음’, ‘휴가’, ‘에’, ‘는’, ‘부산’, ‘국제’, ‘락’, ‘페스티벌’, ‘을’, ‘가’, ‘고’, ‘싶’, ‘어요’, ‘.’]<br />
+키위 형태소 분석(rough) : [‘다음’, ‘휴가’, ‘에’, ‘는’, ‘부산’, ‘국제’, ‘락’, ‘페스티벌’, ‘을’, ‘가’, ‘고’, ‘싶’, ‘어요’, ‘.’]<br />
+키위 형태소 분석(detail) : [‘다음’, ‘휴가’, ‘에’, ‘는’, ‘부산’, ‘국제’, ‘락’, ‘페스티벌’, ‘을’, ‘가’, ‘고’, ‘싶’, ‘어’, ‘요’, ‘.’]</p>
+</blockquote>
+
+<p>육안으로 봤을 때, <code class="language-plaintext highlighter-rouge">꼬꼬마</code> 와 <code class="language-plaintext highlighter-rouge">키위 형태소 분석(rough)</code> 의 토크나이징 정도는 유사해보인다.<br />
+<code class="language-plaintext highlighter-rouge">오텍코</code> 의 성능은 비교적 떨어져보인다.</p>
+
+<p>그런데 토크나이저를 사용하다보면 <strong>중의적인 토크나이징</strong>이 가능할 때 서로 다른 결과를 내놓는다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">전용역</code></p>
+<blockquote>
+  <p>오텍코 형태소 분석 : [‘전’, ‘용역’]<br />
+꼬꼬마 형태소 분석 : [‘전용’, ‘역’]<br />
+키위 형태소 분석(rough) : [‘전’, ‘용역’]<br />
+키위 형태소 분석(detail) : [‘전’, ‘용역’]</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">고물가</code></p>
+<blockquote>
+  <p>오텍코 형태소 분석 : [‘고물’, ‘가’]<br />
+꼬꼬마 형태소 분석 : [‘고물가’]<br />
+키위 형태소 분석(rough) : [‘고’, ‘물가’]<br />
+키위 형태소 분석(detail) : [‘고’, ‘물가’]</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">개인기</code></p>
+<blockquote>
+  <p>오텍코 형태소 분석 : [‘개’, ‘인기’]<br />
+꼬꼬마 형태소 분석 : [‘개인기’]<br />
+키위 형태소 분석(rough) : [‘개인기’]<br />
+키위 형태소 분석(detail) : [‘개인기’]</p>
+</blockquote>
+
+<h1 id="한국어-토크나이저--bm25">한국어 토크나이저 + BM25</h1>
+
+<p>위에서 볼 수 있듯이 <strong>토크나이징 모델에 따라 토큰화 결과</strong>가 다르다.<br />
+수행할 task의 문장들을 여럿 넣어보며 <strong>현재 task에서 가장 적절한 토크나이징 모델이 무엇인지 결정</strong>하는 것이 중요할 것이다.</p>
+
+<p>원하는 토크나이저를 골랐다면, 해당 토크나이저로 1차 토크나이징을 한뒤 BM25에 적용하면 된다.</p>
+
+<p>위에 올린 bm25코드 중간에 해당 코드를 추가하고, 사용자 질의 역시 토크나이징해서 쿼리로 넣으면 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="n">konlpy.tag</span> <span class="kn">import</span> <span class="n">Kkma</span>
+<span class="c1">#...
+</span><span class="n">꼬꼬마</span>  <span class="o">=</span> <span class="nc">Kkma</span><span class="p">()</span>
+
+<span class="n">말뭉치들</span> <span class="o">=</span> <span class="p">[</span><span class="nf">str</span><span class="p">(</span><span class="n">꼬꼬마</span><span class="p">.</span><span class="nf">morphs</span><span class="p">(</span><span class="n">문장</span><span class="p">))</span> <span class="k">for</span> <span class="n">문장</span> <span class="ow">in</span> <span class="n">말뭉치들</span><span class="p">]</span>
+<span class="c1">#...
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+
         </article>
         
         <!-- Like and View Stats -->
@@ -423,19 +724,14 @@
         
         <!-- Post navigation -->
         <nav class="mt-16 grid md:grid-cols-2 gap-4">
-            {% if page.previous %}
+            
             <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
                 <div class="text-sm font-mono uppercase tracking-widest mb-2">Previous Post</div>
-                <a href="{{ page.previous.url | relative_url }}" class="font-bold text-lg hover:underline">{{ page.previous.title }}</a>
+                <a href="/posts/neobrutalism-design/" class="font-bold text-lg hover:underline">네오브루탈리즘 웹디자인의 새로운 물결</a>
             </div>
-            {% endif %}
             
-            {% if page.next %}
-            <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
-                <div class="text-sm font-mono uppercase tracking-widest mb-2">Next Post</div>
-                <a href="{{ page.next.url | relative_url }}" class="font-bold text-lg hover:underline">{{ page.next.title }}</a>
-            </div>
-            {% endif %}
+            
+            
         </nav>
     </main>
     

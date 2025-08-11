@@ -148,6 +148,22 @@
                 <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 pb-32">
                     
                     <div class="post-item relative border-4 border-black bg-white p-4 brutal-shadow rotate-[-0.6deg] hover:rotate-[1deg] transition-transform duration-300" 
+                         data-categories="nlp,ai"
+                         data-tags="bm25s,kkma,okt,kiwi">
+                        <h3 class="font-mono text-xl md:text-2xl mb-2 underline decoration-dotted">
+                            <a href="/posts/Lexical-Search/">bm25와 한국어 토크나이저를 활용한 Lexical Search 개선</a>
+                        </h3>
+                        <p class="text-sm leading-5 font-mono">Lexical Search
+</p>
+                        <div class="mt-2 text-xs text-gray-600">
+                            2025.08.11
+                            
+                            • NLP, AI
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="post-item relative border-4 border-black bg-white p-4 brutal-shadow rotate-[-0.6deg] hover:rotate-[1deg] transition-transform duration-300" 
                          data-categories="design,web"
                          data-tags="neobrutalism,design,web,ui,ux">
                         <h3 class="font-mono text-xl md:text-2xl mb-2 underline decoration-dotted">
@@ -192,11 +208,19 @@
                         
                         
                         
+                        <button onclick="filterPosts('category', 'AI')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="AI">AI</button>
+                        
+                        
+                        
                         <button onclick="filterPosts('category', 'Design')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Design">Design</button>
                         
                         
                         
                         <button onclick="filterPosts('category', 'Digital')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Digital">Digital</button>
+                        
+                        
+                        
+                        <button onclick="filterPosts('category', 'NLP')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="NLP">NLP</button>
                         
                         
                         
@@ -217,7 +241,23 @@
                         
                         
                         
+                        <button onclick="filterPosts('tag', 'Kiwi')" class="filter-btn tag-btn border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono cursor-pointer">#Kiwi</button>
+                        
+                        
+                        
+                        <button onclick="filterPosts('tag', 'Kkma')" class="filter-btn tag-btn border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono cursor-pointer">#Kkma</button>
+                        
+                        
+                        
+                        <button onclick="filterPosts('tag', 'OKT')" class="filter-btn tag-btn border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono cursor-pointer">#OKT</button>
+                        
+                        
+                        
                         <button onclick="filterPosts('tag', 'art')" class="filter-btn tag-btn border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono cursor-pointer">#art</button>
+                        
+                        
+                        
+                        <button onclick="filterPosts('tag', 'bm25s')" class="filter-btn tag-btn border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono cursor-pointer">#bm25s</button>
                         
                         
                         
@@ -351,9 +391,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '/assets/img/floating/sample1.svg?v=1754882994',
-                '/assets/img/floating/sample2.svg?v=1754882994',
-                '/assets/img/floating/sample3.svg?v=1754882994'
+                '/assets/img/floating/sample1.svg?v=1754912052',
+                '/assets/img/floating/sample2.svg?v=1754912052',
+                '/assets/img/floating/sample3.svg?v=1754912052'
             ],
             
             // 창 크기 범위
@@ -658,7 +698,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('/assets/js/search-data.json?v=1754882994');
+                const response = await fetch('/assets/js/search-data.json?v=1754912052');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
