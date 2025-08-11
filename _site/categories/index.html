@@ -130,23 +130,22 @@
     
     <!-- Header -->
     <header class="sticky top-0 z-[1000] border-b-4 border-black bg-white/90 backdrop-blur px-4 md:px-8 py-3 flex items-center justify-between">
-        <div class="uppercase text-2xl tracking-widest font-black">
+        <div class="uppercase text-xl lg:text-2xl tracking-widest font-black">
             <a href="/">PlayGround</a>
         </div>
-        <nav class="flex items-center gap-2">
-            <button id="search-btn" class="border-4 border-black px-3 py-1 brutal-shadow hover:bg-gray-100 transition-colors">Search</button>
-            <button id="randomize-btn" class="border-4 border-black px-3 py-1 brutal-shadow hover:bg-gray-100 transition-colors">Randomize</button>
-            <button id="restore-btn" class="border-4 border-black px-3 py-1 bg-green-200 brutal-shadow hover:bg-green-300 transition-colors">Restore</button>
-            <button id="glitch-btn" class="border-4 border-black px-3 py-1 bg-pink-200 brutal-shadow hover:bg-pink-300 transition-colors">Glitch Mode</button>
+        <nav class="flex items-center gap-1 lg:gap-2">
+            <button id="search-btn" class="border-4 border-black px-2 lg:px-3 py-1 brutal-shadow hover:bg-gray-100 transition-colors text-xs lg:text-sm">Search</button>
+            <button id="randomize-btn" class="hidden sm:block border-4 border-black px-2 lg:px-3 py-1 brutal-shadow hover:bg-gray-100 transition-colors text-xs lg:text-sm">Randomize</button>
+            <button id="restore-btn" class="hidden sm:block border-4 border-black px-2 lg:px-3 py-1 bg-green-200 brutal-shadow hover:bg-green-300 transition-colors text-xs lg:text-sm">Restore</button>
         </nav>
     </header>
     
     <main class="relative min-h-[70vh]">
-        <div class="mx-auto max-w-7xl px-4 md:px-8 flex flex-col lg:flex-row gap-8 pt-10">
+        <div class="mx-auto max-w-7xl px-4 md:px-8 flex flex-col lg:flex-row gap-4 lg:gap-8 pt-6 lg:pt-10">
             <!-- Main content area -->
-            <div class="flex-1">
+            <div class="flex-1 order-2 lg:order-1">
                 <!-- Posts grid -->
-                <div id="posts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-32">
+                <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 pb-32">
                     
                     <div class="post-item relative border-4 border-black bg-white p-4 brutal-shadow rotate-[-0.6deg] hover:rotate-[1deg] transition-transform duration-300" 
                          data-categories="design,web"
@@ -184,36 +183,36 @@
             </div>
             
             <!-- Right Sidebar -->
-            <div class="w-full lg:w-80 space-y-6 lg:space-y-6 mb-8 lg:mb-0">
+            <div class="w-full lg:w-80 space-y-4 lg:space-y-6 mb-6 lg:mb-0 order-1 lg:order-2">
                 <!-- Categories Board -->
-                <div class="border-4 border-black bg-yellow-200 p-4 brutal-shadow sticky top-24">
-                    <h2 class="text-xl font-black mb-3 tracking-widest">CATEGORIES</h2>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="filterPosts('all')" class="filter-btn category-btn border-2 border-black px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase active" data-filter="all">ALL</button>
+                <div class="border-4 border-black bg-yellow-200 p-3 lg:p-4 brutal-shadow lg:sticky lg:top-24">
+                    <h2 class="text-lg lg:text-xl font-black mb-2 lg:mb-3 tracking-widest">CATEGORIES</h2>
+                    <div class="flex flex-wrap gap-1 lg:gap-2">
+                        <button onclick="filterPosts('all')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase active" data-filter="all">ALL</button>
                         
                         
                         
-                        <button onclick="filterPosts('category', 'Design')" class="filter-btn category-btn border-2 border-black px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Design">Design</button>
+                        <button onclick="filterPosts('category', 'Design')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Design">Design</button>
                         
                         
                         
-                        <button onclick="filterPosts('category', 'Digital')" class="filter-btn category-btn border-2 border-black px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Digital">Digital</button>
+                        <button onclick="filterPosts('category', 'Digital')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Digital">Digital</button>
                         
                         
                         
-                        <button onclick="filterPosts('category', 'Philosophy')" class="filter-btn category-btn border-2 border-black px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Philosophy">Philosophy</button>
+                        <button onclick="filterPosts('category', 'Philosophy')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Philosophy">Philosophy</button>
                         
                         
                         
-                        <button onclick="filterPosts('category', 'Web')" class="filter-btn category-btn border-2 border-black px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Web">Web</button>
+                        <button onclick="filterPosts('category', 'Web')" class="filter-btn category-btn border-2 border-black px-2 lg:px-3 py-1 bg-white hover:bg-gray-100 transition-colors text-xs font-mono uppercase" data-filter="Web">Web</button>
                         
                         
                     </div>
                 </div>
                 
                 <!-- Tags Board -->
-                <div class="border-4 border-black bg-green-200 p-4 brutal-shadow">
-                    <h2 class="text-xl font-black mb-3 tracking-widest">TAGS</h2>
+                <div class="border-4 border-black bg-green-200 p-3 lg:p-4 brutal-shadow">
+                    <h2 class="text-lg lg:text-xl font-black mb-2 lg:mb-3 tracking-widest">TAGS</h2>
                     <div class="flex flex-wrap gap-1">
                         
                         
@@ -293,33 +292,9 @@
     </main>
     
     <!-- Footer -->
-    <footer class="relative border-t-4 border-black bg-gray-100">
-        <div class="mx-auto max-w-7xl px-4 md:px-8 py-12 grid md:grid-cols-2 gap-10">
-            <div id="about">
-                <h4 class="font-black text-3xl mb-2">About</h4>
-                <p class="font-mono text-sm leading-6">
-                    PlayGround
-                </p>
-            </div>
-            <div id="contact" class="text-right md:text-left">
-                <h4 class="font-black text-3xl mb-2">Contact</h4>
-                <ul class="space-y-2 text-sm">
-                    
-                    <li><a class="underline" href="mailto:ijzereen@gmail.com">ijzereen@gmail.com</a></li>
-                    
-                    
-                    <li><a class="underline" href="https://github.com/ijzereen" target="_blank">github / </a></li>
-                    
-                    <li><a class="underline" href="mailto:ijzereen@gmail.com" target="_blank">email / </a></li>
-                    
-                    <li><a class="underline" href="/feed.xml" target="_blank">rss / </a></li>
-                    
-                </ul>
-            </div>
-        </div>
-        <div class="fixed right-6 bottom-4 text-sm">
-            <a class="underline mr-3" href="#about">About</a>
-            <a class="underline" href="#contact">Contact</a>
+    <footer class="relative">
+        <div class="fixed right-4 lg:right-6 bottom-4 text-sm z-10">
+            <a class="underline font-mono font-bold" href="/about">Who is 철원</a>
         </div>
     </footer>
     
@@ -335,7 +310,7 @@
     </div>
     
     <!-- Global CHAOS button - Always visible -->
-    <div id="global-chaos-btn" class="fixed bottom-8 right-8 w-16 h-16 border-4 border-black bg-pink-200 cursor-pointer brutal-shadow hover:bg-pink-300 transition-colors flex items-center justify-center font-mono font-bold text-xs rotate-12 z-[1500]">
+    <div id="global-chaos-btn" class="fixed bottom-16 left-4 lg:bottom-8 lg:left-8 w-12 h-12 lg:w-16 lg:h-16 border-4 border-black bg-pink-200 cursor-pointer brutal-shadow hover:bg-pink-300 transition-colors flex items-center justify-center font-mono font-bold text-[8px] lg:text-xs rotate-12 z-[1500]">
         CHAOS
     </div>
     
@@ -376,9 +351,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '/assets/img/floating/sample1.svg?v=1754873155',
-                '/assets/img/floating/sample2.svg?v=1754873155',
-                '/assets/img/floating/sample3.svg?v=1754873155'
+                '/assets/img/floating/sample1.svg?v=1754874317',
+                '/assets/img/floating/sample2.svg?v=1754874317',
+                '/assets/img/floating/sample3.svg?v=1754874317'
             ],
             
             // 창 크기 범위
@@ -586,12 +561,7 @@
             // Save to localStorage
             localStorage.setItem('chaos-mode', chaosMode.toString());
             
-            // Update header button
-            const btn = document.getElementById('glitch-btn');
-            if (btn) {
-                btn.textContent = chaosMode ? 'STOP CHAOS' : 'Glitch Mode';
-                btn.style.background = chaosMode ? '#ff0080' : '#ffc0cb';
-            }
+            // Header button removed - only global button remains
             
             // Update global CHAOS button
             const globalBtn = document.getElementById('global-chaos-btn');
@@ -657,7 +627,7 @@
             }
         }
         
-        document.getElementById('glitch-btn').addEventListener('click', toggleChaosMode);
+        // Header glitch button removed
         
         // Global CHAOS button
         document.getElementById('global-chaos-btn').addEventListener('click', toggleChaosMode);
@@ -668,7 +638,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('/assets/js/search-data.json?v=1754873155');
+                const response = await fetch('/assets/js/search-data.json?v=1754874317');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
@@ -825,12 +795,6 @@
             
             // Initialize CHAOS mode if it was previously active
             if (chaosMode) {
-                const btn = document.getElementById('glitch-btn');
-                if (btn) {
-                    btn.textContent = 'STOP CHAOS';
-                    btn.style.background = '#ff0080';
-                }
-                
                 const globalBtn = document.getElementById('global-chaos-btn');
                 if (globalBtn) {
                     globalBtn.textContent = 'STOP';
@@ -881,31 +845,38 @@
         // Mobile optimizations
         function optimizeForMobile() {
             const isMobile = window.innerWidth < 768;
+            const isVerySmall = window.innerWidth < 480;
             
             if (isMobile) {
                 // Reduce number of windows on mobile
-                windowCount = Math.min(windowCount, 3);
+                windowCount = Math.min(windowCount, isVerySmall ? 1 : 2);
                 
                 // Make windows smaller on mobile
                 const mobileWindows = document.querySelectorAll('#floating-windows .drag-element');
                 mobileWindows.forEach(window => {
-                    window.style.width = '200px';
-                    window.style.height = '150px';
+                    window.style.width = isVerySmall ? '150px' : '200px';
+                    window.style.height = isVerySmall ? '120px' : '150px';
                 });
                 
-                // Hide some decorative elements on very small screens
-                if (window.innerWidth < 480) {
-                    const textWindow = document.getElementById('text-window');
-                    const badge = document.getElementById('badge');
-                    if (textWindow) textWindow.style.display = 'none';
-                    if (badge) badge.style.display = 'none';
-                }
-            } else {
-                // Show elements on larger screens
+                // Hide floating elements on mobile to avoid interference
                 const textWindow = document.getElementById('text-window');
                 const badge = document.getElementById('badge');
-                if (textWindow) textWindow.style.display = 'block';
-                if (badge) badge.style.display = 'block';
+                if (textWindow && (!isPopupHidden('text_window'))) {
+                    textWindow.style.display = isVerySmall ? 'none' : 'block';
+                }
+                if (badge && (!isPopupHidden('badge'))) {
+                    badge.style.display = isVerySmall ? 'none' : 'block';
+                }
+            } else {
+                // Show elements on larger screens only if not hidden by user
+                const textWindow = document.getElementById('text-window');
+                const badge = document.getElementById('badge');
+                if (textWindow && (!isPopupHidden('text_window'))) {
+                    textWindow.style.display = 'block';
+                }
+                if (badge && (!isPopupHidden('badge'))) {
+                    badge.style.display = 'block';
+                }
             }
         }
         

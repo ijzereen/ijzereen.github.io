@@ -24,6 +24,42 @@ social:
 github:
   username: Ijzereen
 
+# UI Labels and Text
+ui:
+  # Navigation and Buttons
+  nav:
+    search: "Search"
+    randomize: "Randomize"
+    restore: "Restore"
+    chaos: "CHAOS"
+    chaos_stop: "STOP"
+    about: "Who is 철원"
+    back: "← BACK"
+    back_to_chaos: "← BACK TO CHAOS"
+  
+  # Categories and Tags
+  categories:
+    title: "CATEGORIES"
+    all: "ALL"
+  
+  tags:
+    title: "TAGS"
+  
+  # Windows and Popups
+  windows:
+    title: "window"
+    greeting: ", how are you?"
+    badge_id: "ID:"
+    badge_issued: "/ ISSUED: TODAY"
+    badge_title: "THE PRESIDENT"
+    badge_portrait: "PORTRAIT"
+  
+  # Search
+  search:
+    title: "SEARCH"
+    placeholder: "제목, 내용, 카테고리, 태그로 검색..."
+    no_results: "검색 결과가 없습니다."
+
 # Basic Jekyll Settings
 baseurl: ""
 paginate: 10

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title | escape }} - {{ site.title | default: "PlayGround" | escape }}</title>
-    <meta name="description" content="{{ page.excerpt | default: site.description | default: 'PlayGround' | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+    <title>About Ijzereen - PlayGround</title>
+    <meta name="description" content="PlayGround">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -186,7 +186,7 @@
     
     <!-- Back button -->
     <div class="fixed top-4 left-4 z-[1000]">
-        <a href="{{ '/' | relative_url }}" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">{{ site.ui.nav.back | default: "← BACK" }}</a>
+        <a href="/" class="inline-block border-4 border-black bg-white px-4 py-2 brutal-shadow hover:bg-gray-100 transition-colors font-mono font-bold uppercase">← BACK</a>
     </div>
     
     <!-- Floating elements for decoration -->
@@ -199,46 +199,64 @@
         <header class="mb-12">
             <div class="border-4 border-black bg-white p-6 brutal-shadow transform -rotate-1 mb-8">
                 <div class="text-sm font-mono uppercase tracking-widest mb-2">
-                    {{ page.date | date: "%Y.%m.%d" }}
-                    {% if page.categories.size > 0 %}
-                    • {{ page.categories | join: " / " }}
-                    {% endif %}
+                    2025.08.11
+                    
+                    • About
+                    
                 </div>
-                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">{{ page.title }}</h1>
-                {% if page.author %}
-                <div class="mt-4 text-lg font-mono">by {{ page.author }}</div>
-                {% endif %}
+                <h1 class="text-4xl md:text-6xl font-black uppercase leading-tight">About Ijzereen</h1>
+                
+                <div class="mt-4 text-lg font-mono">by Ijzereen</div>
+                
             </div>
             
-            {% if page.tags.size > 0 %}
+            
             <div class="flex flex-wrap gap-2 mb-8">
-                {% for tag in page.tags %}
-                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">{{ tag }}</span>
-                {% endfor %}
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">about</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">profile</span>
+                
+                <span class="bg-black text-white px-3 py-1 text-sm font-mono uppercase border-2 border-black">ijzereen</span>
+                
             </div>
-            {% endif %}
+            
         </header>
         
         <!-- Post content -->
         <article class="content-area">
-            {{ content }}
+            <h1 id="about-ijzereen">About Ijzereen</h1>
+
+<p>여기에 자기소개를 Markdown으로 작성하세요.</p>
+
+<h2 id="예시-내용">예시 내용</h2>
+
+<p>이곳은 자유롭게 편집할 수 있는 About 페이지입니다.</p>
+
+<ul>
+  <li>마크다운 문법 지원</li>
+  <li><strong>굵은 글씨</strong>, <em>기울임</em>, <code class="language-plaintext highlighter-rouge">코드</code> 등 사용 가능</li>
+  <li>링크, 이미지, 목록 등 모든 마크다운 기능 사용 가능</li>
+</ul>
+
+<h3 id="contact">Contact</h3>
+
+<ul>
+  <li>Email: ijzereen@gmail.com</li>
+  <li>GitHub: <a href="https://github.com/ijzereen">github.com/ijzereen</a></li>
+</ul>
+
+<hr />
+
+<p><em>이 페이지는 자유롭게 편집할 수 있습니다. Markdown으로 작성하면 됩니다.</em></p>
+
         </article>
         
         <!-- Post navigation -->
         <nav class="mt-16 grid md:grid-cols-2 gap-4">
-            {% if page.previous %}
-            <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
-                <div class="text-sm font-mono uppercase tracking-widest mb-2">Previous Post</div>
-                <a href="{{ page.previous.url | relative_url }}" class="font-bold text-lg hover:underline">{{ page.previous.title }}</a>
-            </div>
-            {% endif %}
             
-            {% if page.next %}
-            <div class="border-4 border-black bg-gray-100 p-4 brutal-shadow">
-                <div class="text-sm font-mono uppercase tracking-widest mb-2">Next Post</div>
-                <a href="{{ page.next.url | relative_url }}" class="font-bold text-lg hover:underline">{{ page.next.title }}</a>
-            </div>
-            {% endif %}
+            
+            
         </nav>
     </main>
     
