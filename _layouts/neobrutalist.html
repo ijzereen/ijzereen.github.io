@@ -6,6 +6,12 @@
     <title>{{ page.title | default: site.title | default: "PlayGround" | escape }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | default: 'PlayGround' | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     
+    <!-- Cache busting -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="build-time" content="{{ site.time | date: '%s' }}">
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     

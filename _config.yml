@@ -127,3 +127,20 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-archives
+
+# Cache Control
+future: false
+safe: true
+incremental: false
+
+# Build timestamp for cache busting
+site_build_time: <%= Time.now.to_i %>
+
+# GitHub Pages specific settings to reduce cache
+github: [metadata]
+kramdown:
+  input: GFM
+  hard_wrap: false
+  
+# Disable caching for development
+livereload: true

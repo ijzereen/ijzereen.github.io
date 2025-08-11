@@ -6,6 +6,12 @@
     <title>Archives</title>
     <meta name="description" content="">
     
+    <!-- Cache busting -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="build-time" content="1754912746">
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -303,9 +309,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '/assets/img/floating/sample1.svg?v=1754912598',
-                '/assets/img/floating/sample2.svg?v=1754912598',
-                '/assets/img/floating/sample3.svg?v=1754912598'
+                '/assets/img/floating/sample1.svg?v=1754912746',
+                '/assets/img/floating/sample2.svg?v=1754912746',
+                '/assets/img/floating/sample3.svg?v=1754912746'
             ],
             
             // 창 크기 범위
@@ -610,7 +616,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('/assets/js/search-data.json?v=1754912598');
+                const response = await fetch('/assets/js/search-data.json?v=1754912746');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
