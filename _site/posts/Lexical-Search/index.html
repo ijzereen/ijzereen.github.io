@@ -10,7 +10,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="build-time" content="1754912746">
+    <meta name="build-time" content="1754915814">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -350,10 +350,6 @@
             background: #f1f1f1;
         }
         
-        /* Like and view stats styling */
-        .brutal-shadow-sm {
-            box-shadow: 2px 2px 0 0 #000;
-        }
         
         /* MathJax Mobile Responsive Styling */
         .MathJax {
@@ -742,35 +738,6 @@
 
         </article>
         
-        <!-- Like and View Stats -->
-        <div class="mt-8 grid md:grid-cols-2 gap-4">
-            <div class="border-4 border-black bg-white p-4 brutal-shadow">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <button id="like-btn" class="bg-pink-200 border-2 border-black px-3 py-1 font-mono font-bold uppercase hover:bg-pink-300 transition-colors brutal-shadow-sm">
-                            ❤️ <span id="like-count">0</span>
-                        </button>
-                    </div>
-                    <div class="text-sm font-mono uppercase tracking-widest">
-                        LIKES
-                    </div>
-                </div>
-            </div>
-            
-            <div class="border-4 border-black bg-white p-4 brutal-shadow">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <div class="bg-blue-200 border-2 border-black px-3 py-1 font-mono font-bold uppercase brutal-shadow-sm">
-                            👁️ <span id="view-count">0</span>
-                        </div>
-                    </div>
-                    <div class="text-sm font-mono uppercase tracking-widest">
-                        TOTAL VIEWS
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- Post navigation -->
         <nav class="mt-16 grid md:grid-cols-2 gap-4">
             
@@ -1026,62 +993,6 @@
             progressBar.style.width = progress + '%';
         });
         
-        // Like and View System
-        function initLikeAndViewSystem() {
-            const postUrl = window.location.pathname;
-            
-            // Get current counts from localStorage
-            const likeKey = `likes_${postUrl}`;
-            const viewKey = `views_${postUrl}`;
-            const userLikeKey = `user_liked_${postUrl}`;
-            
-            let likeCount = parseInt(localStorage.getItem(likeKey) || '0');
-            let viewCount = parseInt(localStorage.getItem(viewKey) || '0');
-            let userLiked = localStorage.getItem(userLikeKey) === 'true';
-            
-            // Increment view count on page load (cumulative, not daily)
-            viewCount++;
-            localStorage.setItem(viewKey, viewCount.toString());
-            
-            // Update UI
-            const likeBtn = document.getElementById('like-btn');
-            const likeCountEl = document.getElementById('like-count');
-            const viewCountEl = document.getElementById('view-count');
-            
-            likeCountEl.textContent = likeCount;
-            viewCountEl.textContent = viewCount;
-            
-            // Set initial like button state
-            if (userLiked) {
-                likeBtn.style.backgroundColor = '#ff0080';
-                likeBtn.style.color = '#fff';
-            }
-            
-            // Like button functionality
-            likeBtn.addEventListener('click', () => {
-                if (userLiked) {
-                    // Unlike
-                    likeCount--;
-                    userLiked = false;
-                    likeBtn.style.backgroundColor = '#ffc0cb';
-                    likeBtn.style.color = '#000';
-                    localStorage.setItem(userLikeKey, 'false');
-                } else {
-                    // Like
-                    likeCount++;
-                    userLiked = true;
-                    likeBtn.style.backgroundColor = '#ff0080';
-                    likeBtn.style.color = '#fff';
-                    localStorage.setItem(userLikeKey, 'true');
-                }
-                
-                localStorage.setItem(likeKey, likeCount.toString());
-                likeCountEl.textContent = likeCount;
-            });
-        }
-        
-        // Initialize on page load
-        initLikeAndViewSystem();
     </script>
 </body>
 </html>
