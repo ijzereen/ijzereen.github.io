@@ -2,16 +2,16 @@
 
 - type: github
   icon: "fab fa-github"
-
-# - type: twitter
-#   icon: "fa-brands fa-x-twitter"
+  url: "https://github.com/ijzereen"
 
 - type: email
   icon: "fas fa-envelope"
+  url: "mailto:ijzereen@gmail.com"
   noblank: true # open link in current tab
 
 - type: rss
   icon: "fas fa-rss"
+  url: "/feed.xml"
   noblank: true
 # Uncomment and complete the url below to enable more contact options
 #

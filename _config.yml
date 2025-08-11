@@ -5,13 +5,14 @@ lang: ko
 timezone: Asia/Seoul
 
 # Site Information
-title: Ijzereen
+title: PlayGround
 tagline: Neo-Brutalist Digital Chaos
-description: >-
-  네오브루탈리즘 스타일의 실험적인 디지털 블로그
+description: PlayGround
 
 # Author Information  
 author: Ijzereen
+
+email: ijzereen@gmail.com
 
 social:
   name: Ijzereen
