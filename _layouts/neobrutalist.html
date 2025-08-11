@@ -355,10 +355,22 @@
             return window;
         }
         
+        // Check if there's enough space for floating windows (mobile check)
+        function hasEnoughSpace() {
+            const screenWidth = window.innerWidth;
+            const minSpace = 768; // Tablet breakpoint
+            return screenWidth >= minSpace;
+        }
+
         // Generate floating windows
         function generateWindows() {
             const container = document.getElementById('floating-windows');
             container.innerHTML = '';
+            
+            // Don't show floating windows on mobile unless CHAOS mode is active
+            if (!hasEnoughSpace() && !chaosMode) {
+                return;
+            }
             
             const shuffledImages = shuffle(imageConfig.sources);
             
@@ -722,9 +734,6 @@
             // Add initial draggable functionality to static elements
             initializeDraggables();
             
-            // Initial mobile optimization
-            optimizeForMobile();
-            
             // Load search data
             loadSearchData();
             
@@ -826,6 +835,8 @@
                 }
             });
             
+            // Regenerate windows based on screen size
+            generateWindows();
             optimizeForMobile();
         });
         
