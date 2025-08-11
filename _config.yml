@@ -33,7 +33,7 @@ ui:
     restore: "Restore"
     chaos: "CHAOS"
     chaos_stop: "STOP"
-    about: "Who is 철원"
+    about: "Who is"
     back: "← BACK"
     back_to_chaos: "← BACK TO CHAOS"
   
