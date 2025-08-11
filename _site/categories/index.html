@@ -120,7 +120,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-white text-black overflow-hidden selection:bg-black selection:text-white">
+<body class="min-h-screen bg-white text-black selection:bg-black selection:text-white">
     
     <!-- Noise Overlay -->
     <div class="noise-overlay pointer-events-none fixed inset-0 mix-blend-overlay opacity-20 z-10"></div>
@@ -131,7 +131,7 @@
     <!-- Header -->
     <header class="sticky top-0 z-[1000] border-b-4 border-black bg-white/90 backdrop-blur px-4 md:px-8 py-3 flex items-center justify-between">
         <div class="uppercase text-xl lg:text-2xl tracking-widest font-black">
-            <a href="/">PlayGround</a>
+            <a href="/">Hi,ijzereen</a>
         </div>
         <nav class="flex items-center gap-1 lg:gap-2">
             <button id="search-btn" class="border-4 border-black px-2 lg:px-3 py-1 brutal-shadow hover:bg-gray-100 transition-colors text-xs lg:text-sm">Search</button>
@@ -391,9 +391,9 @@
             
             // 사용할 이미지 소스들 (assets/img/floating/ 폴더의 이미지들)
             sources: [
-                '/assets/img/floating/sample1.svg?v=1754912052',
-                '/assets/img/floating/sample2.svg?v=1754912052',
-                '/assets/img/floating/sample3.svg?v=1754912052'
+                '/assets/img/floating/sample1.svg?v=1754912437',
+                '/assets/img/floating/sample2.svg?v=1754912437',
+                '/assets/img/floating/sample3.svg?v=1754912437'
             ],
             
             // 창 크기 범위
@@ -698,7 +698,7 @@
         // Load search data
         async function loadSearchData() {
             try {
-                const response = await fetch('/assets/js/search-data.json?v=1754912052');
+                const response = await fetch('/assets/js/search-data.json?v=1754912437');
                 searchData = await response.json();
             } catch (error) {
                 console.error('Failed to load search data:', error);
