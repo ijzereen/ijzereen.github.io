@@ -1,0 +1,91 @@
+---
+---
+/* 포트폴리오 — 마닐라 폴더 도시에르 */
+
+body {
+    background: radial-gradient(ellipse at 50% 0%, #1a1410 0%, #050403 70%);
+    padding: 0 0 80px;
+}
+
+.dossier {
+    position: relative;
+    max-width: 880px;
+    margin: 60px auto 0;
+    padding: 60px 56px;
+    background: var(--bg-paper);
+    color: #2a2114;
+    box-shadow:
+        0 0 0 1px #5a4a2a,
+        0 30px 80px rgba(0,0,0,0.7),
+        inset 0 0 60px rgba(140,110,60,0.15);
+    font-family: var(--font-mono);
+    background-image:
+        repeating-linear-gradient(0deg, rgba(90,70,40,0.06) 0 1px, transparent 1px 28px),
+        radial-gradient(ellipse at 50% 0%, rgba(140,110,60,0.18), transparent 60%);
+    z-index: 3;
+}
+.dossier::before {
+    content: "CLASSIFIED";
+    position: absolute; top: 28px; right: 40px;
+    font-family: var(--font-deco);
+    border: 2px solid #a83020; color: #a83020;
+    padding: 4px 12px; font-size: 11px; letter-spacing: 6px;
+    transform: rotate(6deg);
+    opacity: .85;
+}
+.dossier::after {
+    content: "DOSSIER · " attr(data-id);
+    position: absolute; bottom: 24px; right: 40px;
+    font-family: var(--font-deco);
+    font-size: 10px; letter-spacing: 4px;
+    color: #5a4a2a; opacity: .7;
+}
+
+.dossier h1 {
+    font-family: var(--font-deco);
+    font-size: 32px; letter-spacing: 8px;
+    margin-bottom: 8px;
+    color: #2a2114;
+}
+.dossier .subtitle {
+    font-size: 12px; letter-spacing: 4px;
+    color: #5a4a2a;
+    margin-bottom: 36px;
+    border-bottom: 1px dashed #5a4a2a;
+    padding-bottom: 18px;
+}
+.dossier h2 {
+    font-family: var(--font-deco);
+    font-size: 14px; letter-spacing: 6px;
+    margin: 32px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid #a83020;
+    color: #2a2114;
+}
+.dossier p { line-height: 1.8; font-size: 14px; margin-bottom: 12px; }
+.dossier ul { padding-left: 20px; margin-bottom: 16px; }
+.dossier li { line-height: 1.8; font-size: 13px; margin-bottom: 4px; }
+.dossier strong { color: #6a1818; }
+.dossier a { color: #6a1818; border-bottom: 1px solid #6a1818; }
+.dossier code {
+    background: rgba(90,70,40,0.18);
+    padding: 1px 6px; font-size: 12px;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(90,70,40,0.4);
+    font-size: 13px;
+}
+.field .k { color: #5a4a2a; letter-spacing: 2px; font-size: 11px; }
+.field .v { color: #2a2114; }
+
+@media (max-width: 720px) {
+    .dossier { margin: 30px 16px 0; padding: 40px 24px; }
+    .dossier h1 { font-size: 22px; letter-spacing: 4px; }
+    .dossier::before { top: 14px; right: 16px; padding: 2px 8px; font-size: 9px; }
+    .field { grid-template-columns: 100px 1fr; gap: 8px; }
+}

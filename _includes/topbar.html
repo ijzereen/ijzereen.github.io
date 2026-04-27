@@ -1,0 +1,18 @@
+{%- comment -%}
+공통 톱바.
+사용: {% include topbar.html back="/blog/" back_label="← BACK TO JOURNAL" title="~/foo" meta="42 ENTRIES" %}
+- back: 뒤로 가는 링크 (필수)
+- back_label: 뒤로 가는 라벨
+- title: 가운데 타이틀
+- meta: 우측 메타 (텍스트 또는 링크)
+- meta_href: meta가 링크일 때 href
+{%- endcomment -%}
+<header class="top-bar">
+    <a href="{{ include.back | relative_url }}">{{ include.back_label | default: '← BACK' }}</a>
+    <span class="title">{{ include.title }}</span>
+    {% if include.meta_href -%}
+        <a href="{{ include.meta_href | relative_url }}" class="meta">{{ include.meta }}</a>
+    {%- else -%}
+        <span class="meta">{{ include.meta }}</span>
+    {%- endif %}
+</header>

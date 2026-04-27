@@ -9,47 +9,93 @@
 | `/` | 1인칭 책상 씬 (홈) | `index.html` | `_layouts/biohazard.html` |
 | `/portfolio/` | 서류철 = 포트폴리오 | `portfolio.md` | `_layouts/portfolio.html` |
 | `/blog/` | 맥북 = 기술블로그 인덱스 | `blog.html` | `_layouts/blog-index.html` |
-| `/blog/:title/` | 개별 포스트 | `_posts/*.md` | `_layouts/post.html` |
+| `/blog/:slug/` | 개별 포스트 | `_posts/*.md` | `_layouts/post.html` |
+
+## 📦 코드 구조
+
+```
+ijzereen.github.io/
+├── index.html              # 홈 진입점
+├── portfolio.md            # 서류철 진입점 (마크다운)
+├── blog.html               # 블로그 인덱스 진입점
+│
+├── _layouts/               # 레이아웃 (얇음 — 마크업만)
+│   ├── biohazard.html      # 홈
+│   ├── portfolio.html
+│   ├── blog-index.html
+│   └── post.html
+│
+├── _includes/              # 공통 마크업 조각
+│   ├── head.html           # 공통 head (메타, 폰트, CSS 로드)
+│   ├── topbar.html         # 상단 바
+│   ├── atmosphere.html     # 비네트 + 그레인 오버레이
+│   └── svg/
+│       ├── macbook.svg
+│       └── folder.svg
+│
+├── _posts/                 # 블로그 글
+│
+├── assets/
+│   ├── css/                # 페이지별 CSS
+│   │   ├── base.css        # 공통 토큰/리셋/탑바/오버레이
+│   │   ├── biohazard.css   # 홈
+│   │   ├── portfolio.css   # 서류철
+│   │   ├── blog-index.css  # 터미널 인덱스
+│   │   └── post.css        # 포스트(코드 하이라이트 포함)
+│   ├── js/
+│   │   └── biohazard.js    # 홈 인터랙션
+│   └── img/
+│       ├── posts/          # 포스트 이미지
+│       └── favicons/
+│
+├── _data/                  # (옵션) authors / contact
+├── _config.yml
+└── CLAUDE.md
+```
+
+## 🎨 톤 / 색상 / 폰트
+
+모든 색상/폰트는 `assets/css/base.css` 의 `:root` 변수에서 조정.
+
+```css
+--bg: #050403;          /* 기본 배경 */
+--bg-paper: #ede0b8;    /* 종이 배경 (포트폴리오) */
+--ink: #d8c9a4;         /* 기본 텍스트 */
+--ink-strong: #f1e3bd;  /* 강조 텍스트 */
+--ink-dim: #6b5e44;     /* 흐린 텍스트 */
+--warn: #c14a2b;        /* 빨강 (도장/강조) */
+--term: #7ec27a;        /* 터미널 그린 */
+--rule: #2a221a;        /* 구분선 */
+
+--font-mono: 'JetBrains Mono', monospace;
+--font-deco: 'Special Elite', monospace;   /* 호러 타자기 톤 */
+--font-body: 'Inter', system-ui, sans-serif;
+```
 
 ## 🏠 홈 — 1인칭 책상 씬
 
-`_layouts/biohazard.html` 한 파일에 모두 들어있어.
+`assets/css/biohazard.css` + `assets/js/biohazard.js`. 마크업은 `_layouts/biohazard.html`.
 
-### 오브젝트 변경/추가
-오브젝트는 `<div class="obj ...">` 로 정의돼 있어.
+### 오브젝트 추가/변경
+`_layouts/biohazard.html` 안 `.obj` 블록에 새로 추가:
 ```html
-<div class="obj macbook"
-     data-target="{{ '/blog/' | relative_url }}"
-     data-name="OLD MACBOOK"
-     data-desc="설명 텍스트">
-    <span class="label">OLD MACBOOK</span>
-    <svg>...</svg>
+<div class="obj newthing"
+     data-target="{{ '/somewhere/' | relative_url }}"
+     data-name="OBJECT NAME"
+     data-desc="설명">
+    <span class="label">OBJECT NAME</span>
+    {% include svg/yourfile.svg %}
 </div>
 ```
-- `data-target`: 인스펙트 후 클릭 시 이동할 경로
-- `data-name`: 인스펙트 모드에서 표시될 제목
-- `data-desc`: 인스펙트 모드에서 표시될 설명
+- `data-target`: 인스펙트 후 클릭 시 이동 경로
+- `data-name` / `data-desc`: 인스펙트 모드 표시 텍스트
+- 위치/크기는 `assets/css/biohazard.css` 에서 `.newthing` 클래스로 정의
 
-오브젝트 위치/크기는 `.macbook`, `.folder` CSS 블록에서 조정.
-
-### 손전등 / 분위기 톤
-CSS 변수에서 조정:
-```css
---beam-radius: 280px;   /* 손전등 코어 반경 */
---beam-soft: 460px;     /* 손전등 페이드 반경 */
---ink: #d8c9a4;         /* 기본 텍스트 색 */
---warn: #c14a2b;        /* 강조(빨강) 색 */
-```
-또한 `.flicker` 의 `@keyframes flicker` 에서 형광등 깜빡임 패턴 조정 가능.
-
-### 모바일
-포인터가 coarse(터치)거나 720px 이하에서는 손전등/커서가 사라지고, 오브젝트가 세로로 정렬되고 라벨이 항상 보여.
-
-## 📄 포트폴리오 (`portfolio.md`)
-
-`_layouts/portfolio.html` 의 마닐라 폴더 종이 무드 위에 마크다운으로 그대로 작성하면 돼.
-- `<div class="field">...<span class="k">키</span><span class="v">값</span></div>` — 표 형식 필드
-- 일반 마크다운 (`##`, `-` 리스트 등) 도 다 동작
+### 손전등 / 분위기
+`assets/css/biohazard.css` 의 `:root` :
+- `--beam-radius`: 손전등 코어 반경
+- `--beam-soft`: 페이드 반경
+- `@keyframes flicker`: 형광등 깜빡임 패턴
 
 ## 📝 글 작성
 
@@ -65,36 +111,25 @@ tags: [tag1, tag2]
 
 # 본문
 ```
-- 코드블럭은 VSCode 다크 테마, 인라인 코드는 빨강 톤.
-- MathJax 수식: `$...$` / `$$...$$`.
+- URL: `/blog/:slug/` (slug는 자동 lowercase)
+- 코드블록: VSCode 다크 테마 자동 적용
+- 인라인 코드: 빨강 톤
+- MathJax 수식: `$...$` / `$$...$$`
 
-## 🎨 톤 조정 한 줄 가이드
+## 📄 포트폴리오 (`portfolio.md`)
 
-- **더 어둡게**: `body` 의 `background` 그라디언트를 더 깊게.
-- **빨간 도장 톤 변경**: `--warn` 색만 바꾸면 모든 강조/도장이 일관되게 변해.
-- **종이 색**: 포트폴리오의 `--paper` (`_layouts/portfolio.html`).
-- **터미널 그린**: 블로그 인덱스의 `--term` (`_layouts/blog-index.html`).
+마크다운으로 그대로 작성:
+- 일반 마크다운 (`##`, `-` 리스트 등)
+- 표 형식 필드: `<div class="field"><span class="k">키</span><span class="v">값</span></div>`
 
-## 📁 디렉토리
+## 🛠️ 로컬 빌드
 
-```
-ijzereen.github.io/
-├── index.html              # 홈 (책상 씬)
-├── portfolio.md            # 서류철 진입점
-├── blog.html               # 블로그 인덱스 진입점
-├── _layouts/
-│   ├── biohazard.html      # 1인칭 책상 씬
-│   ├── portfolio.html      # 서류철(포트폴리오) 레이아웃
-│   ├── blog-index.html     # 터미널 무드 인덱스
-│   └── post.html           # 개별 포스트
-├── _posts/                 # 블로그 글
-├── _data/                  # 작성자/연락처 (옵션)
-├── assets/img/             # 이미지
-│   ├── posts/              # 포스트용
-│   └── favicons/
-├── _config.yml
-└── CLAUDE.md
+```bash
+bundle install
+bundle exec jekyll serve --host 0.0.0.0 --port 4000
+# → http://localhost:4000
 ```
 
-## 🧹 빌드 제외
-`기획.md`, `README.md`, `LICENSE` 는 빌드 제외. (`_config.yml` `exclude`)
+## 🚫 빌드 제외 / Git 제외
+- `_config.yml` `exclude`: `기획.md`, `README.md`, `LICENSE`
+- `.gitignore`: `_site/`, `.jekyll-cache/`, `vendor/`, `.DS_Store`

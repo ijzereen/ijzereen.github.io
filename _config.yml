@@ -47,7 +47,7 @@ defaults:
       layout: post
       comments: false
       toc: false
-      permalink: /blog/:title/
+      permalink: /blog/:slug/
 
 # Build Settings
 sass:

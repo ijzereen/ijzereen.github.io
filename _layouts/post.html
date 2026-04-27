@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: 'ko' }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title | escape }} - {{ site.title | escape }}</title>
-    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
-    <link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% include head.html title=page.title css="base,post" %}
 
     <script>
     MathJax = {
@@ -23,237 +13,18 @@
     };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <style>
-        :root {
-            --bg: #0a0908;
-            --bg-2: #15110d;
-            --ink: #d8c9a4;
-            --ink-strong: #f1e3bd;
-            --ink-dim: #6b5e44;
-            --warn: #c14a2b;
-            --term: #7ec27a;
-            --rule: #2a221a;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body {
-            background: var(--bg);
-            color: var(--ink);
-            font-family: 'Inter', system-ui, sans-serif;
-            min-height: 100vh;
-            line-height: 1.7;
-        }
-        a { color: var(--warn); text-decoration: none; border-bottom: 1px dashed currentColor; }
-        a:hover { color: var(--ink-strong); }
-
-        /* 분위기 오버레이 */
-        body::before {
-            content: ""; position: fixed; inset: 0;
-            background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.65) 100%);
-            pointer-events: none; z-index: 1;
-        }
-        body::after {
-            content: ""; position: fixed; inset: -50%;
-            opacity: 0.04; pointer-events: none; z-index: 2;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-        }
-
-        /* Top bar */
-        .top-bar {
-            position: sticky; top: 0; z-index: 10;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 24px;
-            background: rgba(8,6,4,0.88);
-            border-bottom: 1px solid var(--rule);
-            font-family: 'Special Elite', monospace;
-            font-size: 11px; letter-spacing: 4px;
-            backdrop-filter: blur(6px);
-        }
-        .top-bar a { color: var(--ink); border: none; }
-        .top-bar a:hover { color: var(--warn); }
-        .top-bar .title { color: var(--ink-strong); }
-        .top-bar .meta { color: var(--ink-dim); }
-
-        /* Article container */
-        article {
-            position: relative;
-            max-width: 760px;
-            margin: 60px auto 80px;
-            padding: 0 24px;
-            z-index: 3;
-        }
-
-        /* Header */
-        .post-header {
-            border-bottom: 1px solid var(--rule);
-            padding-bottom: 28px;
-            margin-bottom: 40px;
-        }
-        .post-cats {
-            font-family: 'Special Elite', monospace;
-            font-size: 11px; letter-spacing: 4px;
-            color: var(--warn);
-            margin-bottom: 14px;
-        }
-        .post-header h1 {
-            font-family: 'Special Elite', monospace;
-            font-size: 30px;
-            line-height: 1.3;
-            letter-spacing: 2px;
-            color: var(--ink-strong);
-            margin-bottom: 16px;
-        }
-        .post-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--ink-dim);
-            display: flex; gap: 16px; flex-wrap: wrap;
-        }
-        .post-meta .dot { color: var(--warn); }
-
-        /* Body typography */
-        .post-body { font-size: 15.5px; }
-        .post-body h2 {
-            font-family: 'Special Elite', monospace;
-            font-size: 20px; letter-spacing: 3px;
-            color: var(--ink-strong);
-            margin: 48px 0 16px;
-            padding-left: 14px;
-            border-left: 4px solid var(--warn);
-        }
-        .post-body h3 {
-            font-family: 'Special Elite', monospace;
-            font-size: 16px; letter-spacing: 2px;
-            color: var(--ink-strong);
-            margin: 32px 0 12px;
-        }
-        .post-body p, .post-body li { color: #cdbf9c; }
-        .post-body p { margin-bottom: 16px; }
-        .post-body ul, .post-body ol { padding-left: 22px; margin-bottom: 16px; }
-        .post-body li { margin-bottom: 6px; }
-        .post-body strong { color: var(--ink-strong); }
-        .post-body blockquote {
-            border-left: 3px solid var(--warn);
-            padding: 8px 18px;
-            margin: 20px 0;
-            background: rgba(193,74,43,0.05);
-            color: #b8aa84;
-            font-style: italic;
-        }
-        .post-body hr { border: none; border-top: 1px dashed var(--rule); margin: 32px 0; }
-
-        /* Tables */
-        .post-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 18px 0;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-        }
-        .post-body th, .post-body td {
-            border: 1px solid var(--rule);
-            padding: 8px 12px;
-            text-align: left;
-        }
-        .post-body th {
-            background: rgba(193,74,43,0.08);
-            color: var(--ink-strong);
-            font-family: 'Special Elite', monospace;
-            letter-spacing: 2px;
-            font-weight: normal;
-        }
-        .post-body td { color: #cdbf9c; }
-
-        /* Inline code */
-        .post-body :not(pre) > code {
-            background: rgba(193,74,43,0.12);
-            color: var(--ink-strong);
-            padding: 2px 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.88em;
-            border: 1px solid rgba(193,74,43,0.3);
-        }
-
-        /* Code blocks (VSCode dark theme) */
-        .highlight {
-            background: #0d1117;
-            color: #f0f6fc;
-            padding: 14px 16px;
-            margin: 18px 0;
-            overflow-x: auto;
-            border: 1px solid var(--rule);
-            box-shadow: 0 0 0 1px #050605, 0 8px 30px rgba(0,0,0,0.5);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        .highlight pre, .highlight code {
-            background: transparent !important;
-            color: inherit;
-            font-family: inherit;
-            margin: 0; padding: 0; border: none;
-        }
-        .highlight .lineno {
-            color: #4a5a4a;
-            padding-right: 10px;
-            border-right: 1px solid #2a2a2a;
-            margin-right: 10px;
-            user-select: none;
-        }
-
-        /* Token colors (VSCode dark) */
-        .highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #569cd6; }
-        .highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1 { color: #ce9178; }
-        .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo, .highlight .il { color: #b5cea8; }
-        .highlight .c, .highlight .c1, .highlight .cs, .highlight .cm { color: #6a9955; font-style: italic; }
-        .highlight .n, .highlight .na, .highlight .nb, .highlight .nc, .highlight .no, .highlight .nd, .highlight .ne, .highlight .nf, .highlight .nl, .highlight .nn, .highlight .nt, .highlight .nv, .highlight .nx { color: #dcdcaa; }
-        .highlight .o, .highlight .ow, .highlight .p { color: #d4d4d4; }
-        .highlight .bp { color: #569cd6; }
-        .highlight .vc, .highlight .vg, .highlight .vi { color: #9cdcfe; }
-
-        /* Images */
-        .post-body img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 22px auto;
-            border: 1px solid var(--rule);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-        }
-
-        /* Footer */
-        .post-footer {
-            margin-top: 60px;
-            padding-top: 28px;
-            border-top: 1px solid var(--rule);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--ink-dim);
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 12px;
-        }
-        .post-footer .tags span {
-            margin-right: 10px;
-            color: var(--ink);
-        }
-        .post-footer .tags span::before { content: "#"; color: var(--warn); }
-
-        @media (max-width: 720px) {
-            article { margin: 30px auto 60px; padding: 0 16px; }
-            .post-header h1 { font-size: 22px; letter-spacing: 1px; }
-            .post-body { font-size: 14.5px; }
-            .top-bar { padding: 12px 16px; font-size: 10px; letter-spacing: 2px; }
-            .top-bar .meta { display: none; }
-        }
-    </style>
 </head>
 <body>
 
-<header class="top-bar">
-    <a href="{{ '/blog/' | relative_url }}">← BACK TO JOURNAL</a>
-    <span class="title">~/blog/{{ page.slug }}</span>
-    <a href="{{ '/' | relative_url }}" class="meta">ROOM 0</a>
-</header>
+{% assign post_path = "~/blog/" | append: page.slug %}
+{% include topbar.html
+   back="/blog/"
+   back_label="← BACK TO JOURNAL"
+   title=post_path
+   meta="ROOM 0"
+   meta_href="/" %}
+
+{% include atmosphere.html %}
 
 <article>
     <header class="post-header">
@@ -279,7 +50,7 @@
         <div class="tags">
             {% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}
         </div>
-        <a href="{{ '/blog/' | relative_url }}" style="border:none;color:var(--ink-dim);font-family:'Special Elite',monospace;letter-spacing:3px;">← BACK</a>
+        <a href="{{ '/blog/' | relative_url }}">← BACK</a>
     </footer>
 </article>
 
