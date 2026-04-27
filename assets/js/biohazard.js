@@ -3,7 +3,6 @@
 (function () {
     const root = document.documentElement;
     const cursor = document.querySelector('.cursor');
-    const hudHint = document.getElementById('hudHint');
     const inspect = document.getElementById('inspect');
     const stage = document.getElementById('inspectStage');
     const nameEl = document.getElementById('inspectName');
@@ -24,11 +23,9 @@
     objs.forEach(o => {
         o.addEventListener('mouseenter', () => {
             cursor && cursor.classList.add('over-obj');
-            hudHint && hudHint.classList.add('show');
         });
         o.addEventListener('mouseleave', () => {
             cursor && cursor.classList.remove('over-obj');
-            hudHint && hudHint.classList.remove('show');
         });
         o.addEventListener('click', (e) => {
             e.stopPropagation();

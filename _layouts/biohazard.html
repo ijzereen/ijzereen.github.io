@@ -15,41 +15,32 @@
 
     <div class="obj macbook"
          data-target="{{ '/blog/' | relative_url }}"
-         data-name="OLD MACBOOK"
-         data-desc="이 화면 너머에 누군가의 흔적이 남아있다. 기술 노트와 메모, 문제 풀이의 기록.">
-        <span class="label">OLD MACBOOK</span>
+         data-name="MACBOOK">
+        <span class="label">MACBOOK</span>
         {% include svg/macbook.svg %}
     </div>
 
     <div class="obj folder"
          data-target="{{ '/portfolio/' | relative_url }}"
-         data-name="DOSSIER"
-         data-desc="낡은 서류철. 누군가의 이력과 작업물이 정리되어 있다. 손에 들고 펼쳐보자.">
+         data-name="DOSSIER">
         <span class="label">DOSSIER</span>
         {% include svg/folder.svg %}
     </div>
 </div>
 
-<div class="flicker"></div>
 <div class="flashlight"></div>
 <div class="vignette"></div>
 <div class="grain"></div>
 
 <div class="cursor"><span></span></div>
 
-<div class="hud hud-tl">{{ site.title | upcase }} <b>::</b> ROOM 0</div>
-<div class="hud hud-tr">{{ site.author | upcase }}<br><span style="opacity:.5">REC ●</span></div>
-<div class="hud hud-bl">MOVE MOUSE TO ILLUMINATE<br><span style="opacity:.5">CLICK OBJECT TO INSPECT</span></div>
-<div class="hud hud-br"><kbd>CLICK</kbd> INSPECT &nbsp;·&nbsp; <kbd>ESC</kbd> CLOSE</div>
-<div class="hud hud-bc" id="hudHint">▸ CLICK TO INSPECT</div>
-
 <div class="inspect" id="inspect">
-    <div class="inspect-back">[ESC] BACK TO ROOM</div>
+    <div class="inspect-back">ESC</div>
     <div class="inspect-stage" id="inspectStage"></div>
     <div class="inspect-meta">
         <h1 id="inspectName"></h1>
         <p id="inspectDesc"></p>
-        <div class="inspect-cta">▶ CLICK AGAIN TO PROCEED</div>
+        <div class="inspect-cta"></div>
     </div>
 </div>
 

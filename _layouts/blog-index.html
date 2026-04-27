@@ -5,18 +5,16 @@
 </head>
 <body>
 
-{% assign entries_label = site.posts.size | append: " ENTRIES" %}
+{% assign entries_label = site.posts.size | append: " entries" %}
 {% include topbar.html
    back="/"
-   back_label="← BACK TO ROOM"
+   back_label="← Room"
    title="~/blog"
    meta=entries_label %}
 
 <main class="terminal">
-    <h1 class="term-title">JOURNAL</h1>
-    <div class="term-sub">technical notes · scratchpad · investigations</div>
-
-    <div class="term-prompt">ls -lt _posts</div>
+    <h1 class="term-title">Journal</h1>
+    <div class="term-sub">technical notes · scratchpad</div>
 
     <div class="post-list">
     {% if site.posts.size > 0 %}
@@ -42,7 +40,6 @@
     {% endif %}
     </div>
 
-    <div class="term-prompt" style="margin-top:32px">_</div>
 </main>
 
 </body>

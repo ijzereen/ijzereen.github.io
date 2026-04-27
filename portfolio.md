@@ -6,7 +6,7 @@ permalink: /portfolio/
 
 # IJZEREEN
 
-<div class="subtitle">PORTFOLIO · DOSSIER FILE OPENED</div>
+<div class="subtitle">ML · NLP Engineer · Seoul</div>
 
 <div class="field"><span class="k">NAME</span><span class="v">Ijzereen</span></div>
 <div class="field"><span class="k">ROLE</span><span class="v">ML / NLP Engineer</span></div>

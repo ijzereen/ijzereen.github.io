@@ -16,12 +16,11 @@
 </head>
 <body>
 
-{% assign post_path = "~/blog/" | append: page.slug %}
 {% include topbar.html
    back="/blog/"
-   back_label="← BACK TO JOURNAL"
-   title=post_path
-   meta="ROOM 0"
+   back_label="← Journal"
+   title=page.slug
+   meta="Room"
    meta_href="/" %}
 
 {% include atmosphere.html %}
@@ -50,7 +49,7 @@
         <div class="tags">
             {% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}
         </div>
-        <a href="{{ '/blog/' | relative_url }}">← BACK</a>
+        <a href="{{ '/blog/' | relative_url }}">← Back</a>
     </footer>
 </article>
 

@@ -1,12 +1,12 @@
 ---
 ---
-/* 홈 — 1인칭 책상 씬 */
+/* 홈 — 1인칭 책상 씬 (모던 바이오하자드 톤) */
 
 :root {
     --mx: 50vw;
     --my: 50vh;
-    --beam-radius: 280px;
-    --beam-soft: 460px;
+    --beam-radius: 320px;
+    --beam-soft: 540px;
 }
 
 html, body {
@@ -14,14 +14,18 @@ html, body {
     overflow: hidden;
     cursor: none;
     user-select: none;
+    background: #0d0a08;
 }
 
+/* ---------- 룸 ---------- */
 .scene {
     position: fixed; inset: 0;
     perspective: 1100px;
     perspective-origin: 50% 38%;
     overflow: hidden;
-    background: radial-gradient(ellipse at 50% 30%, #1a1410 0%, #0a0806 40%, #020201 100%);
+    /* ambient: 약하게 보이는 정도의 베이스 라이트 */
+    background:
+        radial-gradient(ellipse at 50% 28%, #2c2420 0%, #16110d 55%, #08060a 100%);
 }
 
 /* 뒷벽 */
@@ -30,21 +34,9 @@ html, body {
     left: -10%; right: -10%;
     top: 0; height: 60%;
     background:
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 2px, transparent 2px 6px),
-        linear-gradient(180deg, #1c1612 0%, #0d0a08 100%);
-    box-shadow: inset 0 -80px 120px rgba(0,0,0,0.9);
-}
-.wall::after {
-    content: "";
-    position: absolute;
-    left: 8%; top: 14%;
-    width: 22%; height: 32%;
-    background:
-        linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2)),
-        repeating-linear-gradient(90deg, #2a1f17 0 4px, #1a120c 4px 9px);
-    border: 6px solid #0d0907;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.6), inset 0 0 30px rgba(0,0,0,0.8);
-    transform: rotate(-1.2deg);
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.14) 0 2px, transparent 2px 6px),
+        linear-gradient(180deg, #2c2520 0%, #14100d 100%);
+    box-shadow: inset 0 -80px 120px rgba(0,0,0,0.65);
 }
 
 /* 책상 */
@@ -55,96 +47,119 @@ html, body {
     transform: translateX(-50%) rotateX(64deg);
     transform-origin: 50% 100%;
     background:
-        radial-gradient(ellipse at 50% 0%, rgba(160,110,60,0.18) 0%, transparent 55%),
-        repeating-linear-gradient(92deg, rgba(0,0,0,0.18) 0 3px, transparent 3px 14px),
-        linear-gradient(180deg, #2a1c10 0%, #1a1108 60%, #0a0604 100%);
+        radial-gradient(ellipse at 50% 0%, rgba(190,150,100,0.35) 0%, transparent 60%),
+        repeating-linear-gradient(92deg, rgba(0,0,0,0.22) 0 3px, transparent 3px 14px),
+        linear-gradient(180deg, #3e2c1a 0%, #221610 60%, #0c0807 100%);
     box-shadow:
-        inset 0 60px 100px rgba(0,0,0,0.85),
-        inset 0 -40px 120px rgba(0,0,0,0.95);
+        inset 0 60px 100px rgba(0,0,0,0.65),
+        inset 0 -40px 120px rgba(0,0,0,0.92);
 }
 .desk::before {
     content: "";
     position: absolute;
     left: 0; right: 0; top: -2px;
     height: 6px;
-    background: linear-gradient(180deg, #3b291a, #1a1108);
+    background: linear-gradient(180deg, #4c3522, #1a1108);
     box-shadow: 0 4px 10px rgba(0,0,0,0.7);
 }
 
 .desk-stain {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,0,0,0.55), transparent 70%);
+    background: radial-gradient(circle, rgba(0,0,0,0.5), transparent 70%);
     pointer-events: none;
 }
 .stain-1 { left: 12%; bottom: 18%; width: 180px; height: 60px; transform: rotate(-8deg); }
 .stain-2 { right: 10%; bottom: 12%; width: 220px; height: 70px; transform: rotate(6deg); }
 .stain-3 { left: 46%; bottom: 6%; width: 320px; height: 80px; transform: rotate(-3deg); opacity: .7; }
 
-/* ---------- 인터랙티브 오브젝트 ---------- */
+/* ---------- 오브젝트 (3D 입체감) ---------- */
 .obj {
     position: absolute;
     cursor: none;
     transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s;
-    filter: brightness(0.55) contrast(1.05);
+    /* baseline: 약하지만 형태가 보임 */
+    filter: brightness(0.82) contrast(1.05) saturate(0.95);
     transform-origin: 50% 100%;
+    will-change: transform, filter;
 }
 .obj:hover {
-    filter: brightness(0.95) contrast(1.1) drop-shadow(0 0 14px rgba(255,210,150,0.25));
+    filter: brightness(1.12) contrast(1.08) saturate(1.05) drop-shadow(0 0 26px rgba(255,210,150,0.5));
     transform: translateY(-2px);
 }
-.obj .label {
-    position: absolute;
-    left: 50%; top: -28px;
-    transform: translateX(-50%);
-    font-family: var(--font-deco);
-    font-size: 11px; letter-spacing: 4px;
-    color: var(--ink);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity .25s;
-    text-shadow: 0 0 10px rgba(0,0,0,0.9);
-}
-.obj:hover .label { opacity: 1; }
-.obj .label::before { content: "▸ "; color: var(--warn); }
 
-.macbook { left: 22%; bottom: 12%; width: 360px; }
-.folder  { right: 18%; bottom: 16%; width: 300px; transform: rotate(8deg); }
-.folder:hover { transform: rotate(8deg) translateY(-2px); }
+.macbook {
+    left: 22%; bottom: 12%; width: 420px;
+    transform: perspective(900px) rotateX(8deg) rotateY(-3deg);
+}
+.macbook:hover { transform: perspective(900px) rotateX(8deg) rotateY(-3deg) translateY(-2px); }
+
+.folder {
+    right: 18%; bottom: 14%; width: 340px;
+    transform: perspective(900px) rotateX(8deg) rotateZ(8deg);
+}
+.folder:hover { transform: perspective(900px) rotateX(8deg) rotateZ(8deg) translateY(-2px); }
 
 .obj svg { display: block; width: 100%; height: auto; }
 
+/* 라벨 — 호버 시만 미니멀하게 */
+.obj .label {
+    position: absolute;
+    left: 50%; top: -18px;
+    transform: translateX(-50%) translateY(0);
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--ink-strong);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity .25s, transform .25s;
+    text-shadow: 0 0 12px rgba(0,0,0,0.95);
+    pointer-events: none;
+}
+.obj:hover .label {
+    opacity: 0.85;
+    transform: translateX(-50%) translateY(-4px);
+}
+
 /* ---------- 손전등 ---------- */
+/* 어둠 레이어 — 가장자리만 살짝 어둡게 */
 .flashlight {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 30;
     background: radial-gradient(circle var(--beam-soft) at var(--mx) var(--my),
-        transparent 0%,
-        rgba(0,0,0,0.55) 55%,
-        rgba(0,0,0,0.92) 100%);
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.18) 55%,
+        rgba(0,0,0,0.48) 100%);
     mix-blend-mode: multiply;
-    transition: opacity .4s;
 }
+/* 핫스팟 — 손전등 비추는 부분이 진짜 밝아짐 */
 .flashlight::after {
     content: "";
     position: absolute; inset: 0;
-    background: radial-gradient(circle var(--beam-radius) at var(--mx) var(--my),
-        rgba(255,220,160,0.18) 0%,
-        rgba(255,200,140,0.08) 35%,
-        transparent 70%);
+    background:
+        radial-gradient(circle calc(var(--beam-radius) * 0.32) at var(--mx) var(--my),
+            rgba(255,240,210,0.65) 0%,
+            rgba(255,225,180,0.32) 40%,
+            transparent 75%),
+        radial-gradient(circle var(--beam-radius) at var(--mx) var(--my),
+            rgba(255,210,160,0.20) 0%,
+            rgba(255,200,140,0.08) 55%,
+            transparent 80%);
     mix-blend-mode: screen;
 }
 
-/* ---------- 비네트 + 그레인 (홈은 fixed 위치 다름) ---------- */
+/* ---------- 분위기 ---------- */
 .vignette {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 31;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.95) 100%);
+    background: radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.82) 100%);
 }
 .grain {
     position: fixed; inset: -50%;
     pointer-events: none; z-index: 32;
-    opacity: 0.07;
+    opacity: 0.045;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     animation: grain 1.2s steps(2) infinite;
 }
@@ -154,84 +169,50 @@ html, body {
     100% { transform: translate(15px, -10px); }
 }
 
-.flicker {
-    position: fixed; inset: 0;
-    pointer-events: none; z-index: 29;
-    background: radial-gradient(ellipse at 50% 0%, rgba(220,200,160,0.1), transparent 60%);
-    animation: flicker 6s infinite;
-}
-@keyframes flicker {
-    0%, 92%, 100% { opacity: 1; }
-    93% { opacity: 0.2; }
-    94% { opacity: 0.9; }
-    95% { opacity: 0.4; }
-    96% { opacity: 1; }
-}
-
-/* ---------- 커스텀 커서 ---------- */
+/* ---------- 미니멀 커서 (RE 모던: 도트 → 호버 시 reticle) ---------- */
 .cursor {
     position: fixed;
     left: var(--mx); top: var(--my);
     transform: translate(-50%, -50%);
-    width: 28px; height: 28px;
+    width: 8px; height: 8px;
     pointer-events: none; z-index: 60;
+    transition: width .2s, height .2s;
 }
-.cursor::before, .cursor::after {
-    content: "";
-    position: absolute;
-    background: var(--ink);
-    box-shadow: 0 0 6px rgba(255,200,140,0.6);
-}
-.cursor::before { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
-.cursor::after  { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
 .cursor span {
     position: absolute; inset: 0;
-    border: 1px solid var(--ink);
     border-radius: 50%;
-    opacity: .5;
-    box-shadow: 0 0 8px rgba(255,200,140,0.4);
+    background: rgba(255,235,200,0.9);
+    box-shadow: 0 0 8px rgba(255,200,140,0.6);
+    transition: background .2s, border .2s;
 }
+.cursor.over-obj { width: 32px; height: 32px; }
 .cursor.over-obj span {
-    border-color: var(--warn);
-    box-shadow: 0 0 10px rgba(193,74,43,0.8);
-    opacity: 1;
+    background: transparent;
+    border: 1px solid rgba(255,235,200,0.9);
+    box-shadow: 0 0 14px rgba(193,74,43,0.5), inset 0 0 6px rgba(193,74,43,0.2);
 }
-
-/* ---------- HUD ---------- */
-.hud {
-    position: fixed; z-index: 40;
-    font-family: var(--font-deco);
-    color: var(--ink);
-    text-shadow: 0 0 10px rgba(0,0,0,0.9);
-    pointer-events: none;
+.cursor.over-obj::before,
+.cursor.over-obj::after {
+    content: "";
+    position: absolute;
+    background: rgba(255,235,200,0.9);
 }
-.hud-tl { top: 22px; left: 28px; font-size: 12px; letter-spacing: 4px; }
-.hud-tl b { color: var(--warn); font-weight: normal; }
-.hud-tr { top: 22px; right: 28px; font-size: 11px; letter-spacing: 3px; opacity: .7; text-align: right; }
-.hud-bl { bottom: 22px; left: 28px; font-size: 11px; letter-spacing: 3px; opacity: .65; }
-.hud-br { bottom: 22px; right: 28px; font-size: 11px; letter-spacing: 3px; opacity: .65; text-align: right; }
-.hud-br kbd {
-    display: inline-block;
-    border: 1px solid var(--ink-dim);
-    padding: 1px 6px; margin: 0 2px;
-    font-size: 10px;
-}
-.hud-bc {
-    bottom: 28px; left: 50%;
+.cursor.over-obj::before {
+    left: 50%; top: -4px; bottom: -4px; width: 1px;
     transform: translateX(-50%);
-    font-size: 12px; letter-spacing: 6px;
-    opacity: 0;
-    transition: opacity .3s;
 }
-.hud-bc.show { opacity: .9; }
+.cursor.over-obj::after {
+    top: 50%; left: -4px; right: -4px; height: 1px;
+    transform: translateY(-50%);
+}
 
 /* ---------- 인스펙트 모드 ---------- */
 .inspect {
     position: fixed; inset: 0;
     z-index: 50;
     display: none;
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.98) 70%);
-    backdrop-filter: blur(2px);
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.98) 70%);
+    backdrop-filter: blur(8px);
 }
 .inspect.active { display: block; animation: fadeIn .35s ease-out; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -241,63 +222,75 @@ html, body {
     transform: translate(-50%, -50%);
     transform-style: preserve-3d;
     animation: bob 6s ease-in-out infinite;
+    filter: drop-shadow(0 30px 50px rgba(0,0,0,0.95));
 }
 @keyframes bob {
-    0%, 100% { transform: translate(-50%, -50%) rotateY(-12deg) rotateX(2deg); }
-    50%      { transform: translate(-50%, -50%) rotateY(12deg) rotateX(-2deg); }
+    0%, 100% { transform: translate(-50%, -50%) rotateY(-10deg) rotateX(2deg); }
+    50%      { transform: translate(-50%, -50%) rotateY(10deg)  rotateX(-2deg); }
 }
 .inspect-stage .obj-clone {
-    transform: scale(1.6);
-    filter: brightness(1.05) drop-shadow(0 30px 50px rgba(0,0,0,0.9));
+    transform: scale(1.7);
+    filter: brightness(1.15);
 }
 
+/* 모던: 이름만 미니멀하게, "click again" 텍스트 대신 reticle */
 .inspect-meta {
     position: absolute;
-    left: 50%; bottom: 14%;
+    left: 50%; bottom: 16%;
     transform: translateX(-50%);
     text-align: center;
-    font-family: var(--font-deco);
-    color: var(--ink);
+    font-family: var(--font-display);
 }
 .inspect-meta h1 {
-    font-size: 22px; letter-spacing: 8px;
-    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
     color: var(--ink-strong);
+    margin-bottom: 22px;
+    opacity: .85;
 }
-.inspect-meta p {
-    font-size: 12px; letter-spacing: 3px;
-    opacity: .7;
-    max-width: 480px; line-height: 1.7;
-}
+.inspect-meta p { display: none; }
 .inspect-cta {
-    margin-top: 24px;
-    display: inline-block;
-    padding: 10px 22px;
-    border: 1px solid var(--warn);
-    color: var(--ink-strong);
-    font-size: 12px; letter-spacing: 6px;
-    background: rgba(193,74,43,0.08);
-    animation: pulse 1.6s ease-in-out infinite;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(193,74,43,0.7);
+    border-radius: 50%;
+    color: var(--warn);
+    font-size: 10px;
+    animation: pulse 1.8s ease-in-out infinite;
 }
+.inspect-cta::before { content: "▶"; }
 @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 rgba(193,74,43,0); }
-    50%      { box-shadow: 0 0 24px rgba(193,74,43,0.5); }
-}
-.inspect-back {
-    position: absolute;
-    top: 24px; left: 28px;
-    font-family: var(--font-deco);
-    font-size: 11px; letter-spacing: 4px;
-    color: var(--ink-dim);
+    0%, 100% { box-shadow: 0 0 0 0 rgba(193,74,43,0.55); }
+    50%      { box-shadow: 0 0 0 16px rgba(193,74,43,0); }
 }
 
-/* ---------- 모바일 폴백 ---------- */
+.inspect-back {
+    position: absolute;
+    top: 26px; left: 28px;
+    font-family: var(--font-display);
+    font-size: 9px; letter-spacing: 6px;
+    color: var(--ink-dim);
+    opacity: .55;
+    pointer-events: none;
+}
+
+/* ---------- 모바일 ---------- */
 @media (max-width: 720px), (pointer: coarse) {
     html, body { cursor: auto; }
     .cursor { display: none; }
     .flashlight { display: none; }
-    .macbook { left: 50%; transform: translateX(-50%); width: 70vw; bottom: 32%; }
-    .folder { right: auto; left: 50%; transform: translateX(-50%) rotate(4deg); width: 60vw; bottom: 12%; }
-    .obj .label { opacity: 1; }
-    .hud-br { display: none; }
+    .macbook {
+        left: 50%; bottom: 32%; width: 70vw;
+        transform: translateX(-50%) perspective(900px) rotateX(8deg);
+    }
+    .folder {
+        right: auto; left: 50%; bottom: 12%; width: 60vw;
+        transform: translateX(-50%) perspective(900px) rotateX(8deg) rotateZ(4deg);
+    }
+    .obj { filter: brightness(1) contrast(1.05); }
+    .obj .label { opacity: .8; }
 }

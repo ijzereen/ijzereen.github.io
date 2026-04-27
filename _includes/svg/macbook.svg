@@ -1,27 +1,165 @@
-<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="180" cy="210" rx="170" ry="10" fill="rgba(0,0,0,0.7)"/>
-    <g>
-        <polygon points="60,30 300,30 320,170 40,170" fill="#1a1814" stroke="#0a0807" stroke-width="2"/>
-        <polygon points="74,42 286,42 302,160 58,160" fill="#0b0a08" />
-        <rect x="80" y="50" width="200" height="2" fill="#3a4a3a" opacity=".7"/>
-        <rect x="80" y="58" width="160" height="2" fill="#3a4a3a" opacity=".5"/>
-        <rect x="80" y="66" width="180" height="2" fill="#3a4a3a" opacity=".6"/>
-        <rect x="80" y="74" width="120" height="2" fill="#3a4a3a" opacity=".4"/>
-        <rect x="80" y="86" width="60"  height="2" fill="#7a8a6a" opacity=".5"/>
-        <rect x="80" y="94" width="140" height="2" fill="#3a4a3a" opacity=".6"/>
-        <rect x="80" y="102" width="180" height="2" fill="#3a4a3a" opacity=".5"/>
-        <rect x="80" y="118" width="40" height="6" fill="#c14a2b" opacity=".7">
-            <animate attributeName="opacity" values=".2;.9;.2" dur="2s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="128" y="120" width="100" height="2" fill="#3a4a3a" opacity=".5"/>
-        <rect x="58" y="42" width="244" height="118" fill="url(#scanlines)" opacity=".3"/>
-    </g>
-    <polygon points="40,170 320,170 340,200 20,200" fill="#1f1c18" stroke="#0a0907" stroke-width="2"/>
-    <polygon points="40,170 320,170 320,176 40,176" fill="#0a0807"/>
-    <rect x="140" y="184" width="80" height="2" fill="#0a0807"/>
+<svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg">
     <defs>
-        <pattern id="scanlines" width="2" height="3" patternUnits="userSpaceOnUse">
-            <rect width="2" height="1" fill="#000" opacity=".7"/>
+        <!-- 화면 베젤 그라디언트 -->
+        <linearGradient id="mb-bezel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1c1c1e"/>
+            <stop offset="0.5" stop-color="#0a0a0b"/>
+            <stop offset="1" stop-color="#1c1c1e"/>
+        </linearGradient>
+        <!-- 화면 뒷면(리드 외부) 알루미늄 -->
+        <linearGradient id="mb-lid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3a3a3c"/>
+            <stop offset="0.5" stop-color="#2a2a2c"/>
+            <stop offset="1" stop-color="#1c1c1e"/>
+        </linearGradient>
+        <!-- 화면 글로우 -->
+        <radialGradient id="mb-screen" cx="0.5" cy="0.45" r="0.7">
+            <stop offset="0" stop-color="#152018" stop-opacity="1"/>
+            <stop offset="0.6" stop-color="#080a0a" stop-opacity="1"/>
+            <stop offset="1" stop-color="#02030a" stop-opacity="1"/>
+        </radialGradient>
+        <!-- 화면 반사광 (위쪽) -->
+        <linearGradient id="mb-reflect" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="rgba(255,255,255,0.08)"/>
+            <stop offset="0.4" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+        <!-- 키보드 베이스 (탑 알루미늄) -->
+        <linearGradient id="mb-base-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#42424a"/>
+            <stop offset="0.5" stop-color="#2c2c30"/>
+            <stop offset="1" stop-color="#18181a"/>
+        </linearGradient>
+        <!-- 키보드 베이스 (옆면, 두께) -->
+        <linearGradient id="mb-base-edge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#26262a"/>
+            <stop offset="1" stop-color="#0a0a0c"/>
+        </linearGradient>
+        <!-- 화면 콘텐츠 (코드 라인 시뮬레이션) -->
+        <pattern id="mb-scanlines" width="2" height="3" patternUnits="userSpaceOnUse">
+            <rect width="2" height="1" fill="#000" opacity="0.45"/>
         </pattern>
+        <!-- 부드러운 노이즈 -->
+        <filter id="mb-noise" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="2"/>
+            <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+            <feComposite in2="SourceGraphic" operator="in"/>
+        </filter>
+        <!-- soft drop shadow -->
+        <filter id="mb-shadow" x="-20%" y="-10%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+            <feOffset dx="0" dy="8" result="offsetblur"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.55"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
     </defs>
+
+    <!-- 책상에 닿는 그림자 -->
+    <ellipse cx="240" cy="304" rx="220" ry="10" fill="rgba(0,0,0,0.85)"/>
+    <ellipse cx="240" cy="306" rx="180" ry="6" fill="rgba(0,0,0,0.95)"/>
+
+    <!-- 화면 뒷면 (리드, 살짝 보임) — 우측 가장자리 -->
+    <path d="M84 38 L396 38 L412 234 L68 234 Z" fill="url(#mb-lid)" opacity="0.85"/>
+
+    <!-- 베젤 (화면 프레임) -->
+    <path d="M88 42 L392 42 L406 232 L74 232 Z" fill="url(#mb-bezel)"/>
+
+    <!-- 베젤 위 미세 하이라이트 -->
+    <path d="M88 42 L392 42 L394 46 L86 46 Z" fill="rgba(255,255,255,0.07)"/>
+    <!-- 좌우 베젤 하이라이트 -->
+    <path d="M88 42 L74 232 L78 232 L92 46 Z" fill="rgba(255,255,255,0.04)"/>
+
+    <!-- 화면 -->
+    <path d="M104 56 L376 56 L388 222 L92 222 Z" fill="url(#mb-screen)"/>
+
+    <!-- 화면 콘텐츠: 코드 에디터 시뮬레이션 -->
+    <g clip-path="inset(56px 92px 222px 104px)">
+        <!-- 사이드바 -->
+        <path d="M104 56 L130 56 L132 222 L92 222 Z" fill="rgba(15,20,18,0.7)"/>
+        <!-- 사이드바 파일 리스트 dot -->
+        <circle cx="116" cy="78" r="1.5" fill="#3a4a3a" opacity="0.7"/>
+        <circle cx="116" cy="92" r="1.5" fill="#3a4a3a" opacity="0.5"/>
+        <circle cx="116" cy="106" r="1.5" fill="#7ec27a" opacity="0.8"/>
+        <circle cx="116" cy="120" r="1.5" fill="#3a4a3a" opacity="0.5"/>
+
+        <!-- 코드 라인 -->
+        <g opacity="0.85">
+            <rect x="148" y="74" width="6" height="2" fill="#569cd6"/>
+            <rect x="158" y="74" width="50" height="2" fill="#dcdcaa"/>
+            <rect x="212" y="74" width="20" height="2" fill="#ce9178"/>
+
+            <rect x="156" y="84" width="80" height="2" fill="#dcdcaa" opacity="0.7"/>
+            <rect x="240" y="84" width="40" height="2" fill="#ce9178" opacity="0.7"/>
+
+            <rect x="164" y="94" width="30" height="2" fill="#569cd6"/>
+            <rect x="198" y="94" width="60" height="2" fill="#9cdcfe" opacity="0.8"/>
+
+            <rect x="156" y="104" width="14" height="2" fill="#c14a2b">
+                <animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="174" y="104" width="100" height="2" fill="#cdbf9c" opacity="0.5"/>
+
+            <rect x="148" y="118" width="6" height="2" fill="#569cd6"/>
+            <rect x="158" y="118" width="40" height="2" fill="#dcdcaa"/>
+
+            <rect x="156" y="128" width="80" height="2" fill="#cdbf9c" opacity="0.5"/>
+            <rect x="156" y="138" width="120" height="2" fill="#cdbf9c" opacity="0.5"/>
+            <rect x="156" y="148" width="60" height="2" fill="#b5cea8" opacity="0.7"/>
+            <rect x="220" y="148" width="40" height="2" fill="#cdbf9c" opacity="0.5"/>
+            <rect x="156" y="158" width="90" height="2" fill="#cdbf9c" opacity="0.5"/>
+            <rect x="156" y="168" width="30" height="2" fill="#6a9955" opacity="0.7"/>
+            <rect x="190" y="168" width="100" height="2" fill="#6a9955" opacity="0.5"/>
+
+            <rect x="156" y="186" width="50" height="2" fill="#dcdcaa" opacity="0.6"/>
+            <rect x="210" y="186" width="60" height="2" fill="#ce9178" opacity="0.6"/>
+
+            <!-- 커서 -->
+            <rect x="280" y="148" width="1" height="6" fill="#fff">
+                <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+            </rect>
+        </g>
+
+        <!-- 상태 바 -->
+        <path d="M132 212 L388 212 L388 222 L132 222 Z" fill="rgba(20,30,25,0.85)"/>
+        <rect x="140" y="216" width="40" height="1.5" fill="#7ec27a" opacity="0.8"/>
+        <rect x="200" y="216" width="30" height="1.5" fill="#dcdcaa" opacity="0.6"/>
+    </g>
+
+    <!-- 화면 스캔라인 (CRT 잔향) -->
+    <path d="M104 56 L376 56 L388 222 L92 222 Z" fill="url(#mb-scanlines)" opacity="0.4"/>
+
+    <!-- 화면 반사광 (글래스 위쪽) -->
+    <path d="M104 56 L376 56 L382 124 L98 124 Z" fill="url(#mb-reflect)"/>
+
+    <!-- 화면 노이즈 -->
+    <path d="M104 56 L376 56 L388 222 L92 222 Z" fill="white" opacity="0.025" filter="url(#mb-noise)"/>
+
+    <!-- 카메라 노치 -->
+    <ellipse cx="240" cy="48" rx="3" ry="1.5" fill="#0a0a0c"/>
+    <circle cx="240" cy="48" r="0.8" fill="#1a1a1c"/>
+
+    <!-- 본체 (키보드 베이스) — 두께 표현 -->
+    <!-- 옆면 (얇은 띠) -->
+    <path d="M68 234 L412 234 L426 248 L54 248 Z" fill="url(#mb-base-edge)"/>
+    <!-- 윗면 -->
+    <path d="M54 248 L426 248 L460 286 L20 286 Z" fill="url(#mb-base-top)"/>
+    <!-- 윗면 하이라이트 (위에서 빛 받음) -->
+    <path d="M54 248 L426 248 L424 254 L56 254 Z" fill="rgba(255,255,255,0.15)"/>
+    <!-- 윗면 좌우 가장자리 어둠 -->
+    <path d="M20 286 L54 248 L60 248 L34 286 Z" fill="rgba(0,0,0,0.4)"/>
+    <path d="M460 286 L426 248 L420 248 L446 286 Z" fill="rgba(0,0,0,0.4)"/>
+
+    <!-- 트랙패드 -->
+    <rect x="170" y="262" width="140" height="20" rx="2" fill="#1a1a1c" opacity="0.85"/>
+    <rect x="170" y="262" width="140" height="2" fill="rgba(0,0,0,0.5)"/>
+    <rect x="170" y="280" width="140" height="2" fill="rgba(255,255,255,0.04)"/>
+
+    <!-- 키보드 영역 — 얇은 라인으로 키 패턴 암시 -->
+    <g opacity="0.6">
+        <rect x="60" y="256" width="360" height="0.5" fill="rgba(0,0,0,0.4)"/>
+        <rect x="62" y="259" width="0.5" height="3" fill="rgba(0,0,0,0.4)"/>
+        <rect x="418" y="259" width="0.5" height="3" fill="rgba(0,0,0,0.4)"/>
+    </g>
+
+    <!-- 화면 → 본체 경첩 그림자 -->
+    <path d="M68 234 L412 234 L412 236 L68 236 Z" fill="rgba(0,0,0,0.85)"/>
 </svg>
