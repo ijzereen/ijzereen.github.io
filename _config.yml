@@ -5,13 +5,12 @@ lang: ko
 timezone: Asia/Seoul
 
 # Site Information
-title: Hi,ijzereen
-tagline: Neo-Brutalist Digital Chaos
-description: PlayGround
+title: IJZEREEN
+tagline: Resident of Room 0
+description: 1인칭 책상 위의 포트폴리오 겸 기술 저널.
 
-# Author Information  
+# Author Information
 author: Ijzereen
-
 email: ijzereen@gmail.com
 
 social:
@@ -20,45 +19,8 @@ social:
   links:
     - https://github.com/ijzereen
 
-# GitHub Settings
 github:
   username: Ijzereen
-
-# UI Labels and Text
-ui:
-  # Navigation and Buttons
-  nav:
-    search: "Search"
-    randomize: "Randomize"
-    restore: "Restore"
-    chaos: "CHAOS"
-    chaos_stop: "STOP"
-    about: "Who is"
-    back: "← BACK"
-    back_to_chaos: "← BACK TO CHAOS"
-  
-  # Categories and Tags
-  categories:
-    title: "CATEGORIES"
-    all: "ALL"
-  
-  tags:
-    title: "TAGS"
-  
-  # Windows and Popups
-  windows:
-    title: "window"
-    greeting: ", how are you?"
-    badge_id: "ID:"
-    badge_issued: "/ ISSUED: TODAY"
-    badge_title: "THE PRESIDENT"
-    badge_portrait: "PORTRAIT"
-  
-  # Search
-  search:
-    title: "SEARCH"
-    placeholder: "제목, 내용, 카테고리, 태그로 검색..."
-    no_results: "검색 결과가 없습니다."
 
 # Basic Jekyll Settings
 baseurl: ""
@@ -66,6 +28,8 @@ paginate: 10
 
 # Markdown Settings
 kramdown:
+  input: GFM
+  hard_wrap: false
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: highlight
@@ -73,12 +37,6 @@ kramdown:
       line_numbers: false
     block:
       line_numbers: true
-
-# Collections
-collections:
-  tabs:
-    output: true
-    sort_by: order
 
 # Default Settings
 defaults:
@@ -89,26 +47,11 @@ defaults:
       layout: post
       comments: false
       toc: false
-      permalink: /posts/:title/
-  - scope:
-      path: ""
-      type: tabs
-    values:
-      layout: page
-      permalink: /:title/
+      permalink: /blog/:title/
 
 # Build Settings
 sass:
   style: compressed
-
-compress_html:
-  clippings: all
-  comments: all
-  endings: all
-  profile: false
-  blanklines: false
-  ignore:
-    envs: [development]
 
 # Exclude from build
 exclude:
@@ -118,6 +61,7 @@ exclude:
   - tools
   - README.md
   - LICENSE
+  - "기획.md"
   - "*.config.js"
   - "package*.json"
 
@@ -126,21 +70,9 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
-  - jekyll-archives
 
 # Cache Control
 future: false
 safe: true
 incremental: false
-
-# Build timestamp for cache busting
-site_build_time: <%= Time.now.to_i %>
-
-# GitHub Pages specific settings to reduce cache
-github: [metadata]
-kramdown:
-  input: GFM
-  hard_wrap: false
-  
-# Disable caching for development
 livereload: true

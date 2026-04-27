@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'ko' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | escape }} - {{ site.title | escape }}</title>
+    <meta name="description" content="{{ site.description | escape }}">
+    <link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --ink: #d8c9a4; --ink-dim: #6b5e44; --warn: #c14a2b; --term: #7ec27a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background: #050403;
+            color: var(--ink);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background:
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px),
+                radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+            pointer-events: none; z-index: 2;
+        }
+        body::after {
+            content: ""; position: fixed; inset: -50%;
+            opacity: 0.06; pointer-events: none; z-index: 3;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        }
+
+        .top-bar {
+            position: sticky; top: 0; z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px;
+            background: rgba(8,6,4,0.85);
+            border-bottom: 1px solid #1f1812;
+            font-family: 'Special Elite', monospace;
+            font-size: 11px; letter-spacing: 4px;
+            backdrop-filter: blur(6px);
+        }
+        .top-bar .back { color: var(--ink); }
+        .top-bar .back:hover { color: var(--warn); }
+        .top-bar .title { color: #f1e3bd; }
+        .top-bar .meta { color: var(--ink-dim); }
+
+        /* 터미널 무드 */
+        .terminal {
+            position: relative;
+            max-width: 880px;
+            margin: 50px auto 80px;
+            padding: 32px 36px;
+            background: #0a0c0a;
+            color: var(--term);
+            border: 1px solid #1a2a1a;
+            box-shadow:
+                0 0 0 1px #050605,
+                0 30px 80px rgba(0,0,0,0.8),
+                inset 0 0 80px rgba(0,30,0,0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            z-index: 4;
+        }
+        .terminal::before {
+            content: "● ● ●";
+            position: absolute; top: 10px; left: 14px;
+            color: #2a3a2a;
+            font-size: 12px; letter-spacing: 4px;
+        }
+        .terminal::after {
+            content: "ssh://ijzereen@blog";
+            position: absolute; top: 10px; right: 16px;
+            color: #2a3a2a;
+            font-size: 11px; letter-spacing: 2px;
+        }
+
+        .term-prompt { color: var(--term); margin-top: 24px; opacity: .8; }
+        .term-prompt::before { content: "$ "; color: #c14a2b; }
+
+        h1.term-title {
+            font-family: 'Special Elite', monospace;
+            font-size: 22px; letter-spacing: 6px;
+            color: #b4e8b0;
+            margin: 24px 0 6px;
+        }
+        .term-sub {
+            font-size: 11px; letter-spacing: 3px;
+            color: #4a6a4a;
+            margin-bottom: 24px;
+        }
+
+        .post-list { margin-top: 12px; }
+        .post-row {
+            display: block;
+            padding: 14px 14px;
+            margin: 8px -14px;
+            border-left: 2px solid transparent;
+            transition: background .2s, border-color .2s;
+            cursor: pointer;
+        }
+        .post-row:hover {
+            background: rgba(126,194,122,0.06);
+            border-left-color: var(--warn);
+        }
+        .post-row .row-meta {
+            display: flex; align-items: center; gap: 14px;
+            font-size: 11px; letter-spacing: 2px;
+            color: #4a6a4a;
+            margin-bottom: 4px;
+        }
+        .post-row .row-meta .dot { color: var(--warn); }
+        .post-row .row-title {
+            font-family: 'Special Elite', monospace;
+            font-size: 16px; letter-spacing: 2px;
+            color: #d8e8c8;
+            margin-bottom: 6px;
+        }
+        .post-row:hover .row-title { color: #fff; }
+        .post-row .row-tags { font-size: 11px; color: #4a6a4a; }
+        .post-row .row-tags span { margin-right: 8px; }
+        .post-row .row-tags span::before { content: "#"; }
+
+        .empty {
+            color: #4a6a4a;
+            font-size: 13px;
+            padding: 24px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 720px) {
+            .terminal { margin: 20px 12px 40px; padding: 26px 18px; font-size: 13px; }
+            .terminal::before, .terminal::after { display: none; }
+            h1.term-title { font-size: 18px; letter-spacing: 3px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="top-bar">
+    <a class="back" href="{{ '/' | relative_url }}">← BACK TO ROOM</a>
+    <span class="title">~/blog</span>
+    <span class="meta">{{ site.posts | size }} ENTRIES</span>
+</header>
+
+<main class="terminal">
+    <h1 class="term-title">JOURNAL</h1>
+    <div class="term-sub">technical notes · scratchpad · investigations</div>
+
+    <div class="term-prompt">ls -lt _posts</div>
+
+    <div class="post-list">
+    {% if site.posts.size > 0 %}
+        {% for post in site.posts %}
+            <a class="post-row" href="{{ post.url | relative_url }}">
+                <div class="row-meta">
+                    <span>{{ post.date | date: "%Y.%m.%d" }}</span>
+                    <span class="dot">●</span>
+                    {% if post.categories.size > 0 %}
+                        <span>{{ post.categories | join: " / " }}</span>
+                    {% endif %}
+                </div>
+                <div class="row-title">{{ post.title }}</div>
+                {% if post.tags.size > 0 %}
+                    <div class="row-tags">
+                        {% for tag in post.tags %}<span>{{ tag }}</span>{% endfor %}
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class="empty">// no entries yet</div>
+    {% endif %}
+    </div>
+
+    <div class="term-prompt" style="margin-top:32px">_</div>
+</main>
+
+</body>
+</html>
