@@ -23,9 +23,9 @@ Read this file first; only open the source files listed below when you actually 
 
 **From `tweaks-panel.jsx`:** `useTweaks`, `TweaksPanel`, `TweakSection`, `TweakRow`, `TweakSlider`, `TweakToggle`, `TweakRadio`, `TweakSelect`, `TweakText`, `TweakNumber`, `TweakColor`, `TweakButton`
 
-**From `i18n.jsx`:** `STRINGS` (key → `{en, ko}`), `LangContext`, `useT()` returns `(key) => string`, `useLang()` returns `'en' | 'ko'`
+**From `i18n.jsx`:** `STRINGS` (key → `{en, ko}`), `LangContext`, `DesignContext`, `useT()` returns `(key) => string`, `useLang()` returns `'en' | 'ko'`, `useDesignMode()` returns `'pixel' | 'modern'`
 
-**From `chrome.jsx`:** `Win`, `TopBar`, `Dock`, `DesktopIcon`, `MobileShell`, `ICONS` (`folder | file | readme | avatar | resume | mail | github | trash | notes | terminal`)
+**From `chrome.jsx`:** `Win`, `TopBar`, `Dock`, `DesktopIcon`, `MobileShell`, `ICONS`, `PIXEL_ICONS`, `MODERN_ICONS` — keys: `folder | file | readme | avatar | resume | mail | github | trash | notes | terminal`. `ICONS[name]` is a `ThemedIcon` component that picks the right set via `useDesignMode()` at render time, so call sites never need to know which mode is active.
 
 **From `pages.jsx`:** all page components + `PixelAvatar`, `ContactCard`, `Repo`
 
@@ -70,6 +70,11 @@ Mobile tiles in `MOBILE_TILES` reference these vars (e.g. `bg: 'var(--accent)'`)
 
 ### Add a palette
 - Append `[bg, chrome, titlebar, accent]` hex tuple to `PALETTES` in `app.jsx:12`. The Tweak chip picker auto-renders it.
+
+### Add a new icon
+- Add a 13×13 pixel grid entry to `PIXEL_ICONS` in `chrome.jsx` (`makeIcon(rows, palette)` style).
+- Add a matching 24×24 SVG entry to `MODERN_ICONS` using `var(--accent)`/`var(--ink)`/`var(--chrome)` so it carries through palette changes.
+- Both maps must share the same key. `ICONS` auto-wraps via `useDesignMode()`.
 
 ### Tweak a visual style
 - Pixel mode lives at the top of `styles.css`; modern overrides live under the `body.mode-modern` block (~line 540+); mobile tiles under `.m-*` (~line 850+).

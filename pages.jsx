@@ -297,6 +297,19 @@ function TrashPage() {
 }
 
 function PixelAvatar({ size = 64 }) {
+  const mode = useDesignMode();
+  if (mode === 'modern') {
+    return (
+      <svg width={size} height={size} viewBox="0 0 64 64"
+           style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '50%',
+                    background: 'var(--chrome-2)', flexShrink: 0, overflow: 'hidden' }}>
+        <circle cx="32" cy="26" r="13" fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+        <path d="M8 60c0-13 10-22 24-22s24 9 24 22"
+              fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5"
+              strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
   const rows = [
     '...hhhhh...',
     '..hhhhhhh..',

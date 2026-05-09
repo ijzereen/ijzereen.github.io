@@ -1,6 +1,8 @@
 /* eslint-disable */
-// Pixel-art icons + window chrome + dock + top bar
-// Icons are simple 11×11 SVG grids. shape-rendering: crispEdges keeps them sharp.
+// Two icon sets + window chrome + dock + top bar + mobile shell.
+// PIXEL_ICONS: 13×13 SVG grids with shape-rendering: crispEdges.
+// MODERN_ICONS: clean 24×24 SVG geometry using palette CSS vars.
+// The exported ICONS map switches between them via DesignContext.
 
 // ── Pixel icon factory ──────────────────────────────────────────────────────
 function makeIcon(rows, palette, size = 44) {
@@ -19,7 +21,7 @@ function makeIcon(rows, palette, size = 44) {
   );
 }
 
-const ICONS = {
+const PIXEL_ICONS = {
   // ── Folder ────────────────────────────────────────────────
   folder: () => makeIcon([
     '.............',
@@ -190,6 +192,111 @@ const ICONS = {
     '.............',
   ], { '#': '#1c1410', K: '#1a1410', a: '#b6e26b' }),
 };
+
+// ── Modern icon set ─────────────────────────────────────────────────────────
+// Clean 24×24 line-and-fill SVGs. Use palette CSS vars so themes carry
+// through. Same keys as PIXEL_ICONS so call sites are unchanged.
+const MODERN_SVG_PROPS = {
+  width: 44, height: 44, viewBox: '0 0 24 24', fill: 'none',
+  strokeLinecap: 'round', strokeLinejoin: 'round',
+};
+const MODERN_ICONS = {
+  folder: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <path d="M3 7a2 2 0 0 1 2-2h3.5l2 2h8.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"
+            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  file: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
+            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M14 3v4h4" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="12" x2="15" y2="12" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="15" x2="15" y2="15" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="18" x2="12" y2="18" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  readme: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
+            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M14 3v4h4" stroke="var(--ink)" strokeWidth="1.5" />
+      <rect x="8" y="11" width="7" height="2" rx="0.5" fill="var(--accent)" />
+      <line x1="8" y1="16" x2="15" y2="16" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="19" x2="12" y2="19" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  avatar: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <circle cx="12" cy="9" r="4" fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"
+            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  resume: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <rect x="5" y="4" width="14" height="17" rx="1.5"
+            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
+      <rect x="9" y="2.5" width="6" height="3" rx="0.5"
+            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="11" x2="16" y2="11" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="14" x2="16" y2="14" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="8" y1="17" x2="13" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  mail: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <rect x="3" y="6" width="18" height="13" rx="1.5"
+            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M3.5 7l8.5 6 8.5-6" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  github: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <polyline points="9 7 5 12 9 17" stroke="var(--ink)" strokeWidth="2" />
+      <polyline points="15 7 19 12 15 17" stroke="var(--ink)" strokeWidth="2" />
+      <line x1="13.5" y1="6" x2="10.5" y2="18" stroke="var(--accent)" strokeWidth="2" />
+    </svg>
+  ),
+  trash: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <path d="M5 7h14" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
+            stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M6.5 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7"
+            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="10" y1="11" x2="10" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
+      <line x1="14" y1="11" x2="14" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  notes: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <path d="M16 3l5 5-13 13H3v-5L16 3z"
+            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M14 5l5 5" stroke="var(--ink)" strokeWidth="1.5" />
+    </svg>
+  ),
+  terminal: () => (
+    <svg {...MODERN_SVG_PROPS}>
+      <rect x="3" y="4" width="18" height="16" rx="1.5"
+            fill="var(--titlebar)" stroke="var(--ink)" strokeWidth="1.5" />
+      <polyline points="7 10 10 12 7 14" stroke="var(--accent)" strokeWidth="1.5" />
+      <line x1="12" y1="14" x2="16" y2="14" stroke="var(--accent)" strokeWidth="1.5" />
+    </svg>
+  ),
+};
+
+// ── Switching ICONS map ─────────────────────────────────────────────────────
+// Each entry is a function component that picks the right set at render time
+// via DesignContext. Call sites stay the same: React.createElement(ICONS[name]).
+const ICONS = Object.fromEntries(
+  Object.keys(PIXEL_ICONS).map((name) => [name, function ThemedIcon() {
+    const mode = useDesignMode();
+    const set = mode === 'modern' ? MODERN_ICONS : PIXEL_ICONS;
+    return (set[name] || set.file)();
+  }])
+);
 
 // ── Window ──────────────────────────────────────────────────────────────────
 function Win({ win, onClose, onMinimize, onFocus, onMove, onResize, active }) {
@@ -395,4 +502,4 @@ function MobileShell({ tiles, apps, openId, onLaunch, onClose }) {
   );
 }
 
-Object.assign(window, { Win, TopBar, Dock, DesktopIcon, MobileShell, ICONS });
+Object.assign(window, { Win, TopBar, Dock, DesktopIcon, MobileShell, ICONS, PIXEL_ICONS, MODERN_ICONS });

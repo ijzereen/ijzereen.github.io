@@ -1,7 +1,9 @@
 /* eslint-disable */
-// Tiny i18n layer. Strings are keyed; each entry has { en, ko }.
-// Pages call useT() to get a t(key) bound to the current language; App
-// provides the language via LangContext driven by the `lang` tweak.
+// Tiny i18n + ambient-context layer. Loaded before pages.jsx so any
+// component can call useT() / useLang() / useDesignMode().
+// - STRINGS: keyed translations { en, ko }
+// - LangContext: 'en' | 'ko' (provided by App from the `lang` tweak)
+// - DesignContext: 'pixel' | 'modern' (provided by App from `designMode`)
 
 const STRINGS = {
   // ── topbar / shell ────────────────────────────────────────────────
@@ -142,6 +144,7 @@ const STRINGS = {
 };
 
 const LangContext = React.createContext('en');
+const DesignContext = React.createContext('pixel');
 
 function useT() {
   const lang = React.useContext(LangContext);
@@ -156,4 +159,8 @@ function useLang() {
   return React.useContext(LangContext);
 }
 
-Object.assign(window, { STRINGS, LangContext, useT, useLang });
+function useDesignMode() {
+  return React.useContext(DesignContext);
+}
+
+Object.assign(window, { STRINGS, LangContext, DesignContext, useT, useLang, useDesignMode });

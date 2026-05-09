@@ -832,6 +832,23 @@ body.mode-modern .cap {
   color: var(--ink-soft);
 }
 
+/* Topbar logo: replace 4-quadrant pixel block with a clean circle */
+body.mode-modern .topbar-logo .glyph {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* Boot splash: rounded progress bar */
+body.mode-modern .boot {
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+}
+body.mode-modern .boot .bar {
+  border-radius: 999px;
+  overflow: hidden;
+  border-width: 1px;
+}
+
 /* Terminal stays mono in modern (intentional) */
 body.mode-modern .term {
   border: 1px solid rgba(0,0,0,0.1);

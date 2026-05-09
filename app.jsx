@@ -198,6 +198,7 @@ function App() {
 
   return (
     <LangContext.Provider value={t.lang || 'en'}>
+      <DesignContext.Provider value={t.designMode || 'pixel'}>
       <div className="wallpaper" onClick={() => setSelectedIcon(null)} />
 
       <TopBar activeTitle={activeTitle} lang={t.lang || 'en'} onCycleLang={cycleLang} />
@@ -295,6 +296,7 @@ function App() {
           </div>
         </TweakSection>
       </TweaksPanel>
+      </DesignContext.Provider>
     </LangContext.Provider>
   );
 }
