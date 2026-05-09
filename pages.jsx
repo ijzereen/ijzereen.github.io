@@ -108,10 +108,10 @@ function ContactPage() {
       <p style={{ marginBottom: 18 }}>{t('contact.intro')}</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 18 }}>
-        <ContactCard label={t('contact.card.email')} value="hello@yourname.dev" />
-        <ContactCard label={t('contact.card.github')} value="@your-handle" />
-        <ContactCard label={t('contact.card.twitter')} value="@your-handle" />
-        <ContactCard label={t('contact.card.linkedin')} value="/in/your-name" />
+        <ContactCard label={t('contact.card.email')} value={CONFIG.owner.email} />
+        <ContactCard label={t('contact.card.github')} value={`@${CONFIG.owner.githubHandle}`} />
+        <ContactCard label={t('contact.card.twitter')} value={CONFIG.owner.twitter} />
+        <ContactCard label={t('contact.card.linkedin')} value={CONFIG.owner.linkedin} />
       </div>
 
       <hr />
@@ -177,7 +177,7 @@ function GithubPage() {
     <div className="win-content">
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
         <div>
-          <h1 style={{ marginBottom: 4 }}>github.com/your-handle</h1>
+          <h1 style={{ marginBottom: 4 }}>github.com/{CONFIG.owner.githubHandle}</h1>
           <p style={{ margin: 0 }}>
             <span className="tag">{t('github.followers')}</span>&nbsp;
             <span className="tag accent">{t('github.repos')}</span>
@@ -296,6 +296,37 @@ function TrashPage() {
   );
 }
 
+function FolderPage({ categoryId }) {
+  const t = useT();
+  const lang = useLang();
+  const cat = CONFIG.posts.categories.find((c) => c.id === categoryId);
+  if (!cat) return <div className="win-content"><p>unknown.</p></div>;
+  const title = localize(cat.label, lang);
+  const items = cat.items || [];
+  return (
+    <div className="win-content">
+      <h1 style={{ marginBottom: 4 }}>{title}</h1>
+      <p className="cap" style={{ marginBottom: 14 }}>
+        {CONFIG.posts.basePath}/{cat.folder} · {items.length} {t('folder.items')}
+      </p>
+      {items.length === 0 ? (
+        <div className="bordered">
+          <p style={{ margin: 0 }}>{t('folder.empty')}</p>
+        </div>
+      ) : (
+        <ul style={{ paddingLeft: 18, margin: 0 }}>
+          {items.map((item) => (
+            <li key={item.id} style={{ marginBottom: 8 }}>
+              <strong>{localize(item.title, lang)}</strong>
+              {item.date && <span className="cap"> · {item.date}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function PixelAvatar({ size = 64 }) {
   const mode = useDesignMode();
   if (mode === 'modern') {
@@ -335,6 +366,6 @@ function PixelAvatar({ size = 64 }) {
 
 Object.assign(window, {
   AboutPage, ResumePage, ContactPage, GithubPage,
-  ReadmePage, NotesPage, TrashPage,
+  ReadmePage, NotesPage, TrashPage, FolderPage,
   PixelAvatar, ContactCard, Repo,
 });

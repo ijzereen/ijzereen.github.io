@@ -13,8 +13,12 @@ const STRINGS = {
   'topbar.help':          { en: 'HELP',        ko: '도움말' },
   'topbar.tweaks':        { en: '⚙ TWEAKS',    ko: '⚙ 설정' },
   'topbar.lang.tip':      { en: 'Language',    ko: '언어' },
-  'boot.title':           { en: 'PIXEL/OS booting…', ko: 'PIXEL/OS 부팅 중…' },
-  'boot.subtitle':        { en: 'portfolio shell · v0.9', ko: '포트폴리오 셸 · v0.9' },
+  'boot.booting':         { en: 'booting…',    ko: '부팅 중…' },
+  'boot.shell':           { en: 'portfolio shell', ko: '포트폴리오 셸' },
+
+  // ── folder window ─────────────────────────────────────────────────
+  'folder.items':         { en: 'items',       ko: '항목' },
+  'folder.empty':         { en: 'still empty — coming soon.', ko: '아직 비어있어요 — 곧 채울 예정.' },
 
   // ── dock labels ───────────────────────────────────────────────────
   'dock.about':           { en: 'about',       ko: '소개' },

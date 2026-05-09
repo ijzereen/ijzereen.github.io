@@ -6,8 +6,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "dockPos": "bottom",
   "showDesktopIcons": true,
   "boot": true,
-  "designMode": "pixel",
-  "lang": "en"
+  "designMode": "modern",
+  "lang": "ko"
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -38,6 +38,19 @@ const APPS = {
   notes:    { id: 'notes',    title: 'notes.txt',     icon: 'notes',    render: () => <NotesPage />,   w: 460, h: 440 },
   trash:    { id: 'trash',    title: '~/.trash',      icon: 'trash',    render: () => <TrashPage />,   w: 420, h: 320 },
   terminal: { id: 'terminal', title: 'terminal',      icon: 'terminal', render: () => <AboutPage />,   w: 560, h: 520 }, // reuses about for now
+
+  // Post-category folder windows — derived from CONFIG so adding a
+  // category in config.jsx auto-registers an app + desktop icon.
+  ...Object.fromEntries(CONFIG.posts.categories.map((c) => [
+    `post-${c.id}`,
+    {
+      id: `post-${c.id}`,
+      title: `${c.folder}/`,
+      icon: c.icon,
+      render: () => <FolderPage categoryId={c.id} />,
+      w: 480, h: 480,
+    },
+  ])),
 };
 
 const DOCK_ITEMS = [
@@ -50,12 +63,13 @@ const DOCK_ITEMS = [
   { id: 'trash',   labelKey: 'dock.trash',   icon: 'trash' },
 ];
 
-const DESKTOP_FILES = [
-  { id: 'readme', icon: 'readme', label: 'README.md' },
-  { id: 'about',  icon: 'avatar', label: 'about-me' },
-  { id: 'notes',  icon: 'notes',  label: 'notes.txt' },
-  { id: 'trash',  icon: 'trash',  label: 'trash' },
-];
+// Desktop is now driven by CONFIG.posts.categories — each Post/* folder
+// becomes a desktop folder icon. Edit config.jsx to add/rename/reorder.
+const DESKTOP_FILES = CONFIG.posts.categories.map((c) => ({
+  id: `post-${c.id}`,
+  icon: c.icon,
+  label: c.label,           // {en, ko} — DesktopIcon localizes
+}));
 
 // Mobile (Win8) tile layout — palette-aware bg/fg so themes carry through.
 const MOBILE_TILES = [
@@ -74,7 +88,7 @@ function App() {
   const [zCounter, setZCounter] = React.useState(10);
   const [activeId, setActiveId] = React.useState(null);
   const [selectedIcon, setSelectedIcon] = React.useState(null);
-  const [booting, setBooting] = React.useState(t.boot);
+  const [booting, setBooting] = React.useState(t.boot && CONFIG.features.showBootSplash);
   const [isMobile, setIsMobile] = React.useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
   );
@@ -220,7 +234,7 @@ function App() {
                   <DesktopIcon
                     key={f.id}
                     icon={f.icon}
-                    label={f.label}
+                    label={localize(f.label, t.lang || 'en')}
                     selected={selectedIcon === f.id}
                     onSelect={() => setSelectedIcon(f.id)}
                     onOpen={() => launchApp(f.id)}
@@ -254,48 +268,50 @@ function App() {
 
       {booting && <BootSplash lang={t.lang || 'en'} />}
 
-      <TweaksPanel title="Tweaks">
-        <TweakSection label="Design">
-          <TweakRadio label="Style" value={t.designMode || 'pixel'}
-                      options={[{ value: 'pixel', label: 'Pixel' },
-                                { value: 'modern', label: 'Modern' }]}
-                      onChange={(v) => setTweak('designMode', v)} />
-          <TweakRadio label="Language" value={t.lang || 'en'}
-                      options={[{ value: 'en', label: 'English' },
-                                { value: 'ko', label: '한국어' }]}
-                      onChange={(v) => setTweak('lang', v)} />
-        </TweakSection>
-        <TweakSection label="Theme">
-          <TweakColor label="Palette" value={t.palette} options={PALETTES}
-                      onChange={(v) => setTweak('palette', v)} />
-        </TweakSection>
-        <TweakSection label="Layout">
-          <TweakRadio label="Dock position" value={t.dockPos}
-                      options={[{ value: 'bottom', label: 'Bottom' },
-                                { value: 'left', label: 'Left' }]}
-                      onChange={(v) => setTweak('dockPos', v)} />
-          <TweakToggle label="Desktop icons" value={t.showDesktopIcons}
-                       onChange={(v) => setTweak('showDesktopIcons', v)} />
-          <TweakToggle label="Boot splash on load" value={t.boot}
-                       onChange={(v) => setTweak('boot', v)} />
-        </TweakSection>
-        <TweakSection label="Apps">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {Object.values(APPS).filter((a) => a.id !== 'terminal').map((a) => (
-              <button key={a.id}
-                      onClick={() => launchApp(a.id)}
-                      style={{
-                        padding: '6px 10px', border: '1px solid rgba(0,0,0,.15)',
-                        background: 'rgba(255,255,255,.6)', borderRadius: 6,
-                        font: '11px ui-sans-serif, system-ui, sans-serif',
-                        cursor: 'default',
-                      }}>
-                Open {a.id}
-              </button>
-            ))}
-          </div>
-        </TweakSection>
-      </TweaksPanel>
+      {CONFIG.features.showTweaksButton && (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Design">
+            <TweakRadio label="Style" value={t.designMode || 'pixel'}
+                        options={[{ value: 'pixel', label: 'Pixel' },
+                                  { value: 'modern', label: 'Modern' }]}
+                        onChange={(v) => setTweak('designMode', v)} />
+            <TweakRadio label="Language" value={t.lang || 'en'}
+                        options={[{ value: 'en', label: 'English' },
+                                  { value: 'ko', label: '한국어' }]}
+                        onChange={(v) => setTweak('lang', v)} />
+          </TweakSection>
+          <TweakSection label="Theme">
+            <TweakColor label="Palette" value={t.palette} options={PALETTES}
+                        onChange={(v) => setTweak('palette', v)} />
+          </TweakSection>
+          <TweakSection label="Layout">
+            <TweakRadio label="Dock position" value={t.dockPos}
+                        options={[{ value: 'bottom', label: 'Bottom' },
+                                  { value: 'left', label: 'Left' }]}
+                        onChange={(v) => setTweak('dockPos', v)} />
+            <TweakToggle label="Desktop icons" value={t.showDesktopIcons}
+                         onChange={(v) => setTweak('showDesktopIcons', v)} />
+            <TweakToggle label="Boot splash on load" value={t.boot}
+                         onChange={(v) => setTweak('boot', v)} />
+          </TweakSection>
+          <TweakSection label="Apps">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {Object.values(APPS).filter((a) => a.id !== 'terminal').map((a) => (
+                <button key={a.id}
+                        onClick={() => launchApp(a.id)}
+                        style={{
+                          padding: '6px 10px', border: '1px solid rgba(0,0,0,.15)',
+                          background: 'rgba(255,255,255,.6)', borderRadius: 6,
+                          font: '11px ui-sans-serif, system-ui, sans-serif',
+                          cursor: 'default',
+                        }}>
+                  Open {a.id}
+                </button>
+              ))}
+            </div>
+          </TweakSection>
+        </TweaksPanel>
+      )}
       </DesignContext.Provider>
     </LangContext.Provider>
   );
@@ -305,9 +321,9 @@ function BootSplash({ lang }) {
   const t = (k) => (STRINGS[k] && (STRINGS[k][lang] ?? STRINGS[k].en)) || k;
   return (
     <div className="boot">
-      <div style={{ letterSpacing: '0.1em' }}>{t('boot.title')}</div>
+      <div style={{ letterSpacing: '0.1em' }}>{CONFIG.os.name} {t('boot.booting')}</div>
       <div className="bar"><i /></div>
-      <div style={{ fontSize: 14, opacity: 0.6 }}>{t('boot.subtitle')}</div>
+      <div style={{ fontSize: 14, opacity: 0.6 }}>{t('boot.shell')} · {CONFIG.os.version}</div>
     </div>
   );
 }

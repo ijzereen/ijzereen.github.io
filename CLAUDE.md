@@ -5,21 +5,24 @@ Read this file first; only open the source files listed below when you actually 
 
 ## Architecture in one sentence
 
-`index.html` boots React + Babel-standalone in the browser, then loads five JSX files in order — `tweaks-panel.jsx` → `i18n.jsx` → `pages.jsx` → `chrome.jsx` → `app.jsx` — each attaching its exports to `window` for the next file to consume. `app.jsx` mounts `<App />`.
+`index.html` boots React + Babel-standalone in the browser, then loads six JSX files in order — `tweaks-panel.jsx` → `config.jsx` → `i18n.jsx` → `pages.jsx` → `chrome.jsx` → `app.jsx` — each attaching its exports to `window` for the next file to consume. `app.jsx` mounts `<App />`.
 
 ## File map
 
 | File | Purpose | When to open |
 |------|---------|--------------|
 | `index.html` | Script tag order + Google Fonts (Pixelify Sans, VT323, Silkscreen, Galmuri11, Noto Sans KR) | Adding a new JSX file or swapping a font |
-| `app.jsx` | App shell, window manager, palette → CSS-var binding, design/lang/mobile state, Tweaks panel wiring. Defines `TWEAK_DEFAULTS`, `PALETTES`, `APPS`, `DOCK_ITEMS`, `DESKTOP_FILES`, `MOBILE_TILES` | Wiring a new tweak, page, or palette |
-| `chrome.jsx` | `Win`, `TopBar`, `Dock`, `DesktopIcon`, `MobileShell`, and the `ICONS` map (pixel SVG factory) | Window chrome, topbar, dock, mobile tile shell |
-| `pages.jsx` | Page components: `AboutPage`, `ResumePage`, `ContactPage`, `GithubPage`, `ReadmePage`, `NotesPage`, `TrashPage` + `PixelAvatar` | Editing page copy/layout |
-| `i18n.jsx` | `STRINGS` dict, `LangContext`, `useT()`, `useLang()` | Adding/changing a translation |
+| `config.jsx` | **Site facade.** `CONFIG` object: OS branding, owner contact, feature flags, post categories. **Edit here first** for any branding / structural change | Renaming the site, swapping owner info, adding a Post category, toggling topbar buttons |
+| `app.jsx` | App shell, window manager, palette → CSS-var binding, design/lang/mobile state, Tweaks panel wiring. Defines `TWEAK_DEFAULTS`, `PALETTES`, `APPS`, `DOCK_ITEMS`, `DESKTOP_FILES`, `MOBILE_TILES` (latter two derive from CONFIG) | Wiring a new tweak, page, or palette |
+| `chrome.jsx` | `Win`, `TopBar`, `Dock`, `DesktopIcon`, `MobileShell`, and the `ICONS`/`PIXEL_ICONS`/`MODERN_ICONS` maps | Window chrome, topbar, dock, mobile tile shell |
+| `pages.jsx` | Page components: `AboutPage`, `ResumePage`, `ContactPage`, `GithubPage`, `ReadmePage`, `NotesPage`, `TrashPage`, `FolderPage` (generic post-category viewer) + `PixelAvatar` | Editing page copy/layout |
+| `i18n.jsx` | `STRINGS` dict, `LangContext`, `DesignContext`, `useT()`, `useLang()`, `useDesignMode()` | Adding/changing a translation |
 | `tweaks-panel.jsx` | **Vendored design-tool component — do not modify.** Floating tweaks shell + form controls. Listens for `__activate_edit_mode` postMessage | Almost never |
 | `styles.css` | Pixel design system + `body.mode-modern` overrides + `body.lang-ko` font fallback + `.m-*` mobile tile styles | Visual changes |
 
 ## Key globals (attached to `window` by the JSX files)
+
+**From `config.jsx`:** `CONFIG` (the facade — read it from anywhere; never deep-clone), `localize(value, lang)` resolves `{en, ko}` maps or passes strings through.
 
 **From `tweaks-panel.jsx`:** `useTweaks`, `TweaksPanel`, `TweakSection`, `TweakRow`, `TweakSlider`, `TweakToggle`, `TweakRadio`, `TweakSelect`, `TweakText`, `TweakNumber`, `TweakColor`, `TweakButton`
 
@@ -55,6 +58,22 @@ The 4-color palette tuple is exploded into CSS custom properties on `:root`:
 
 Mobile tiles in `MOBILE_TILES` reference these vars (e.g. `bg: 'var(--accent)'`) so themes carry through.
 
+## CONFIG facade shape (config.jsx)
+
+```js
+CONFIG = {
+  os: { name, version },
+  owner: { githubHandle, email, twitter, linkedin },
+  features: { showTweaksButton, showLangButton, showBootSplash },
+  posts: {
+    basePath: 'Post',
+    categories: [{ id, folder, icon, label: {en, ko}, items: [...] }, ...],
+  },
+}
+```
+
+`CONFIG.posts.categories` drives both `DESKTOP_FILES` (the desktop folder icons) and the dynamic `post-<id>` apps in `APPS`. To add a category, just push to the array — no other edits needed. Each `items[]` entry is `{ id, title (string|{en,ko}), date }` rendered by `FolderPage`.
+
 ## Common workflows
 
 ### Add a new page
@@ -62,6 +81,12 @@ Mobile tiles in `MOBILE_TILES` reference these vars (e.g. `bg: 'var(--accent)'`)
 2. Register in `APPS` (app.jsx:21): `mypage: { id, title, icon, render: () => <MyPage />, w, h }`.
 3. (optional) Add to `DOCK_ITEMS` with `labelKey: 'dock.mypage'` and to `MOBILE_TILES`.
 4. Add `STRINGS['dock.mypage'] = { en, ko }` in `i18n.jsx`.
+
+### Add a Post category
+- Append `{ id, folder, icon: 'folder', label: {en, ko}, items: [] }` to `CONFIG.posts.categories` in `config.jsx`. Desktop icon + folder window auto-register.
+
+### Hide / show topbar buttons
+- Toggle `CONFIG.features.showTweaksButton` / `showLangButton` / `showBootSplash`.
 
 ### Add a translation
 - Add `'namespace.key': { en: '...', ko: '...' }` to `STRINGS` in `i18n.jsx`.

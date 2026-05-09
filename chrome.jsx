@@ -373,7 +373,7 @@ function TopBar({ activeTitle, lang = 'en', onCycleLang }) {
     <div className="topbar">
       <div className="topbar-logo">
         <span className="glyph" />
-        <span>PIXEL/OS v0.9</span>
+        <span>{CONFIG.os.name} {CONFIG.os.version}</span>
       </div>
       <div className="topbar-menus">
         <div className="topbar-menu">{activeTitle || t('topbar.desktop')}</div>
@@ -385,11 +385,15 @@ function TopBar({ activeTitle, lang = 'en', onCycleLang }) {
         <span className="pill">WIFI ✓</span>
         <span className="pill">BAT 87%</span>
         <span>{fmt}</span>
-        <button className="topbar-lang" onClick={onCycleLang}
-                title={t('topbar.lang.tip')} aria-label={t('topbar.lang.tip')}>
-          {lang === 'ko' ? '한' : 'A'}
-        </button>
-        <button className="topbar-tweaks" onClick={toggleTweaks} aria-pressed={tweaksOpen} title="Tweaks">{t('topbar.tweaks')}</button>
+        {CONFIG.features.showLangButton && (
+          <button className="topbar-lang" onClick={onCycleLang}
+                  title={t('topbar.lang.tip')} aria-label={t('topbar.lang.tip')}>
+            {lang === 'ko' ? '한' : 'A'}
+          </button>
+        )}
+        {CONFIG.features.showTweaksButton && (
+          <button className="topbar-tweaks" onClick={toggleTweaks} aria-pressed={tweaksOpen} title="Tweaks">{t('topbar.tweaks')}</button>
+        )}
       </div>
     </div>
   );
