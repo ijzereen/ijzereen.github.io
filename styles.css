@@ -593,49 +593,50 @@ body.mode-modern {
 body.mode-modern img,
 body.mode-modern svg { image-rendering: auto; shape-rendering: auto; }
 
-/* Modern wallpaper: smooth gradient, no noise pattern */
-body.mode-modern .wallpaper::before { display: none; }
-body.mode-modern .wallpaper {
-  background: linear-gradient(135deg, var(--bg) 0%, color-mix(in oklab, var(--bg), #000 12%) 100%);
-}
+/* Modern wallpaper: solid color, no gradient, no noise */
+body.mode-modern .wallpaper::before,
+body.mode-modern .wallpaper::after { display: none; }
+body.mode-modern .wallpaper { background: var(--bg); }
 
-/* Topbar: glassy translucent */
+/* Topbar: solid, no blur */
 body.mode-modern .topbar {
   height: 32px;
-  background: color-mix(in oklab, var(--titlebar) 70%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: var(--titlebar);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 1px solid rgba(0,0,0,0.18);
   font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
   font-size: 13px;
   letter-spacing: 0;
 }
 body.mode-modern .desktop { inset: 32px 0 0 0; }
-body.mode-modern .topbar-menu { padding: 4px 12px; border-radius: 6px; }
+body.mode-modern .topbar-menu { padding: 4px 12px; border-radius: 0; }
 body.mode-modern .topbar-tray .pill,
-body.mode-modern .topbar-tweaks {
-  border-radius: 6px;
+body.mode-modern .topbar-tweaks,
+body.mode-modern .topbar-lang {
+  border-radius: 0;
   font-size: 12px;
   border: none;
-  background: rgba(255,255,255,0.08);
+  background: transparent;
 }
+body.mode-modern .topbar-tweaks:hover,
+body.mode-modern .topbar-tweaks[aria-pressed="true"],
+body.mode-modern .topbar-lang:hover { background: var(--accent); color: var(--accent-ink); }
 
-/* Windows: rounded with soft shadow */
+/* Windows: thin border, no shadow */
 body.mode-modern .win {
-  border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.18);
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 6px;
+  box-shadow: none;
   overflow: hidden;
   font-size: 14px;
 }
-body.mode-modern .win.is-dragging {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 24px 60px rgba(0,0,0,0.28);
-}
+body.mode-modern .win.is-dragging { box-shadow: none; }
 body.mode-modern .win-titlebar {
-  height: 36px;
-  background: color-mix(in oklab, var(--chrome) 92%, var(--titlebar) 8%);
+  height: 34px;
+  background: var(--chrome);
   color: var(--ink);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
   font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
   font-size: 12px;
   letter-spacing: 0;
@@ -649,80 +650,85 @@ body.mode-modern .win-titlebar .title {
 body.mode-modern .win-titlebar .title::before,
 body.mode-modern .win-titlebar .title::after { display: none; }
 
-/* Traffic-light style controls */
+/* Traffic-light controls — flat solid colors, no gradients/shadows */
 body.mode-modern .win-btn {
   width: 12px; height: 12px;
   border: none;
   border-radius: 50%;
-  background: #d6d6d6;
+  background: #c0c0c0;
   box-shadow: none;
   font-size: 0;
   color: transparent;
 }
 body.mode-modern .win-btn.close { background: #ff5f57; }
 body.mode-modern .win-btn:not(.close) { background: #febc2e; }
-body.mode-modern .win-btn:hover { filter: brightness(0.95); color: rgba(0,0,0,0.5); font-size: 9px; }
+body.mode-modern .win-btn:hover { color: rgba(0,0,0,0.55); font-size: 9px; filter: none; }
 body.mode-modern .win-btn:active { transform: none; box-shadow: none; }
 body.mode-modern .win-resize { display: none; }
 
 /* Scrollbars: thin */
-body.mode-modern .win-body::-webkit-scrollbar { width: 10px; height: 10px; }
+body.mode-modern .win-body::-webkit-scrollbar { width: 8px; height: 8px; }
 body.mode-modern .win-body::-webkit-scrollbar-track { background: transparent; border: none; }
 body.mode-modern .win-body::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.18);
-  border: 2px solid transparent;
-  background-clip: content-box;
-  border-radius: 999px;
+  background: rgba(0,0,0,0.22);
+  border: none;
+  border-radius: 0;
 }
 
-/* Dock */
+/* Dock — flat solid panel, no blur, no shadow */
 body.mode-modern .dock {
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 16px;
-  background: color-mix(in oklab, var(--chrome) 60%, transparent);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 8px 10px;
-  gap: 8px;
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 0;
+  background: var(--chrome);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 6px 8px;
+  gap: 4px;
 }
 body.mode-modern .dock-item {
   border: none;
-  border-radius: 12px;
+  border-radius: 0;
   background: transparent;
-  width: 48px; height: 48px;
-  transition: transform 0.18s cubic-bezier(.3,.7,.4,1);
+  width: 44px; height: 44px;
+  color: var(--ink);
+  transition: background-color 0.1s linear, color 0.1s linear;
 }
-body.mode-modern .dock-item:hover {
-  transform: translateY(-6px) scale(1.08);
-  background: rgba(0,0,0,0.04);
+body.mode-modern .dock-item:hover,
+body.mode-modern .dock.left .dock-item:hover {
+  transform: none;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
-body.mode-modern .dock.left .dock-item:hover { transform: translateX(6px) scale(1.08); }
+body.mode-modern .dock-item:active { transform: none; }
 body.mode-modern .dock-item .running-dot {
   width: 4px; height: 4px;
-  border-radius: 50%;
+  border-radius: 0;
   border: none;
-  background: var(--ink);
+  background: var(--accent);
 }
 body.mode-modern .dock-item .tip {
-  border-radius: 6px;
+  border-radius: 0;
   font-family: -apple-system, system-ui, sans-serif;
   font-size: 11px;
   letter-spacing: 0;
-  background: rgba(0,0,0,0.78);
-  color: #fff;
+  background: var(--titlebar);
+  color: var(--titlebar-ink);
 }
-body.mode-modern .dock-divider { background: rgba(0,0,0,0.15); }
+body.mode-modern .dock-divider { background: rgba(0,0,0,0.18); }
 
 /* Desktop icons */
-body.mode-modern .desktop-icon { border-radius: 8px; }
+body.mode-modern .desktop-icon { border-radius: 0; }
+body.mode-modern .desktop-icon .icon-art { color: var(--accent); }
 body.mode-modern .desktop-icon.selected {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12);
   border-color: transparent;
 }
 body.mode-modern .desktop-icon .icon-label {
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  text-shadow: none;
   font-size: 12px;
+  background: rgba(0,0,0,0.35);
+  padding: 2px 6px;
 }
 
 /* Generic typography inside windows */
@@ -748,20 +754,20 @@ body.mode-modern .tag {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0;
-  border-radius: 999px;
+  border-radius: 0;
   padding: 3px 10px;
 }
 body.mode-modern .kbd {
   font-family: -apple-system, system-ui, sans-serif;
   font-size: 11px;
-  border-radius: 5px;
+  border-radius: 0;
   border-width: 1px;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  box-shadow: none;
   background: var(--chrome-2);
 }
 body.mode-modern .bordered {
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 0;
   background: var(--chrome);
 }
 body.mode-modern .field-group label {
@@ -773,17 +779,16 @@ body.mode-modern .field-group label {
 }
 body.mode-modern .field-group input,
 body.mode-modern .field-group textarea {
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 0;
   box-shadow: none;
   font-family: inherit;
   background: var(--chrome);
 }
 body.mode-modern .field-group input:focus,
 body.mode-modern .field-group textarea:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
-  border-color: transparent;
+  outline: none;
+  border-color: var(--accent);
 }
 body.mode-modern button.btn {
   font-family: -apple-system, system-ui, sans-serif;
@@ -792,13 +797,16 @@ body.mode-modern button.btn {
   letter-spacing: 0;
   text-transform: none;
   border: none;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+  border-radius: 0;
+  box-shadow: none;
   padding: 9px 16px;
+  transition: filter 0.1s linear;
 }
+body.mode-modern button.btn:hover { filter: brightness(0.92); }
 body.mode-modern button.btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+  transform: none;
+  box-shadow: none;
+  filter: brightness(0.85);
 }
 
 /* Timeline */
@@ -818,10 +826,10 @@ body.mode-modern .tl-item .when {
 
 /* Contribution grid */
 body.mode-modern .contrib-grid {
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 0;
 }
-body.mode-modern .contrib-cell { border-radius: 2px; border: none; }
+body.mode-modern .contrib-cell { border-radius: 0; border: none; }
 
 /* Cap labels */
 body.mode-modern .cap {
@@ -839,20 +847,19 @@ body.mode-modern .topbar-logo .glyph {
   border-radius: 50%;
 }
 
-/* Boot splash: rounded progress bar */
+/* Boot splash: flat progress bar */
 body.mode-modern .boot {
   font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
 }
 body.mode-modern .boot .bar {
-  border-radius: 999px;
-  overflow: hidden;
+  border-radius: 0;
   border-width: 1px;
 }
 
 /* Terminal stays mono in modern (intentional) */
 body.mode-modern .term {
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 0;
   box-shadow: none;
   font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', monospace;
   font-size: 13px;
@@ -972,10 +979,14 @@ body.mode-modern .term {
   .topbar-menus .topbar-menu:not(:first-child) { display: none; }
 }
 
-/* Modern-mode mobile: rounded tiles, soft shadow */
+/* Modern-mode mobile: stay flat — square tiles, no shadow */
 body.mode-modern .m-tile {
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mode-modern .m-tile:active {
+  transform: none;
+  filter: brightness(0.92);
 }
 body.mode-modern .m-tile-label,
 body.mode-modern .m-greet h1,
@@ -988,8 +999,8 @@ body.mode-modern .m-page-bar {
   font-family: -apple-system, system-ui, sans-serif;
   letter-spacing: 0;
   font-size: 14px;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.18);
 }
-body.mode-modern .m-back { border-radius: 50%; border-width: 1px; }
+body.mode-modern .m-back { border-radius: 0; border-width: 1px; }
 body.mode-modern .m-shell,
 body.mode-modern .m-page { inset: 32px 0 0 0; }

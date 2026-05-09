@@ -194,95 +194,69 @@ const PIXEL_ICONS = {
 };
 
 // ── Modern icon set ─────────────────────────────────────────────────────────
-// Clean 24×24 line-and-fill SVGs. Use palette CSS vars so themes carry
-// through. Same keys as PIXEL_ICONS so call sites are unchanged.
+// Single-color flat silhouettes via currentColor. No outlines, no gradients,
+// no multi-color fills — solid material-flat shapes that take their hue from
+// the parent's `color` (set per call site in CSS). Same keys as PIXEL_ICONS.
 const MODERN_SVG_PROPS = {
-  width: 44, height: 44, viewBox: '0 0 24 24', fill: 'none',
-  strokeLinecap: 'round', strokeLinejoin: 'round',
+  width: 44, height: 44, viewBox: '0 0 24 24', fill: 'currentColor',
 };
 const MODERN_ICONS = {
   folder: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <path d="M3 7a2 2 0 0 1 2-2h3.5l2 2h8.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"
-            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M3 7a2 2 0 0 1 2-2h3.5l2 2h8.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
     </svg>
   ),
   file: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
-            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M14 3v4h4" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="12" x2="15" y2="12" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="15" x2="15" y2="15" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="18" x2="12" y2="18" stroke="var(--ink)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M6 3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9l-6-6H6zm7 0v5a1 1 0 0 0 1 1h5l-6-6z" />
     </svg>
   ),
   readme: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
-            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M14 3v4h4" stroke="var(--ink)" strokeWidth="1.5" />
-      <rect x="8" y="11" width="7" height="2" rx="0.5" fill="var(--accent)" />
-      <line x1="8" y1="16" x2="15" y2="16" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="19" x2="12" y2="19" stroke="var(--ink)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M6 3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9l-6-6H6zm7 0v5a1 1 0 0 0 1 1h5l-6-6zM8 12h8v1.5H8V12zm0 3.5h8V17H8v-1.5zM8 19h5v-1.5H8V19z" />
     </svg>
   ),
   avatar: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <circle cx="12" cy="9" r="4" fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"
-            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
+      <circle cx="12" cy="9" r="4.5" />
+      <path d="M3.5 21c0-4.7 3.8-7.5 8.5-7.5s8.5 2.8 8.5 7.5h-17z" />
     </svg>
   ),
   resume: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <rect x="5" y="4" width="14" height="17" rx="1.5"
-            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
-      <rect x="9" y="2.5" width="6" height="3" rx="0.5"
-            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="11" x2="16" y2="11" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="14" x2="16" y2="14" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="8" y1="17" x2="13" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M9 2a1 1 0 0 0-1 1v1H6a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2V3a1 1 0 0 0-1-1H9zm0 9h6v1.5H9V11zm0 3h6v1.5H9V14zm0 3h4v1.5H9V17z" />
     </svg>
   ),
   mail: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <rect x="3" y="6" width="18" height="13" rx="1.5"
-            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M3.5 7l8.5 6 8.5-6" stroke="var(--ink)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M3 6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6zm2 1.3v.6l7 4.4 7-4.4v-.6L12 11.7 5 7.3z" />
     </svg>
   ),
   github: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <polyline points="9 7 5 12 9 17" stroke="var(--ink)" strokeWidth="2" />
-      <polyline points="15 7 19 12 15 17" stroke="var(--ink)" strokeWidth="2" />
-      <line x1="13.5" y1="6" x2="10.5" y2="18" stroke="var(--accent)" strokeWidth="2" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M9.4 6L3 12.5 9.4 19l1.4-1.4-5-5.1 5-5.1L9.4 6zm5.2 0l-1.4 1.4 5 5.1-5 5.1 1.4 1.4 6.4-6.5L14.6 6z" />
     </svg>
   ),
   trash: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <path d="M5 7h14" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"
-            stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M6.5 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7"
-            fill="var(--chrome)" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="10" y1="11" x2="10" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
-      <line x1="14" y1="11" x2="14" y2="17" stroke="var(--ink)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M9 3a1 1 0 0 0-1 1v1H4v2h16V5h-4V4a1 1 0 0 0-1-1H9zM6 8v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H6zm3 3h2v8H9v-8zm4 0h2v8h-2v-8z" />
     </svg>
   ),
   notes: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <path d="M16 3l5 5-13 13H3v-5L16 3z"
-            fill="var(--accent)" stroke="var(--ink)" strokeWidth="1.5" />
-      <path d="M14 5l5 5" stroke="var(--ink)" strokeWidth="1.5" />
+      <path d="M16.5 2.5L21.5 7.5l-13 13H3v-5.5L16.5 2.5z" />
     </svg>
   ),
   terminal: () => (
     <svg {...MODERN_SVG_PROPS}>
-      <rect x="3" y="4" width="18" height="16" rx="1.5"
-            fill="var(--titlebar)" stroke="var(--ink)" strokeWidth="1.5" />
-      <polyline points="7 10 10 12 7 14" stroke="var(--accent)" strokeWidth="1.5" />
-      <line x1="12" y1="14" x2="16" y2="14" stroke="var(--accent)" strokeWidth="1.5" />
+      <path fillRule="evenodd" clipRule="evenodd"
+            d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4zm3.5 5.5L11 12.5 6.5 15.5l1 1.3L13 13.2v-1.4L7.5 8.2l-1 1.3zm6 6h5V17h-5v-1.5z" />
     </svg>
   ),
 };
