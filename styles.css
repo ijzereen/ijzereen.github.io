@@ -110,7 +110,8 @@ svg { shape-rendering: crispEdges; }
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.12);
 }
-.topbar-tweaks {
+.topbar-tweaks,
+.topbar-lang {
   appearance: none;
   font: inherit;
   letter-spacing: 0.04em;
@@ -121,11 +122,52 @@ svg { shape-rendering: crispEdges; }
   cursor: default;
   margin-left: 4px;
 }
+.topbar-lang {
+  min-width: 22px; padding: 3px 7px;
+  font-family: 'Galmuri11', 'Silkscreen', 'Pixelify Sans', monospace;
+  font-weight: 700;
+}
 .topbar-tweaks:hover,
-.topbar-tweaks[aria-pressed="true"] {
+.topbar-tweaks[aria-pressed="true"],
+.topbar-lang:hover {
   background: var(--accent);
   color: var(--accent-ink);
   border-color: var(--accent);
+}
+
+/* Korean font fallback when lang=ko — Galmuri11 keeps the pixel feel for
+   Hangul (Pixelify Sans + VT323 are Latin-only) */
+body.lang-ko {
+  font-family: 'Galmuri11', 'Pixelify Sans', ui-monospace, 'Cascadia Code', monospace;
+}
+body.lang-ko .win-titlebar,
+body.lang-ko .topbar,
+body.lang-ko .cap,
+body.lang-ko .tag,
+body.lang-ko button.btn,
+body.lang-ko .field-group label,
+body.lang-ko .tl-item .when {
+  font-family: 'Galmuri11', 'Silkscreen', monospace;
+}
+body.lang-ko .term,
+body.lang-ko .kbd {
+  font-family: 'Galmuri11', 'VT323', monospace;
+}
+/* In modern mode, prefer Noto Sans KR for clean Korean type */
+body.mode-modern.lang-ko {
+  font-family: 'Noto Sans KR', -apple-system, system-ui, sans-serif;
+}
+body.mode-modern.lang-ko .win h1,
+body.mode-modern.lang-ko .win h2,
+body.mode-modern.lang-ko .win h3,
+body.mode-modern.lang-ko .topbar,
+body.mode-modern.lang-ko .win-titlebar,
+body.mode-modern.lang-ko button.btn,
+body.mode-modern.lang-ko .cap,
+body.mode-modern.lang-ko .tag,
+body.mode-modern.lang-ko .field-group label,
+body.mode-modern.lang-ko .tl-item .when {
+  font-family: 'Noto Sans KR', -apple-system, system-ui, sans-serif;
 }
 
 /* ── Desktop / icons ───────────────────────────────────────────────────── */

@@ -262,25 +262,26 @@ function Win({ win, onClose, onMinimize, onFocus, onMove, onResize, active }) {
 }
 
 // ── Top bar ─────────────────────────────────────────────────────────────────
-function TopBar({ activeTitle }) {
+function TopBar({ activeTitle, lang = 'en', onCycleLang }) {
   const [now, setNow] = React.useState(() => new Date());
   const [tweaksOpen, setTweaksOpen] = React.useState(false);
+  const t = useT();
   React.useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 30 * 1000);
-    return () => clearInterval(t);
+    const tm = setInterval(() => setNow(new Date()), 30 * 1000);
+    return () => clearInterval(tm);
   }, []);
   React.useEffect(() => {
     const onMsg = (e) => {
-      const t = e?.data?.type;
-      if (t === '__activate_edit_mode') setTweaksOpen(true);
-      else if (t === '__deactivate_edit_mode' || t === '__edit_mode_dismissed') setTweaksOpen(false);
+      const ty = e?.data?.type;
+      if (ty === '__activate_edit_mode') setTweaksOpen(true);
+      else if (ty === '__deactivate_edit_mode' || ty === '__edit_mode_dismissed') setTweaksOpen(false);
     };
     window.addEventListener('message', onMsg);
     return () => window.removeEventListener('message', onMsg);
   }, []);
-  const fmt = now.toLocaleString('en-US', {
+  const fmt = now.toLocaleString(lang === 'ko' ? 'ko-KR' : 'en-US', {
     weekday: 'short', month: 'short', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', hour12: true,
+    hour: 'numeric', minute: '2-digit', hour12: lang !== 'ko',
   }).toUpperCase();
 
   const toggleTweaks = () => {
@@ -294,16 +295,20 @@ function TopBar({ activeTitle }) {
         <span>PIXEL/OS v0.9</span>
       </div>
       <div className="topbar-menus">
-        <div className="topbar-menu">{activeTitle || 'DESKTOP'}</div>
-        <div className="topbar-menu">FILE</div>
-        <div className="topbar-menu">VIEW</div>
-        <div className="topbar-menu">HELP</div>
+        <div className="topbar-menu">{activeTitle || t('topbar.desktop')}</div>
+        <div className="topbar-menu">{t('topbar.file')}</div>
+        <div className="topbar-menu">{t('topbar.view')}</div>
+        <div className="topbar-menu">{t('topbar.help')}</div>
       </div>
       <div className="topbar-tray">
         <span className="pill">WIFI ✓</span>
         <span className="pill">BAT 87%</span>
         <span>{fmt}</span>
-        <button className="topbar-tweaks" onClick={toggleTweaks} aria-pressed={tweaksOpen} title="Tweaks">⚙ TWEAKS</button>
+        <button className="topbar-lang" onClick={onCycleLang}
+                title={t('topbar.lang.tip')} aria-label={t('topbar.lang.tip')}>
+          {lang === 'ko' ? '한' : 'A'}
+        </button>
+        <button className="topbar-tweaks" onClick={toggleTweaks} aria-pressed={tweaksOpen} title="Tweaks">{t('topbar.tweaks')}</button>
       </div>
     </div>
   );
@@ -311,21 +316,22 @@ function TopBar({ activeTitle }) {
 
 // ── Dock ────────────────────────────────────────────────────────────────────
 function Dock({ items, position, openIds, onLaunch }) {
+  const t = useT();
   return (
     <div className={`dock ${position}`}>
-      {items.map((it, i) =>
-        it.divider
-          ? <span key={`d-${i}`} className="dock-divider" />
-          : (
-            <button key={it.id} className="dock-item"
-                    onClick={() => onLaunch(it.id)}
-                    title={it.label}>
-              {React.createElement(ICONS[it.icon] || ICONS.file)}
-              {openIds.includes(it.id) && <span className="running-dot" />}
-              <span className="tip">{it.label}</span>
-            </button>
-          )
-      )}
+      {items.map((it, i) => {
+        if (it.divider) return <span key={`d-${i}`} className="dock-divider" />;
+        const label = it.labelKey ? t(it.labelKey) : it.label;
+        return (
+          <button key={it.id} className="dock-item"
+                  onClick={() => onLaunch(it.id)}
+                  title={label}>
+            {React.createElement(ICONS[it.icon] || ICONS.file)}
+            {openIds.includes(it.id) && <span className="running-dot" />}
+            <span className="tip">{label}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

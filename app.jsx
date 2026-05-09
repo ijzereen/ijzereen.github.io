@@ -6,7 +6,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "dockPos": "bottom",
   "showDesktopIcons": true,
   "boot": true,
-  "designMode": "pixel"
+  "designMode": "pixel",
+  "lang": "en"
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -30,13 +31,13 @@ const APPS = {
 };
 
 const DOCK_ITEMS = [
-  { id: 'about',   label: 'about',    icon: 'avatar' },
-  { id: 'resume',  label: 'résumé',   icon: 'resume' },
-  { id: 'contact', label: 'contact',  icon: 'mail' },
-  { id: 'github',  label: 'github',   icon: 'github' },
+  { id: 'about',   labelKey: 'dock.about',   icon: 'avatar' },
+  { id: 'resume',  labelKey: 'dock.resume',  icon: 'resume' },
+  { id: 'contact', labelKey: 'dock.contact', icon: 'mail' },
+  { id: 'github',  labelKey: 'dock.github',  icon: 'github' },
   { divider: true },
-  { id: 'readme',  label: 'README',   icon: 'readme' },
-  { id: 'trash',   label: 'trash',    icon: 'trash' },
+  { id: 'readme',  labelKey: 'dock.readme',  icon: 'readme' },
+  { id: 'trash',   labelKey: 'dock.trash',   icon: 'trash' },
 ];
 
 const DESKTOP_FILES = [
@@ -75,6 +76,16 @@ function App() {
     document.body.classList.remove('mode-pixel', 'mode-modern');
     document.body.classList.add(`mode-${t.designMode || 'pixel'}`);
   }, [t.designMode]);
+
+  // Apply language to <html lang> + body class for font fallback
+  React.useEffect(() => {
+    const lang = t.lang || 'en';
+    document.documentElement.lang = lang;
+    document.body.classList.remove('lang-en', 'lang-ko');
+    document.body.classList.add(`lang-${lang}`);
+  }, [t.lang]);
+
+  const cycleLang = () => setTweak('lang', (t.lang || 'en') === 'en' ? 'ko' : 'en');
 
   React.useEffect(() => {
     if (!booting) return;
@@ -150,10 +161,10 @@ function App() {
   );
 
   return (
-    <>
+    <LangContext.Provider value={t.lang || 'en'}>
       <div className="wallpaper" onClick={() => setSelectedIcon(null)} />
 
-      <TopBar activeTitle={activeTitle} />
+      <TopBar activeTitle={activeTitle} lang={t.lang || 'en'} onCycleLang={cycleLang} />
 
       <div className="desktop" onClick={() => setSelectedIcon(null)}>
         {t.showDesktopIcons && (
@@ -192,13 +203,7 @@ function App() {
         onLaunch={launchApp}
       />
 
-      {booting && (
-        <div className="boot">
-          <div style={{ letterSpacing: '0.1em' }}>PIXEL/OS booting…</div>
-          <div className="bar"><i /></div>
-          <div style={{ fontSize: 14, opacity: 0.6 }}>portfolio shell · v0.9</div>
-        </div>
-      )}
+      {booting && <BootSplash lang={t.lang || 'en'} />}
 
       <TweaksPanel title="Tweaks">
         <TweakSection label="Design">
@@ -206,6 +211,10 @@ function App() {
                       options={[{ value: 'pixel', label: 'Pixel' },
                                 { value: 'modern', label: 'Modern' }]}
                       onChange={(v) => setTweak('designMode', v)} />
+          <TweakRadio label="Language" value={t.lang || 'en'}
+                      options={[{ value: 'en', label: 'English' },
+                                { value: 'ko', label: '한국어' }]}
+                      onChange={(v) => setTweak('lang', v)} />
         </TweakSection>
         <TweakSection label="Theme">
           <TweakColor label="Palette" value={t.palette} options={PALETTES}
@@ -238,7 +247,18 @@ function App() {
           </div>
         </TweakSection>
       </TweaksPanel>
-    </>
+    </LangContext.Provider>
+  );
+}
+
+function BootSplash({ lang }) {
+  const t = (k) => (STRINGS[k] && (STRINGS[k][lang] ?? STRINGS[k].en)) || k;
+  return (
+    <div className="boot">
+      <div style={{ letterSpacing: '0.1em' }}>{t('boot.title')}</div>
+      <div className="bar"><i /></div>
+      <div style={{ fontSize: 14, opacity: 0.6 }}>{t('boot.subtitle')}</div>
+    </div>
   );
 }
 
