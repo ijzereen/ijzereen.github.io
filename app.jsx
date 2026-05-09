@@ -17,6 +17,16 @@ const PALETTES = [
   ["#3f4670", "#f1e9d9", "#161827", "#e8b04a"], // Indigo Gold
   ["#9a7a5a", "#f7eedc", "#3a1f10", "#c45e3a"], // Sand Espresso
   ["#2a3542", "#dde2d6", "#0f141a", "#7ec0a8"], // Slate Mint
+  ["#1f2937", "#e5e7eb", "#0b1220", "#22d3ee"], // Cyber Cyan (dark + neon)
+  ["#0d1b2a", "#f4f1de", "#020617", "#e63946"], // Crimson Ink (deep navy + red)
+  ["#7e1c45", "#fce4ec", "#3a0a23", "#ffb703"], // Berry Honey
+  ["#264653", "#fefae0", "#0d1b1e", "#f4a261"], // Teal Amber
+  ["#283618", "#fefae0", "#1a2010", "#bc6c25"], // Olive Rust
+  ["#e9c46a", "#fff5e1", "#3d2914", "#264653"], // Mustard Pop (light bg)
+  ["#f6bd60", "#fff8ed", "#3a2e1f", "#84a59d"], // Cream Mint (warm light)
+  ["#1a1a1a", "#f0f0f0", "#000000", "#ff006e"], // Mono Pop (B&W + magenta)
+  ["#0f3460", "#e8e8e8", "#0a1f3a", "#e94560"], // Mid-Night Rose
+  ["#5e503f", "#eae0d5", "#22181c", "#c6ac8f"], // Latte
 ];
 
 const APPS = {
