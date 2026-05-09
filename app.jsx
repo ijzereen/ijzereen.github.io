@@ -5,7 +5,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "palette": ["#4a6557", "#f0e6d2", "#2a1e18", "#d97757"],
   "dockPos": "bottom",
   "showDesktopIcons": true,
-  "boot": true
+  "boot": true,
+  "designMode": "pixel"
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -68,6 +69,12 @@ function App() {
     r.setProperty('--ink-soft', shade(titlebar, 0.18));
     r.setProperty('--accent-ink', isLight(accent) ? '#1c1410' : '#fff8e8');
   }, [t.palette]);
+
+  // Apply design mode (pixel | modern) as a body class
+  React.useEffect(() => {
+    document.body.classList.remove('mode-pixel', 'mode-modern');
+    document.body.classList.add(`mode-${t.designMode || 'pixel'}`);
+  }, [t.designMode]);
 
   React.useEffect(() => {
     if (!booting) return;
@@ -194,6 +201,12 @@ function App() {
       )}
 
       <TweaksPanel title="Tweaks">
+        <TweakSection label="Design">
+          <TweakRadio label="Style" value={t.designMode || 'pixel'}
+                      options={[{ value: 'pixel', label: 'Pixel' },
+                                { value: 'modern', label: 'Modern' }]}
+                      onChange={(v) => setTweak('designMode', v)} />
+        </TweakSection>
         <TweakSection label="Theme">
           <TweakColor label="Palette" value={t.palette} options={PALETTES}
                       onChange={(v) => setTweak('palette', v)} />

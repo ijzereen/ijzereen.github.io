@@ -535,3 +535,266 @@ button.btn.ghost { background: var(--chrome-2); color: var(--ink); }
   letter-spacing: 0.08em;
   color: var(--ink-soft);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Modern design mode — clean macOS-like aesthetic
+   Activated when <body> has class "mode-modern". Overrides the pixel
+   defaults: smooth fonts, rounded corners, soft shadows, no crisp-edges.
+   ───────────────────────────────────────────────────────────────────────── */
+body.mode-modern {
+  font-family: -apple-system, 'SF Pro Text', 'Inter', 'Pretendard', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+}
+body.mode-modern img,
+body.mode-modern svg { image-rendering: auto; shape-rendering: auto; }
+
+/* Modern wallpaper: smooth gradient, no noise pattern */
+body.mode-modern .wallpaper::before { display: none; }
+body.mode-modern .wallpaper {
+  background: linear-gradient(135deg, var(--bg) 0%, color-mix(in oklab, var(--bg), #000 12%) 100%);
+}
+
+/* Topbar: glassy translucent */
+body.mode-modern .topbar {
+  height: 32px;
+  background: color-mix(in oklab, var(--titlebar) 70%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+body.mode-modern .desktop { inset: 32px 0 0 0; }
+body.mode-modern .topbar-menu { padding: 4px 12px; border-radius: 6px; }
+body.mode-modern .topbar-tray .pill,
+body.mode-modern .topbar-tweaks {
+  border-radius: 6px;
+  font-size: 12px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Windows: rounded with soft shadow */
+body.mode-modern .win {
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.18);
+  overflow: hidden;
+  font-size: 14px;
+}
+body.mode-modern .win.is-dragging {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 24px 60px rgba(0,0,0,0.28);
+}
+body.mode-modern .win-titlebar {
+  height: 36px;
+  background: color-mix(in oklab, var(--chrome) 92%, var(--titlebar) 8%);
+  color: var(--ink);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+body.mode-modern .win-titlebar.active::before { display: none; }
+body.mode-modern .win-titlebar .title {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+body.mode-modern .win-titlebar .title::before,
+body.mode-modern .win-titlebar .title::after { display: none; }
+
+/* Traffic-light style controls */
+body.mode-modern .win-btn {
+  width: 12px; height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #d6d6d6;
+  box-shadow: none;
+  font-size: 0;
+  color: transparent;
+}
+body.mode-modern .win-btn.close { background: #ff5f57; }
+body.mode-modern .win-btn:not(.close) { background: #febc2e; }
+body.mode-modern .win-btn:hover { filter: brightness(0.95); color: rgba(0,0,0,0.5); font-size: 9px; }
+body.mode-modern .win-btn:active { transform: none; box-shadow: none; }
+body.mode-modern .win-resize { display: none; }
+
+/* Scrollbars: thin */
+body.mode-modern .win-body::-webkit-scrollbar { width: 10px; height: 10px; }
+body.mode-modern .win-body::-webkit-scrollbar-track { background: transparent; border: none; }
+body.mode-modern .win-body::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+
+/* Dock */
+body.mode-modern .dock {
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  background: color-mix(in oklab, var(--chrome) 60%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 8px 10px;
+  gap: 8px;
+}
+body.mode-modern .dock-item {
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  width: 48px; height: 48px;
+  transition: transform 0.18s cubic-bezier(.3,.7,.4,1);
+}
+body.mode-modern .dock-item:hover {
+  transform: translateY(-6px) scale(1.08);
+  background: rgba(0,0,0,0.04);
+}
+body.mode-modern .dock.left .dock-item:hover { transform: translateX(6px) scale(1.08); }
+body.mode-modern .dock-item .running-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ink);
+}
+body.mode-modern .dock-item .tip {
+  border-radius: 6px;
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0;
+  background: rgba(0,0,0,0.78);
+  color: #fff;
+}
+body.mode-modern .dock-divider { background: rgba(0,0,0,0.15); }
+
+/* Desktop icons */
+body.mode-modern .desktop-icon { border-radius: 8px; }
+body.mode-modern .desktop-icon.selected {
+  background: rgba(255,255,255,0.18);
+  border-color: transparent;
+}
+body.mode-modern .desktop-icon .icon-label {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  font-size: 12px;
+}
+
+/* Generic typography inside windows */
+body.mode-modern .win h1,
+body.mode-modern .win h2,
+body.mode-modern .win h3 {
+  font-family: -apple-system, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+body.mode-modern .win h1 { font-size: 26px; }
+body.mode-modern .win h2 { font-size: 18px; }
+body.mode-modern .win p,
+body.mode-modern .win li { font-size: 14px; }
+body.mode-modern .win hr {
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-style: solid;
+  opacity: 1;
+}
+
+body.mode-modern .tag {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+body.mode-modern .kbd {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  border-radius: 5px;
+  border-width: 1px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  background: var(--chrome-2);
+}
+body.mode-modern .bordered {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: var(--chrome);
+}
+body.mode-modern .field-group label {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body.mode-modern .field-group input,
+body.mode-modern .field-group textarea {
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  box-shadow: none;
+  font-family: inherit;
+  background: var(--chrome);
+}
+body.mode-modern .field-group input:focus,
+body.mode-modern .field-group textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+body.mode-modern button.btn {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+  padding: 9px 16px;
+}
+body.mode-modern button.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+}
+
+/* Timeline */
+body.mode-modern .tl { border-left: 2px solid rgba(0,0,0,0.12); }
+body.mode-modern .tl-item::before {
+  border-radius: 50%;
+  border-width: 0;
+  width: 10px; height: 10px;
+  left: -27px;
+}
+body.mode-modern .tl-item .when {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Contribution grid */
+body.mode-modern .contrib-grid {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+}
+body.mode-modern .contrib-cell { border-radius: 2px; border: none; }
+
+/* Cap labels */
+body.mode-modern .cap {
+  font-family: -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink-soft);
+}
+
+/* Terminal stays mono in modern (intentional) */
+body.mode-modern .term {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: none;
+  font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 13px;
+}
