@@ -350,4 +350,49 @@ function DesktopIcon({ icon, label, selected, onSelect, onOpen }) {
   );
 }
 
-Object.assign(window, { Win, TopBar, Dock, DesktopIcon, ICONS });
+// ── Mobile (Win8) tile shell ────────────────────────────────────────────────
+// Replaces the desktop+dock when viewport ≤768px. Tiles are big, flat,
+// solid color blocks sized 'sm' (1×1), 'wide' (2×1), 'lg' (2×2). Tap a
+// tile to push a fullscreen page; back arrow returns to the start screen.
+function MobileShell({ tiles, apps, openId, onLaunch, onClose }) {
+  const t = useT();
+  const open = openId ? apps[openId] : null;
+
+  if (open) {
+    return (
+      <div className="m-page">
+        <div className="m-page-bar">
+          <button className="m-back" onClick={onClose} aria-label="Back">←</button>
+          <span className="m-page-title">{open.title}</span>
+        </div>
+        <div className="m-page-body">{open.render()}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="m-shell">
+      <div className="m-greet">
+        <h1>portfolio</h1>
+        <span className="m-greet-sub">{t('topbar.lang.tip') === '언어' ? '타일을 눌러서 열기' : 'tap a tile to open'}</span>
+      </div>
+      <div className="m-tiles">
+        {tiles.map((tile) => (
+          <button
+            key={tile.id}
+            className={`m-tile m-tile-${tile.size || 'sm'}`}
+            style={{ background: tile.bg, color: tile.fg }}
+            onClick={() => onLaunch(tile.id)}
+          >
+            <span className="m-tile-icon">
+              {React.createElement(ICONS[tile.icon] || ICONS.file)}
+            </span>
+            <span className="m-tile-label">{t(tile.labelKey)}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { Win, TopBar, Dock, DesktopIcon, MobileShell, ICONS });

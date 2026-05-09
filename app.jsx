@@ -57,6 +57,17 @@ const DESKTOP_FILES = [
   { id: 'trash',  icon: 'trash',  label: 'trash' },
 ];
 
+// Mobile (Win8) tile layout — palette-aware bg/fg so themes carry through.
+const MOBILE_TILES = [
+  { id: 'about',   labelKey: 'dock.about',   icon: 'avatar', size: 'lg',   bg: 'var(--accent)',   fg: 'var(--accent-ink)' },
+  { id: 'resume',  labelKey: 'dock.resume',  icon: 'resume', size: 'sm',   bg: 'var(--titlebar)', fg: 'var(--chrome)'     },
+  { id: 'contact', labelKey: 'dock.contact', icon: 'mail',   size: 'sm',   bg: 'var(--ink-soft)', fg: 'var(--chrome)'     },
+  { id: 'github',  labelKey: 'dock.github',  icon: 'github', size: 'wide', bg: 'var(--titlebar)', fg: 'var(--chrome)'     },
+  { id: 'readme',  labelKey: 'dock.readme',  icon: 'readme', size: 'sm',   bg: 'var(--accent)',   fg: 'var(--accent-ink)' },
+  { id: 'notes',   labelKey: 'dock.readme',  icon: 'notes',  size: 'sm',   bg: 'var(--chrome-2)', fg: 'var(--ink)'        },
+  { id: 'trash',   labelKey: 'dock.trash',   icon: 'trash',  size: 'wide', bg: 'var(--ink-soft)', fg: 'var(--chrome)'     },
+];
+
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [windows, setWindows] = React.useState([]);
@@ -64,6 +75,21 @@ function App() {
   const [activeId, setActiveId] = React.useState(null);
   const [selectedIcon, setSelectedIcon] = React.useState(null);
   const [booting, setBooting] = React.useState(t.boot);
+  const [isMobile, setIsMobile] = React.useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  );
+  const [mobileOpen, setMobileOpen] = React.useState(null);
+
+  React.useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)');
+    const onChange = (e) => setIsMobile(e.matches);
+    if (mql.addEventListener) mql.addEventListener('change', onChange);
+    else mql.addListener(onChange);
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener('change', onChange);
+      else mql.removeListener(onChange);
+    };
+  }, []);
 
   // CSS variable bindings driven by palette
   React.useEffect(() => {
@@ -176,42 +202,54 @@ function App() {
 
       <TopBar activeTitle={activeTitle} lang={t.lang || 'en'} onCycleLang={cycleLang} />
 
-      <div className="desktop" onClick={() => setSelectedIcon(null)}>
-        {t.showDesktopIcons && (
-          <div className="desktop-icons">
-            {DESKTOP_FILES.map((f) => (
-              <DesktopIcon
-                key={f.id}
-                icon={f.icon}
-                label={f.label}
-                selected={selectedIcon === f.id}
-                onSelect={() => setSelectedIcon(f.id)}
-                onOpen={() => launchApp(f.id)}
+      {isMobile ? (
+        <MobileShell
+          tiles={MOBILE_TILES}
+          apps={APPS}
+          openId={mobileOpen}
+          onLaunch={setMobileOpen}
+          onClose={() => setMobileOpen(null)}
+        />
+      ) : (
+        <>
+          <div className="desktop" onClick={() => setSelectedIcon(null)}>
+            {t.showDesktopIcons && (
+              <div className="desktop-icons">
+                {DESKTOP_FILES.map((f) => (
+                  <DesktopIcon
+                    key={f.id}
+                    icon={f.icon}
+                    label={f.label}
+                    selected={selectedIcon === f.id}
+                    onSelect={() => setSelectedIcon(f.id)}
+                    onOpen={() => launchApp(f.id)}
+                  />
+                ))}
+              </div>
+            )}
+
+            {windows.map((w) => (
+              <Win
+                key={w.id}
+                win={w}
+                active={activeId === w.id}
+                onClose={closeWin}
+                onMinimize={minimizeWin}
+                onFocus={() => focusWin(w.id)}
+                onMove={moveWin}
+                onResize={resizeWin}
               />
             ))}
           </div>
-        )}
 
-        {windows.map((w) => (
-          <Win
-            key={w.id}
-            win={w}
-            active={activeId === w.id}
-            onClose={closeWin}
-            onMinimize={minimizeWin}
-            onFocus={() => focusWin(w.id)}
-            onMove={moveWin}
-            onResize={resizeWin}
+          <Dock
+            items={DOCK_ITEMS}
+            position={t.dockPos}
+            openIds={openAppIds}
+            onLaunch={launchApp}
           />
-        ))}
-      </div>
-
-      <Dock
-        items={DOCK_ITEMS}
-        position={t.dockPos}
-        openIds={openAppIds}
-        onLaunch={launchApp}
-      />
+        </>
+      )}
 
       {booting && <BootSplash lang={t.lang || 'en'} />}
 

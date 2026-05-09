@@ -840,3 +840,139 @@ body.mode-modern .term {
   font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', monospace;
   font-size: 13px;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile (Windows 8 tile) shell
+   Activated when viewport ≤768px — replaces desktop+dock with a flat
+   live-tile start screen. Square solid blocks, no rounded corners, label
+   bottom-left, icon top-left. Page view fills the whole viewport.
+   ───────────────────────────────────────────────────────────────────────── */
+.m-shell {
+  position: fixed;
+  inset: 28px 0 0 0;
+  z-index: 1;
+  overflow-y: auto;
+  padding: 18px 14px 28px;
+  -webkit-overflow-scrolling: touch;
+}
+.m-greet { padding: 8px 4px 18px; color: #fff; }
+.m-greet h1 {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 36px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+}
+.m-greet-sub {
+  font-family: 'Silkscreen', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+.m-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 22vw;
+  gap: 8px;
+}
+@media (min-width: 480px) {
+  .m-tiles { grid-auto-rows: 100px; }
+}
+.m-tile {
+  appearance: none;
+  border: 0;
+  padding: 10px 12px 12px;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  font: inherit;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 0 0 rgba(0,0,0,0.25);
+  transition: transform 0.08s steps(2);
+}
+.m-tile:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 0 rgba(0,0,0,0.25); }
+.m-tile-sm   { grid-column: span 2; grid-row: span 1; }
+.m-tile-wide { grid-column: span 4; grid-row: span 1; }
+.m-tile-lg   { grid-column: span 4; grid-row: span 2; }
+.m-tile-icon {
+  display: flex;
+  width: 36px; height: 36px;
+}
+.m-tile-icon svg { width: 100%; height: 100%; }
+.m-tile-lg .m-tile-icon { width: 64px; height: 64px; }
+.m-tile-label {
+  font-family: 'Silkscreen', 'Pixelify Sans', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.m-tile-lg .m-tile-label { font-size: 18px; letter-spacing: 0.04em; }
+
+/* Page view (fullscreen modal) */
+.m-page {
+  position: fixed;
+  inset: 28px 0 0 0;
+  z-index: 5;
+  background: var(--chrome);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.m-page-bar {
+  display: flex; align-items: center; gap: 10px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--titlebar);
+  color: var(--titlebar-ink);
+  border-bottom: var(--pixel) solid var(--ink);
+  font-family: 'Silkscreen', monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.m-back {
+  appearance: none;
+  border: 2px solid var(--titlebar-ink);
+  background: transparent;
+  color: var(--titlebar-ink);
+  width: 28px; height: 28px;
+  font: inherit;
+  font-size: 14px;
+  cursor: default;
+}
+.m-back:active { transform: translate(1px, 1px); }
+.m-page-title { flex: 1; text-transform: lowercase; }
+.m-page-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+/* Hide TopBar tray pills on small phones to avoid wrap */
+@media (max-width: 380px) {
+  .topbar-tray .pill { display: none; }
+  .topbar-menus .topbar-menu:not(:first-child) { display: none; }
+}
+
+/* Modern-mode mobile: rounded tiles, soft shadow */
+body.mode-modern .m-tile {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+body.mode-modern .m-tile-label,
+body.mode-modern .m-greet h1,
+body.mode-modern .m-greet-sub {
+  font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+body.mode-modern .m-page-bar {
+  font-family: -apple-system, system-ui, sans-serif;
+  letter-spacing: 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+body.mode-modern .m-back { border-radius: 50%; border-width: 1px; }
+body.mode-modern .m-shell,
+body.mode-modern .m-page { inset: 32px 0 0 0; }
