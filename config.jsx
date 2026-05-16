@@ -39,7 +39,12 @@ const CONFIG = {
     // Mirrors Post/ on disk — folder names kept verbatim (no translation),
     // containment matches the filesystem.
     categories: [
-      { id: 'drawing', folder: 'Drawing', icon: 'folder', label: 'Drawing', items: [] },
+      { id: 'drawing', folder: 'Drawing', icon: 'folder', label: 'Drawing',
+        view: 'gallery',
+        items: [
+          { id: 'img-3508', file: 'IMG_3508.jpeg' },
+          { id: 'img-3553', file: 'IMG_3553.jpeg' },
+        ] },
       { id: 'movie',   folder: 'Movie',   icon: 'folder', label: 'Movie',   items: [] },
       { id: 'game',    folder: 'Game',    icon: 'folder', label: 'Game',    items: [] },
       { id: 'blog',    folder: 'Blog',    icon: 'folder', label: 'Blog',

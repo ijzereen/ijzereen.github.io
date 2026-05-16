@@ -301,6 +301,7 @@ function FolderPage({ categoryId }) {
   const lang = useLang();
   const cat = CONFIG.posts.categories.find((c) => c.id === categoryId);
   if (!cat) return <div className="win-content"><p>unknown.</p></div>;
+  if (cat.view === 'gallery') return <GalleryPage cat={cat} />;
   const title = localize(cat.label, lang);
   const items = cat.items || [];
   return (
@@ -332,6 +333,115 @@ function FolderPage({ categoryId }) {
           ))}
         </ul>
       )}
+    </div>
+  );
+}
+
+// ── Gallery view (used by categories with view: 'gallery') ────────────────
+// Renders items as a thumbnail grid. Each tile reads EXIF date from the
+// image and shows the weekday + capture date as caption. Clicking a tile
+// opens the full image in its own window via window.__launch.
+function GalleryPage({ cat }) {
+  const t = useT();
+  const lang = useLang();
+  const items = cat.items || [];
+  return (
+    <div className="win-content">
+      <h1 style={{ marginBottom: 4 }}>{localize(cat.label, lang)}</h1>
+      <p className="cap" style={{ marginBottom: 14 }}>
+        {CONFIG.posts.basePath}/{cat.folder} · {items.length} {t('folder.items')}
+      </p>
+      {items.length === 0 ? (
+        <div className="bordered"><p style={{ margin: 0 }}>{t('folder.empty')}</p></div>
+      ) : (
+        <div className="gallery-grid">
+          {items.map((item) => (
+            <GalleryTile key={item.id} item={item} cat={cat} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GalleryTile({ item, cat }) {
+  const lang = useLang();
+  const [date, setDate] = React.useState(null);
+  const src = `${CONFIG.posts.basePath}/${cat.folder}/${item.file}`;
+
+  React.useEffect(() => {
+    let cancelled = false;
+    if (!window.exifr) return;
+    window.exifr
+      .parse(src, ['DateTimeOriginal', 'CreateDate', 'ModifyDate'])
+      .then((tags) => {
+        if (cancelled || !tags) return;
+        const raw = tags.DateTimeOriginal || tags.CreateDate || tags.ModifyDate;
+        if (raw) setDate(raw instanceof Date ? raw : new Date(raw));
+      })
+      .catch(() => { /* no EXIF — leave date null */ });
+    return () => { cancelled = true; };
+  }, [src]);
+
+  const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
+  const weekday = date && date.toLocaleDateString(locale, { weekday: 'long' });
+  const dateStr = date && date.toLocaleDateString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+  const open = () => {
+    if (window.__launch) window.__launch(`post-${cat.id}-${item.id}`);
+  };
+
+  return (
+    <div className="gallery-tile" onClick={open}>
+      <div className="gallery-thumb">
+        <img src={src} alt={item.file} loading="lazy" />
+      </div>
+      <div className="gallery-caption">
+        {weekday ? (
+          <>
+            <strong>{weekday}</strong>
+            <span className="cap"> · {dateStr}</span>
+          </>
+        ) : (
+          <span className="cap">{item.file}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Image viewer — opened when a gallery tile is clicked. Renders the file
+// at natural size inside the standard window chrome.
+function ImagePage({ basePath, folder, file }) {
+  const lang = useLang();
+  const [date, setDate] = React.useState(null);
+  const src = `${basePath}/${folder}/${file}`;
+
+  React.useEffect(() => {
+    let cancelled = false;
+    if (!window.exifr) return;
+    window.exifr.parse(src, ['DateTimeOriginal', 'CreateDate', 'ModifyDate'])
+      .then((tags) => {
+        if (cancelled || !tags) return;
+        const raw = tags.DateTimeOriginal || tags.CreateDate || tags.ModifyDate;
+        if (raw) setDate(raw instanceof Date ? raw : new Date(raw));
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [src]);
+
+  const locale = lang === 'ko' ? 'ko-KR' : 'en-US';
+  const caption = date
+    ? `${date.toLocaleDateString(locale, { weekday: 'long' })} · ${date.toLocaleString(locale)}`
+    : `${folder}/${file}`;
+
+  return (
+    <div className="win-content image-content">
+      <img src={src} alt={file}
+           style={{ maxWidth: '100%', display: 'block', margin: '0 auto',
+                    border: 'var(--pixel) solid var(--ink)',
+                    boxShadow: '4px 4px 0 0 var(--shadow)' }} />
+      <p className="cap" style={{ textAlign: 'center', marginTop: 10 }}>{caption}</p>
     </div>
   );
 }
@@ -443,5 +553,6 @@ function PixelAvatar({ size = 64 }) {
 Object.assign(window, {
   AboutPage, ResumePage, ContactPage, GithubPage,
   ReadmePage, NotesPage, TrashPage, FolderPage, PostPage,
+  GalleryPage, GalleryTile, ImagePage,
   PixelAvatar, ContactCard, Repo,
 });

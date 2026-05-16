@@ -307,6 +307,45 @@ body.mode-modern.lang-ko .tl-item .when {
   padding: 18px 22px 22px;
 }
 
+/* Gallery view — used by Drawing folder window */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.gallery-tile {
+  cursor: pointer;
+  background: var(--chrome-2);
+  border: var(--pixel) solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--shadow);
+  transition: transform 80ms ease, box-shadow 80ms ease;
+  overflow: hidden;
+}
+.gallery-tile:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--shadow);
+}
+.gallery-tile:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--shadow);
+}
+.gallery-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-bottom: var(--pixel) solid var(--ink);
+  background: var(--chrome);
+}
+.gallery-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.gallery-caption {
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  background: var(--chrome);
+}
+
 /* Markdown post body — rendered by marked.js into .post-content */
 .post-content h1 { font-size: 22px; margin: 4px 0 14px; line-height: 1.25; }
 .post-content h2 {

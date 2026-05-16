@@ -53,23 +53,27 @@ const APPS = {
   ])),
 
   // Per-post viewer windows — one per item in each category. Opened from
-  // FolderPage when a user clicks a post.
+  // FolderPage (markdown) or GalleryPage (image) when a user clicks an item.
   ...Object.fromEntries(
     CONFIG.posts.categories.flatMap((c) =>
       (c.items || [])
         .filter((item) => item.file)
-        .map((item) => [
-          `post-${c.id}-${item.id}`,
-          {
-            id: `post-${c.id}-${item.id}`,
-            title: `${c.folder}/${item.file}`,
-            icon: 'file',
-            render: () => (
-              <PostPage basePath={CONFIG.posts.basePath} folder={c.folder} file={item.file} />
-            ),
-            w: 720, h: 600,
-          },
-        ])
+        .map((item) => {
+          const isImage = /\.(jpe?g|png|gif|webp|svg|avif)$/i.test(item.file);
+          return [
+            `post-${c.id}-${item.id}`,
+            {
+              id: `post-${c.id}-${item.id}`,
+              title: `${c.folder}/${item.file}`,
+              icon: 'file',
+              render: () => isImage
+                ? <ImagePage  basePath={CONFIG.posts.basePath} folder={c.folder} file={item.file} />
+                : <PostPage   basePath={CONFIG.posts.basePath} folder={c.folder} file={item.file} />,
+              w: isImage ? 640 : 720,
+              h: isImage ? 640 : 600,
+            },
+          ];
+        })
     )
   ),
 };
