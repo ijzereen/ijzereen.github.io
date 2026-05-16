@@ -21,7 +21,7 @@ function _postItems(catId) {
 
 const CONFIG = {
   os: {
-    name: 'PIXEL/OS',
+    name: 'CheolWon',
     version: 'v0.9',
   },
 
