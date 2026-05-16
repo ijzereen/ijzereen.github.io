@@ -347,34 +347,36 @@ body.mode-modern.lang-ko .tl-item .when {
 }
 
 /* Markdown post body — rendered by marked.js into .post-content */
-/* Post body headings — VT323 keeps the CRT/retro feel from the chrome but
-   has distinct digit glyphs (0/O, 2/5/8 etc.) so titles like "BM25" stay
-   readable. Latin runs through VT323; Korean falls per-glyph to Noto Sans
-   KR. No text-shadow regardless of body.glow. */
+/* Post body headings — Silkscreen. Already loaded for the chrome (dock,
+   topbar, win-titlebar), uses angular pixel glyphs so digits are square
+   and never collide with letters (no more 5-vs-s confusion that VT323
+   had). Korean per-glyph falls through Galmuri11 then Noto Sans KR. */
 .post-content h1,
 .post-content h2,
 .post-content h3 {
-  font-family: 'VT323', 'Noto Sans KR', ui-monospace, monospace;
-  font-weight: 400;            /* VT323 ships single-weight; bolding does nothing */
+  font-family: 'Silkscreen', 'Galmuri11', 'Noto Sans KR', monospace;
   letter-spacing: 0;
   text-shadow: none;
   color: var(--ink);
 }
 .post-content h1 {
-  font-size: 36px;
-  line-height: 1.15;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.3;
   margin: 6px 0 18px;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   border-bottom: 2px solid var(--ink);
 }
 .post-content h2 {
-  font-size: 28px;
-  line-height: 1.2;
-  margin: 28px 0 10px;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.35;
+  margin: 28px 0 12px;
 }
 .post-content h3 {
-  font-size: 22px;
-  line-height: 1.25;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
   margin: 22px 0 8px;
   color: var(--ink-soft);
 }
