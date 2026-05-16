@@ -164,6 +164,14 @@ const STRINGS = {
   'trash.empty':          { en: 'EMPTY TRASH', ko: '휴지통 비우기' },
 };
 
+// Profile MD files (Profile/about.md, Profile/resume.md, Profile/contact.md)
+// are compiled by scripts/index-profile.py into window.PROFILE_STRINGS and
+// loaded right before this file. Merge them in so the in-file STRINGS map
+// serves as the schema/fallback and the MD wins.
+if (typeof window !== 'undefined' && window.PROFILE_STRINGS) {
+  Object.assign(STRINGS, window.PROFILE_STRINGS);
+}
+
 const LangContext = React.createContext('en');
 const DesignContext = React.createContext('pixel');
 
@@ -171,7 +179,10 @@ function useT() {
   const lang = React.useContext(LangContext);
   return React.useCallback((key) => {
     const entry = STRINGS[key];
-    if (!entry) return key;
+    if (entry == null) return key;
+    // Language-neutral keys (e.g., about.skill.languages) ship as plain
+    // strings; bilingual keys ship as { en, ko } pairs.
+    if (typeof entry === 'string') return entry;
     return entry[lang] ?? entry.en ?? key;
   }, [lang]);
 }

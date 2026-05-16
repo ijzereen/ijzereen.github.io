@@ -26,13 +26,13 @@ function AboutPage() {
         <br />
         <span className="prompt">$ </span>cat skills.txt
         <br />
-        <span className="muted">// {t('about.skills.languages')}   </span>python, c, c++
+        <span className="muted">// {t('about.skills.languages')}   </span>{t('about.skill.languages')}
         <br />
-        <span className="muted">// {t('about.skills.stack')}       </span>fastapi, celery, rabbitmq, postgres, minio
+        <span className="muted">// {t('about.skills.stack')}       </span>{t('about.skill.backend')}
         <br />
-        <span className="muted">// {t('about.skills.tools')}       </span>langchain, langgraph, vllm, ollama
+        <span className="muted">// {t('about.skills.tools')}       </span>{t('about.skill.ai')}
         <br />
-        <span className="muted">// {t('about.skills.currently')}   </span>{t('about.skills.building')} <span className="accent">AirWards · 목표관리체계</span>
+        <span className="muted">// {t('about.skills.currently')}   </span>{t('about.skills.building')} <span className="accent">{t('about.skill.currently')}</span>
         <br />
         <span className="prompt">$ </span><span style={{ animation: 'blink 1s steps(2) infinite' }}>▋</span>
       </div>
