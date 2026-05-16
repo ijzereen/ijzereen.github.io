@@ -408,7 +408,7 @@ function BootSplash({ lang }) {
     <div className="boot">
       <div style={{ letterSpacing: '0.1em' }}>{CONFIG.os.name} {t('boot.booting')}</div>
       <div className="bar"><i /></div>
-      <div style={{ fontSize: 14, opacity: 0.6 }}>{t('boot.shell')} · {CONFIG.os.version}</div>
+      <div style={{ fontSize: 14, opacity: 0.6 }}>{CONFIG.os.version}</div>
     </div>
   );
 }
