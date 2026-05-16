@@ -2,14 +2,14 @@
 // Main App — wires desktop, top bar, dock, window manager, tweaks.
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "palette": ["#4a6557", "#f0e6d2", "#2a1e18", "#d97757"],
+  "palette": ["#9a7a5a", "#f7eedc", "#3a1f10", "#c45e3a"],
   "dockPos": "bottom",
   "showDesktopIcons": true,
   "boot": true,
-  "designMode": "modern",
+  "designMode": "pixel",
   "lang": "ko",
   "crt": true,
-  "scanlines": 35,
+  "scanlines": 11,
   "glow": true,
   "noise": false,
   "flicker": false,

@@ -33,7 +33,7 @@ const CONFIG = {
   },
 
   features: {
-    showTweaksButton: true,    // ⚙ TWEAKS button + panel
+    showTweaksButton: false,   // ⚙ TWEAKS button + panel (hidden — panel JSX in app.jsx kept for later)
     showLangButton: true,      // 한 / A language toggle
     showBootSplash: true,
   },
