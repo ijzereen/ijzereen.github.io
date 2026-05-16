@@ -26,10 +26,12 @@ const CONFIG = {
   },
 
   owner: {
-    githubHandle: 'your-handle',
-    email: 'hello@yourname.dev',
-    twitter: '@your-handle',
-    linkedin: '/in/your-name',
+    name: '정철원',
+    email: 'ijzereen@gmail.com',
+    phone: '010-3451-4102',
+    githubHandle: 'ijzereen',   // TODO: verify actual GitHub handle
+    linkedin: '',               // TODO: paste LinkedIn URL or /in/<handle>
+    twitter: '',                // unused on the page; leave blank
   },
 
   features: {

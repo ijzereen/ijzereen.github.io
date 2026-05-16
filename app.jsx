@@ -95,7 +95,6 @@ const DOCK_ITEMS = [
   { id: 'about',   labelKey: 'dock.about',   icon: 'avatar' },
   { id: 'resume',  labelKey: 'dock.resume',  icon: 'resume' },
   { id: 'contact', labelKey: 'dock.contact', icon: 'mail' },
-  { id: 'github',  labelKey: 'dock.github',  icon: 'github' },
   { divider: true },
   { id: 'readme',  labelKey: 'dock.readme',  icon: 'readme' },
   { id: 'trash',   labelKey: 'dock.trash',   icon: 'trash' },

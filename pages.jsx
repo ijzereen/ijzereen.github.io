@@ -22,17 +22,17 @@ function AboutPage() {
       <div className="term">
         <span className="prompt">$ </span>whoami
         <br />
-        <span className="accent">your-name</span>
+        <span className="accent">{CONFIG.owner.githubHandle || 'ijzereen'}</span>
         <br />
         <span className="prompt">$ </span>cat skills.txt
         <br />
-        <span className="muted">// {t('about.skills.languages')}   </span>typescript, python, go
+        <span className="muted">// {t('about.skills.languages')}   </span>python, c, c++
         <br />
-        <span className="muted">// {t('about.skills.stack')}       </span>react, node, postgres, redis
+        <span className="muted">// {t('about.skills.stack')}       </span>fastapi, celery, rabbitmq, postgres, minio
         <br />
-        <span className="muted">// {t('about.skills.tools')}       </span>figma, linear, vim, tmux
+        <span className="muted">// {t('about.skills.tools')}       </span>langchain, langgraph, vllm, ollama
         <br />
-        <span className="muted">// {t('about.skills.currently')}   </span>{t('about.skills.building')} <span className="accent">[REDACTED]</span>
+        <span className="muted">// {t('about.skills.currently')}   </span>{t('about.skills.building')} <span className="accent">AirWards · 목표관리체계</span>
         <br />
         <span className="prompt">$ </span><span style={{ animation: 'blink 1s steps(2) infinite' }}>▋</span>
       </div>
@@ -62,21 +62,13 @@ function ResumePage() {
 
       <h2 style={{ marginBottom: 10 }}>{t('resume.experience')}</h2>
       <div className="tl">
-        <div className="tl-item">
-          <div className="when">{t('resume.exp.1.when')}</div>
-          <div className="role">{t('resume.exp.1.role')}</div>
-          <p style={{ margin: '4px 0 0' }}>{t('resume.exp.1.desc')}</p>
-        </div>
-        <div className="tl-item">
-          <div className="when">{t('resume.exp.2.when')}</div>
-          <div className="role">{t('resume.exp.2.role')}</div>
-          <p style={{ margin: '4px 0 0' }}>{t('resume.exp.2.desc')}</p>
-        </div>
-        <div className="tl-item">
-          <div className="when">{t('resume.exp.3.when')}</div>
-          <div className="role">{t('resume.exp.3.role')}</div>
-          <p style={{ margin: '4px 0 0' }}>{t('resume.exp.3.desc')}</p>
-        </div>
+        {[1, 2, 3, 4].map((i) => (
+          <div className="tl-item" key={i}>
+            <div className="when">{t(`resume.exp.${i}.when`)}</div>
+            <div className="role">{t(`resume.exp.${i}.role`)}</div>
+            <p style={{ margin: '4px 0 0' }}>{t(`resume.exp.${i}.desc`)}</p>
+          </div>
+        ))}
       </div>
 
       <hr />
@@ -108,10 +100,10 @@ function ContactPage() {
       <p style={{ marginBottom: 18 }}>{t('contact.intro')}</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 18 }}>
-        <ContactCard label={t('contact.card.email')} value={CONFIG.owner.email} />
-        <ContactCard label={t('contact.card.github')} value={`@${CONFIG.owner.githubHandle}`} />
-        <ContactCard label={t('contact.card.twitter')} value={CONFIG.owner.twitter} />
-        <ContactCard label={t('contact.card.linkedin')} value={CONFIG.owner.linkedin} />
+        <ContactCard label={t('contact.card.email')} value={CONFIG.owner.email || t('contact.card.empty')} />
+        <ContactCard label={t('contact.card.phone')} value={CONFIG.owner.phone || t('contact.card.empty')} />
+        <ContactCard label={t('contact.card.github')} value={CONFIG.owner.githubHandle ? `@${CONFIG.owner.githubHandle}` : t('contact.card.empty')} />
+        <ContactCard label={t('contact.card.linkedin')} value={CONFIG.owner.linkedin || t('contact.card.empty')} />
       </div>
 
       <hr />
