@@ -7,7 +7,12 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showDesktopIcons": true,
   "boot": true,
   "designMode": "modern",
-  "lang": "ko"
+  "lang": "ko",
+  "crt": true,
+  "scanlines": 35,
+  "glow": true,
+  "noise": false,
+  "flicker": false
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -27,6 +32,13 @@ const PALETTES = [
   ["#1a1a1a", "#f0f0f0", "#000000", "#ff006e"], // Mono Pop (B&W + magenta)
   ["#0f3460", "#e8e8e8", "#0a1f3a", "#e94560"], // Mid-Night Rose
   ["#5e503f", "#eae0d5", "#22181c", "#c6ac8f"], // Latte
+  // ── Retro / CRT-friendly palettes ──────────────────────────────────────
+  ["#0f380f", "#9bbc0f", "#0f380f", "#306230"], // Game Boy
+  ["#352879", "#a8b0fc", "#1d1655", "#fce8a1"], // C64
+  ["#1a0e00", "#ffb86b", "#0a0500", "#ff8c00"], // Amber CRT
+  ["#001a00", "#9fffb8", "#000a00", "#33ff99"], // Green Phosphor
+  ["#1a0033", "#ff6ec7", "#0a001a", "#00f0ff"], // Synthwave
+  ["#2b2b2b", "#f4d35e", "#0d0d0d", "#ee4266"], // Arcade
 ];
 
 const APPS = {
@@ -151,6 +163,16 @@ function App() {
     document.body.classList.remove('mode-pixel', 'mode-modern');
     document.body.classList.add(`mode-${t.designMode || 'pixel'}`);
   }, [t.designMode]);
+
+  // Retro FX: toggle body classes and bind --scanline-alpha for intensity.
+  React.useEffect(() => {
+    document.body.classList.toggle('crt', !!t.crt);
+    document.body.classList.toggle('glow', !!t.glow);
+    document.body.classList.toggle('noise', !!t.noise);
+    document.body.classList.toggle('flicker', !!t.flicker);
+    const alpha = Math.max(0, Math.min(100, Number(t.scanlines) || 0)) / 100;
+    document.documentElement.style.setProperty('--scanline-alpha', alpha.toFixed(3));
+  }, [t.crt, t.glow, t.noise, t.flicker, t.scanlines]);
 
   // Apply language to <html lang> + body class for font fallback
   React.useEffect(() => {
@@ -317,6 +339,19 @@ function App() {
           <TweakSection label="Theme">
             <TweakColor label="Palette" value={t.palette} options={PALETTES}
                         onChange={(v) => setTweak('palette', v)} />
+          </TweakSection>
+          <TweakSection label="Retro FX">
+            <TweakToggle label="CRT scanlines + vignette" value={!!t.crt}
+                         onChange={(v) => setTweak('crt', v)} />
+            <TweakSlider label="Scanline intensity" min={0} max={100} step={1}
+                         value={Number(t.scanlines) || 0}
+                         onChange={(v) => setTweak('scanlines', v)} />
+            <TweakToggle label="Neon glow" value={!!t.glow}
+                         onChange={(v) => setTweak('glow', v)} />
+            <TweakToggle label="Film grain" value={!!t.noise}
+                         onChange={(v) => setTweak('noise', v)} />
+            <TweakToggle label="CRT flicker" value={!!t.flicker}
+                         onChange={(v) => setTweak('flicker', v)} />
           </TweakSection>
           <TweakSection label="Layout">
             <TweakRadio label="Dock position" value={t.dockPos}

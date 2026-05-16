@@ -1103,3 +1103,93 @@ body.mode-modern .m-page-bar {
 body.mode-modern .m-back { border-radius: 0; border-width: 1px; }
 body.mode-modern .m-shell,
 body.mode-modern .m-page { inset: 32px 0 0 0; }
+
+/* ── Retro FX ─────────────────────────────────────────────────────────────
+   Bound to body classes from app.jsx — toggle via Tweaks panel.
+
+   .crt     → scanlines + radial vignette overlay (intensity = CSS var)
+   .glow    → neon-style text-shadow on titles, icon labels, accents
+   .noise   → animated film-grain layer (SVG turbulence)
+   .flicker → subtle global brightness flicker
+*/
+
+body.crt::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, var(--scanline-alpha, 0.35)) 0px,
+      rgba(0, 0, 0, var(--scanline-alpha, 0.35)) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+  animation: crt-scan 9s linear infinite;
+}
+@keyframes crt-scan {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 12px, 0 0; }
+}
+
+body.noise::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9997;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  animation: noise-shift 1.2s steps(6) infinite;
+}
+@keyframes noise-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3%, 1%); }
+  40%  { transform: translate(2%, -2%); }
+  60%  { transform: translate(-2%, 3%); }
+  80%  { transform: translate(3%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+body.flicker { animation: crt-flicker 4.5s infinite; }
+@keyframes crt-flicker {
+  0%, 100% { filter: brightness(1); }
+  43%      { filter: brightness(1); }
+  44%      { filter: brightness(0.86); }
+  45%      { filter: brightness(1); }
+  72%      { filter: brightness(1); }
+  73%      { filter: brightness(1.08); }
+  74%      { filter: brightness(1); }
+}
+
+/* Neon glow on titles, icon labels and accent surfaces */
+body.glow .title-bar,
+body.glow .top-bar,
+body.glow .desktop-icon .icon-label,
+body.glow h1, body.glow h2 {
+  text-shadow:
+    0 0 4px var(--accent),
+    0 0 1px rgba(255, 255, 255, 0.4);
+}
+body.glow .pixel-cursor,
+body.glow .accent-text {
+  text-shadow:
+    0 0 6px var(--accent),
+    0 0 12px var(--accent);
+}
+body.glow .win {
+  box-shadow:
+    6px 6px 0 0 var(--shadow),
+    0 0 18px rgba(0, 0, 0, 0.35);
+}
+body.glow.mode-modern .win {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 24px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Respect reduced-motion preference — kill scrolling/flicker animations. */
+@media (prefers-reduced-motion: reduce) {
+  body.crt::after,
+  body.noise::before,
+  body.flicker { animation: none; }
+}
