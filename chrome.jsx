@@ -375,15 +375,8 @@ function TopBar({ activeTitle, lang = 'en', onCycleLang }) {
         <span className="glyph" />
         <span>{CONFIG.os.name} {CONFIG.os.version}</span>
       </div>
-      <div className="topbar-menus">
-        <div className="topbar-menu">{activeTitle || t('topbar.desktop')}</div>
-        <div className="topbar-menu">{t('topbar.file')}</div>
-        <div className="topbar-menu">{t('topbar.view')}</div>
-        <div className="topbar-menu">{t('topbar.help')}</div>
-      </div>
+      <div className="topbar-menus" />
       <div className="topbar-tray">
-        <span className="pill">WIFI ✓</span>
-        <span className="pill">BAT 87%</span>
         <span>{fmt}</span>
         {CONFIG.features.showLangButton && (
           <button className="topbar-lang" onClick={onCycleLang}
