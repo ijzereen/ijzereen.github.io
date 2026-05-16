@@ -319,18 +319,42 @@ body.mode-modern.lang-ko .tl-item .when {
 .post-content li { margin: 4px 0; line-height: 1.5; }
 .post-content a  { color: var(--accent); }
 .post-content img { max-width: 100%; }
+/* Inline code — stays light, fits the prose */
 .post-content code {
   background: var(--chrome-2); padding: 1px 6px;
-  border: 1px solid var(--ink); font-family: 'VT323', monospace;
-  font-size: 0.95em;
+  border: 1px solid var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
 }
+/* Code block — dark terminal look, pixel border on the outside */
 .post-content pre {
-  background: var(--chrome-2); padding: 12px; overflow: auto;
+  background: #1c1f24;
+  padding: 0; overflow: auto;
   border: var(--pixel) solid var(--ink);
   box-shadow: 4px 4px 0 0 var(--shadow);
-  margin: 12px 0;
+  margin: 14px 0;
 }
-.post-content pre code { background: transparent; padding: 0; border: none; }
+.post-content pre code {
+  display: block;
+  background: transparent; border: none;
+  padding: 14px 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #d7dae0;
+}
+/* hljs theme already paints tokens — keep its background transparent so our
+   dark .post-content pre shows through (otherwise hljs overrides with its
+   own block bg). */
+.post-content pre code.hljs { background: transparent; padding: 14px 16px; }
+
+/* KaTeX block math — center it and give breathing room */
+.post-content .katex-display {
+  margin: 16px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.post-content .katex { font-size: 1.05em; }
 .post-content blockquote {
   border-left: var(--pixel) solid var(--ink);
   background: var(--chrome-2);

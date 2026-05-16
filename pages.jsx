@@ -337,11 +337,40 @@ function FolderPage({ categoryId }) {
 }
 
 // Fetches a markdown file from Post/<folder>/<file>, strips YAML frontmatter,
-// renders the body through marked.js. Shown in its own window.
+// pre-processes $$…$$ / $…$ math into placeholders so marked doesn't mangle
+// underscores, renders body via marked.js, then swaps the placeholders for
+// KaTeX-rendered HTML and runs highlight.js on the code blocks.
+function renderPostMarkdown(md) {
+  const slots = [];
+  // Block math first ($$…$$, multiline) so the inline pass doesn't see it.
+  let processed = md.replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => {
+    const i = slots.push({ tex: tex.trim(), display: true }) - 1;
+    return `@@MATH${i}@@`;
+  });
+  // Inline math: single $…$ on a single line, not adjacent to another $.
+  processed = processed.replace(/(?<!\$)\$([^\$\n]+?)\$(?!\$)/g, (_, tex) => {
+    const i = slots.push({ tex: tex.trim(), display: false }) - 1;
+    return `@@MATH${i}@@`;
+  });
+  let html = (window.marked && window.marked.parse(processed)) || processed;
+  html = html.replace(/@@MATH(\d+)@@/g, (_, i) => {
+    const { tex, display } = slots[Number(i)];
+    if (!window.katex) return `<code>${tex}</code>`;
+    try {
+      return window.katex.renderToString(tex, { displayMode: display, throwOnError: false });
+    } catch (e) {
+      return `<code>${tex}</code>`;
+    }
+  });
+  return html;
+}
+
 function PostPage({ basePath, folder, file }) {
   const [html, setHtml] = React.useState('');
   const [error, setError] = React.useState(null);
+  const containerRef = React.useRef(null);
   const url = `${basePath}/${folder}/${file}`;
+
   React.useEffect(() => {
     let cancelled = false;
     fetch(url)
@@ -349,18 +378,25 @@ function PostPage({ basePath, folder, file }) {
       .then((text) => {
         if (cancelled) return;
         const body = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n*/, '');
-        const out = window.marked ? window.marked.parse(body) : body;
-        setHtml(out);
+        setHtml(renderPostMarkdown(body));
       })
       .catch((e) => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
   }, [url]);
+
+  React.useEffect(() => {
+    if (!html || !containerRef.current || !window.hljs) return;
+    containerRef.current.querySelectorAll('pre code').forEach((el) => {
+      try { window.hljs.highlightElement(el); } catch (_) { /* ignore */ }
+    });
+  }, [html]);
 
   if (error) {
     return <div className="win-content"><p>load failed: {error}</p><p className="cap">{url}</p></div>;
   }
   return (
     <div
+      ref={containerRef}
       className="win-content post-content"
       dangerouslySetInnerHTML={{ __html: html || '<p class="cap">loading…</p>' }}
     />
