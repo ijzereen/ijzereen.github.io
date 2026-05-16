@@ -480,14 +480,23 @@ function buildMavericksSvg() {
 
 function Wallpaper({ mode }) {
   const svg = React.useMemo(() => buildMavericksSvg(), []);
-  if (mode !== 'mavericks') return null;
-  return (
-    <div
-      className="wallpaper-layer"
-      aria-hidden="true"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
-  );
+  if (mode === 'image') {
+    return (
+      <div className="wallpaper-layer" aria-hidden="true">
+        <img src="assets/wallpaper-wave.png" alt="" className="wallpaper-img" />
+      </div>
+    );
+  }
+  if (mode === 'procedural') {
+    return (
+      <div
+        className="wallpaper-layer"
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+    );
+  }
+  return null;
 }
 
 // ── Gallery view (used by categories with view: 'gallery') ────────────────

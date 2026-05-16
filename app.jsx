@@ -13,7 +13,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "glow": true,
   "noise": false,
   "flicker": false,
-  "wallpaper": "mavericks"
+  "wallpaper": "image"
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -341,9 +341,10 @@ function App() {
           <TweakSection label="Theme">
             <TweakColor label="Palette" value={t.palette} options={PALETTES}
                         onChange={(v) => setTweak('palette', v)} />
-            <TweakRadio label="Wallpaper" value={t.wallpaper || 'mavericks'}
-                        options={[{ value: 'mavericks', label: 'Pixel Wave' },
-                                  { value: 'none',      label: 'Palette only' }]}
+            <TweakRadio label="Wallpaper" value={t.wallpaper || 'image'}
+                        options={[{ value: 'image',      label: 'Pixel Wave' },
+                                  { value: 'procedural', label: 'Procedural' },
+                                  { value: 'none',       label: 'Palette only' }]}
                         onChange={(v) => setTweak('wallpaper', v)} />
           </TweakSection>
           <TweakSection label="Retro FX">
