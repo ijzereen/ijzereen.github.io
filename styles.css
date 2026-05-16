@@ -352,28 +352,31 @@ body.mode-modern.lang-ko .tl-item .when {
    confused with curved s). Strong retro game UI feel. Single weight.
    Korean per-glyph falls through Galmuri11 then Noto Sans KR. Generous
    line-height because square glyphs crowd at tight leading. */
-.post-content h1,
-.post-content h2,
-.post-content h3 {
+/* Selector intentionally nests inside .win to beat the later
+   `.win h1, .win h2, .win h3 { font-family: Pixelify Sans }` rule
+   (same specificity as .post-content h1 alone, source order wins). */
+.win .post-content h1,
+.win .post-content h2,
+.win .post-content h3 {
   font-family: 'Press Start 2P', 'Galmuri11', 'Noto Sans KR', monospace;
   font-weight: 400;
   letter-spacing: 0;
   text-shadow: none;
   color: var(--ink);
 }
-.post-content h1 {
+.win .post-content h1 {
   font-size: 20px;
   line-height: 1.45;
   margin: 6px 0 22px;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--ink);
 }
-.post-content h2 {
+.win .post-content h2 {
   font-size: 15px;
   line-height: 1.55;
   margin: 30px 0 14px;
 }
-.post-content h3 {
+.win .post-content h3 {
   font-size: 12px;
   line-height: 1.6;
   margin: 22px 0 10px;
