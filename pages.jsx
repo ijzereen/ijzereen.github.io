@@ -345,89 +345,125 @@ function FolderPage({ categoryId }) {
 // slice). No external image asset is fetched.
 
 const WALLPAPER_PALETTE = {
-  abyss:  '#03081a',
-  deep:   '#071230',
-  deep2:  '#0c1c44',
-  mid:    '#163866',
-  light:  '#2a608e',
-  foamLo: '#4f88b6',
-  foam:   '#bcd4dc',
-  white:  '#e8f1f5',
+  abyss:  '#02050f',
+  deepK:  '#03081a',
+  deep:   '#061027',
+  deep2:  '#0a1a36',
+  mid:    '#102e58',
+  midL:   '#1a4a7c',
+  light:  '#2a6da6',
+  glow:   '#5fa1c8',
+  foamLo: '#a8c8d8',
+  foam:   '#d0e2ea',
+  white:  '#f0f6f9',
 };
 
 function buildMavericksSvg() {
-  const W = 80, H = 50;
+  const W = 96, H = 60;
   const C = WALLPAPER_PALETTE;
-  // Tiny deterministic PRNG so reloads produce the same picture.
   let s = 1337;
   const rand = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
 
   const grid = Array.from({ length: H }, () => Array(W).fill(C.deep));
 
-  // Depth banding — top deepens slightly, mid is base, bottom darkens.
+  // Depth banding — almost-black at the top and bottom, mid-tone band in the
+  // middle. The wave will cut across the mid band.
   for (let y = 0; y < H; y++) {
-    for (let x = 0; x < W; x++) {
-      if (y < 4)            grid[y][x] = C.abyss;
-      else if (y < 14)      grid[y][x] = C.deep;
-      else if (y < 28)      grid[y][x] = C.deep2;
-      else if (y < H - 4)   grid[y][x] = C.deep;
-      else                  grid[y][x] = C.abyss;
-    }
+    let base;
+    if (y < 3)        base = C.abyss;
+    else if (y < 9)   base = C.deepK;
+    else if (y < 18)  base = C.deep;
+    else if (y < 28)  base = C.deep2;
+    else if (y < 40)  base = C.deep2;
+    else if (y < 52)  base = C.deep;
+    else              base = C.deepK;
+    for (let x = 0; x < W; x++) grid[y][x] = base;
   }
 
-  // Texture: sparse noise to break flat bands.
-  for (let y = 0; y < H; y++) {
+  // Subtle surface striping — pull random cells to a neighbor shade to break
+  // flat horizontal bands without looking like static noise.
+  for (let y = 4; y < H - 4; y++) {
     for (let x = 0; x < W; x++) {
-      if (rand() < 0.05) {
-        grid[y][x] = rand() < 0.5 ? C.deep : C.deep2;
+      if (rand() < 0.04) {
+        const cur = grid[y][x];
+        if (cur === C.deep)        grid[y][x] = C.deep2;
+        else if (cur === C.deep2)  grid[y][x] = C.mid;
+        else if (cur === C.deepK)  grid[y][x] = C.deep;
       }
     }
   }
 
-  // The curl: an asymmetric hump peaking right of center, with light water
-  // banding below the crest line to suggest the inside of the tube.
-  const crestFor = (x) => {
+  // Wave crest curve — asymmetric hump centered slightly left of middle,
+  // with a tilt so the left side reaches higher than the right.
+  const crestY = (x) => {
     const t = x / W;
-    const hump = Math.exp(-Math.pow((t - 0.58) / 0.30, 2));
-    return Math.round(24 - 8 * hump);
+    const width = t < 0.48 ? 0.22 : 0.34;
+    const hump = Math.exp(-Math.pow((t - 0.48) / width, 2));
+    return Math.round(28 - 16 * hump);
   };
+  const humpAt = (x) => {
+    const t = x / W;
+    const width = t < 0.48 ? 0.22 : 0.34;
+    return Math.exp(-Math.pow((t - 0.48) / width, 2));
+  };
+
+  // Tube interior glow — a lit cyan-teal band right under the foam crest in
+  // the peak region. Brighter near the apex, dimmer toward the wave shoulders.
   for (let x = 0; x < W; x++) {
-    const cy = crestFor(x);
-    for (let dy = 1; dy <= 7; dy++) {
+    const cy = crestY(x);
+    const h = humpAt(x);
+    if (h < 0.25) continue;
+    const depth = Math.max(2, Math.floor(h * 7));
+    for (let dy = 1; dy <= depth; dy++) {
       const y = cy + dy;
       if (y < 0 || y >= H) continue;
-      const color =
-        dy === 1 ? C.foamLo :
-        dy === 2 ? C.light  :
-        dy === 3 ? C.light  :
-        dy === 4 ? C.mid    :
-        dy === 5 ? C.mid    :
-                   C.deep2;
+      let color;
+      if (dy === 1)      color = h > 0.7 ? C.glow  : C.light;
+      else if (dy === 2) color = h > 0.7 ? C.light : C.midL;
+      else if (dy === 3) color = h > 0.6 ? C.midL  : C.mid;
+      else if (dy <= 5)  color = C.mid;
+      else               color = C.deep2;
       grid[y][x] = color;
     }
-    if (cy >= 0 && cy < H) grid[cy][x] = C.foam;
-    if (cy - 1 >= 0 && rand() < 0.7) grid[cy - 1][x] = C.white;
-    if (cy - 2 >= 0 && rand() < 0.35) grid[cy - 2][x] = C.foam;
   }
 
-  // Foam splash particles above the crest.
-  for (let i = 0; i < 60; i++) {
-    const x = Math.floor(rand() * W);
-    const cy = crestFor(x);
-    const y = cy - (1 + Math.floor(rand() * 5));
-    if (y >= 0 && y < H) {
-      grid[y][x] = rand() < 0.5 ? C.white : C.foam;
+  // Foam crest line — bright pixels along the curve, brightest where the
+  // wave peaks. Adds an extra row above for thickness in the peak zone.
+  for (let x = 0; x < W; x++) {
+    const cy = crestY(x);
+    if (cy < 0 || cy >= H) continue;
+    const h = humpAt(x);
+    grid[cy][x] = h > 0.55 ? C.white : C.foam;
+    if (cy - 1 >= 0 && h > 0.4 && rand() < 0.85) {
+      grid[cy - 1][x] = h > 0.7 ? C.foam : C.foamLo;
+    }
+    if (cy - 2 >= 0 && h > 0.6 && rand() < 0.5) {
+      grid[cy - 2][x] = C.foamLo;
     }
   }
 
-  // Sparkle highlights catching light on the lower water.
-  for (let i = 0; i < 24; i++) {
+  // Foam splash particles above the crest — denser and taller where the
+  // hump is strongest, suggesting upward spray from the breaking lip.
+  for (let i = 0; i < 240; i++) {
     const x = Math.floor(rand() * W);
-    const y = 30 + Math.floor(rand() * 16);
-    if (y < H) grid[y][x] = C.mid;
+    const h = humpAt(x);
+    if (rand() > h * 0.85 + 0.05) continue;
+    const reach = Math.floor(1 + rand() * 9 * h);
+    const cy = crestY(x);
+    const y = cy - reach;
+    if (y < 0 || y >= H) continue;
+    const pick = rand();
+    grid[y][x] = pick < 0.35 ? C.white : pick < 0.7 ? C.foam : C.foamLo;
   }
 
-  // Run-length encode rows into <rect> spans to keep the SVG small.
+  // Ripple highlights catching light on the lower water.
+  for (let i = 0; i < 50; i++) {
+    const x = Math.floor(rand() * W);
+    const y = 40 + Math.floor(rand() * 16);
+    if (y < H) grid[y][x] = rand() < 0.5 ? C.mid : C.deep2;
+  }
+
+  // Run-length encode rows into <rect> spans.
   let rects = '';
   for (let y = 0; y < H; y++) {
     let start = 0;
