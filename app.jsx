@@ -255,7 +255,12 @@ function App() {
     setActiveId(id);
   };
   const moveWin = (id, x, y) => {
-    setWindows((ws) => ws.map((w) => w.id === id ? { ...w, x, y } : w));
+    // Clamp y so a window can't be dragged above the topbar (height 28 +
+    // 3px pixel border = 31). Lets the user reach the very edge but never
+    // hide the titlebar under the system chrome.
+    const minY = 31;
+    const clampedY = Math.max(minY, y);
+    setWindows((ws) => ws.map((w) => w.id === id ? { ...w, x, y: clampedY } : w));
   };
   const resizeWin = (id, w, h) => {
     setWindows((ws) => ws.map((win) => win.id === id ? { ...win, w, h } : win));
