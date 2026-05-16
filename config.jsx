@@ -36,17 +36,19 @@ const CONFIG = {
   // write new posts — { id, title (string or {en, ko}), date, file? }.
   posts: {
     basePath: 'Post',
+    // Mirrors Post/ on disk — folder names kept verbatim (no translation),
+    // containment matches the filesystem.
     categories: [
-      { id: 'drawing', folder: 'Drawing', icon: 'folder',
-        label: { en: 'Drawing', ko: '드로잉' }, items: [] },
-      { id: 'movie',   folder: 'Movie',   icon: 'folder',
-        label: { en: 'Movie',   ko: '영화' },   items: [] },
-      { id: 'game',    folder: 'Game',    icon: 'folder',
-        label: { en: 'Game',    ko: '게임' },   items: [] },
-      { id: 'blog',    folder: 'Blog',    icon: 'folder',
-        label: { en: 'Blog',    ko: '블로그' }, items: [] },
-      { id: 'book',    folder: 'Book',    icon: 'folder',
-        label: { en: 'Book',    ko: '책' },     items: [] },
+      { id: 'drawing', folder: 'Drawing', icon: 'folder', label: 'Drawing', items: [] },
+      { id: 'movie',   folder: 'Movie',   icon: 'folder', label: 'Movie',   items: [] },
+      { id: 'game',    folder: 'Game',    icon: 'folder', label: 'Game',    items: [] },
+      { id: 'blog',    folder: 'Blog',    icon: 'folder', label: 'Blog',
+        items: [
+          { id: '2025-08-11-lexical-search',
+            title: '2025-08-11-Lexical-Search',
+            date: '2025-08-11' },
+        ] },
+      { id: 'book',    folder: 'Book',    icon: 'folder', label: 'Book',    items: [] },
     ],
   },
 };
