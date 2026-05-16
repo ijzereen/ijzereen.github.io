@@ -1104,6 +1104,30 @@ body.mode-modern .m-back { border-radius: 0; border-width: 1px; }
 body.mode-modern .m-shell,
 body.mode-modern .m-page { inset: 32px 0 0 0; }
 
+/* ── Wallpaper ────────────────────────────────────────────────────────────
+   Procedurally-generated inline SVG ocean scene. Lives inside .desktop as
+   a positioned layer beneath the icons and windows. The inner <svg> is
+   stretched to fill via 100% width/height; crispEdges + integer-cell
+   coordinates keep the pixel-art look chunky at any viewport size.
+*/
+.wallpaper-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.wallpaper-layer svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+.desktop > .desktop-icons,
+.desktop > .win,
+.desktop > .desktop-icon { position: relative; z-index: 1; }
+
 /* ── Retro FX ─────────────────────────────────────────────────────────────
    Bound to body classes from app.jsx — toggle via Tweaks panel.
 

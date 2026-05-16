@@ -12,7 +12,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "scanlines": 35,
   "glow": true,
   "noise": false,
-  "flicker": false
+  "flicker": false,
+  "wallpaper": "mavericks"
 }/*EDITMODE-END*/;
 
 // Curated palettes: [bg, chrome, titlebar, accent]
@@ -284,6 +285,7 @@ function App() {
       ) : (
         <>
           <div className="desktop" onClick={() => setSelectedIcon(null)}>
+            <Wallpaper mode={t.wallpaper || 'none'} />
             {t.showDesktopIcons && (
               <div className="desktop-icons">
                 {DESKTOP_FILES.map((f) => (
@@ -339,6 +341,10 @@ function App() {
           <TweakSection label="Theme">
             <TweakColor label="Palette" value={t.palette} options={PALETTES}
                         onChange={(v) => setTweak('palette', v)} />
+            <TweakRadio label="Wallpaper" value={t.wallpaper || 'mavericks'}
+                        options={[{ value: 'mavericks', label: 'Pixel Wave' },
+                                  { value: 'none',      label: 'Palette only' }]}
+                        onChange={(v) => setTweak('wallpaper', v)} />
           </TweakSection>
           <TweakSection label="Retro FX">
             <TweakToggle label="CRT scanlines + vignette" value={!!t.crt}

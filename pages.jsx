@@ -337,6 +337,123 @@ function FolderPage({ categoryId }) {
   );
 }
 
+// ── Wallpaper ─────────────────────────────────────────────────────────────
+// Procedurally-drawn pixel-art ocean wave inspired by the OS X Mavericks
+// composition (deep water + breaking curl + foam crest). The art is built
+// cell-by-cell on a coarse grid and rendered as an inline SVG that scales
+// crisply to any viewport size (shape-rendering=crispEdges + preserveAspectRatio
+// slice). No external image asset is fetched.
+
+const WALLPAPER_PALETTE = {
+  abyss:  '#03081a',
+  deep:   '#071230',
+  deep2:  '#0c1c44',
+  mid:    '#163866',
+  light:  '#2a608e',
+  foamLo: '#4f88b6',
+  foam:   '#bcd4dc',
+  white:  '#e8f1f5',
+};
+
+function buildMavericksSvg() {
+  const W = 80, H = 50;
+  const C = WALLPAPER_PALETTE;
+  // Tiny deterministic PRNG so reloads produce the same picture.
+  let s = 1337;
+  const rand = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+
+  const grid = Array.from({ length: H }, () => Array(W).fill(C.deep));
+
+  // Depth banding — top deepens slightly, mid is base, bottom darkens.
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (y < 4)            grid[y][x] = C.abyss;
+      else if (y < 14)      grid[y][x] = C.deep;
+      else if (y < 28)      grid[y][x] = C.deep2;
+      else if (y < H - 4)   grid[y][x] = C.deep;
+      else                  grid[y][x] = C.abyss;
+    }
+  }
+
+  // Texture: sparse noise to break flat bands.
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (rand() < 0.05) {
+        grid[y][x] = rand() < 0.5 ? C.deep : C.deep2;
+      }
+    }
+  }
+
+  // The curl: an asymmetric hump peaking right of center, with light water
+  // banding below the crest line to suggest the inside of the tube.
+  const crestFor = (x) => {
+    const t = x / W;
+    const hump = Math.exp(-Math.pow((t - 0.58) / 0.30, 2));
+    return Math.round(24 - 8 * hump);
+  };
+  for (let x = 0; x < W; x++) {
+    const cy = crestFor(x);
+    for (let dy = 1; dy <= 7; dy++) {
+      const y = cy + dy;
+      if (y < 0 || y >= H) continue;
+      const color =
+        dy === 1 ? C.foamLo :
+        dy === 2 ? C.light  :
+        dy === 3 ? C.light  :
+        dy === 4 ? C.mid    :
+        dy === 5 ? C.mid    :
+                   C.deep2;
+      grid[y][x] = color;
+    }
+    if (cy >= 0 && cy < H) grid[cy][x] = C.foam;
+    if (cy - 1 >= 0 && rand() < 0.7) grid[cy - 1][x] = C.white;
+    if (cy - 2 >= 0 && rand() < 0.35) grid[cy - 2][x] = C.foam;
+  }
+
+  // Foam splash particles above the crest.
+  for (let i = 0; i < 60; i++) {
+    const x = Math.floor(rand() * W);
+    const cy = crestFor(x);
+    const y = cy - (1 + Math.floor(rand() * 5));
+    if (y >= 0 && y < H) {
+      grid[y][x] = rand() < 0.5 ? C.white : C.foam;
+    }
+  }
+
+  // Sparkle highlights catching light on the lower water.
+  for (let i = 0; i < 24; i++) {
+    const x = Math.floor(rand() * W);
+    const y = 30 + Math.floor(rand() * 16);
+    if (y < H) grid[y][x] = C.mid;
+  }
+
+  // Run-length encode rows into <rect> spans to keep the SVG small.
+  let rects = '';
+  for (let y = 0; y < H; y++) {
+    let start = 0;
+    let color = grid[y][0];
+    for (let x = 1; x <= W; x++) {
+      if (x === W || grid[y][x] !== color) {
+        rects += `<rect x="${start}" y="${y}" width="${x - start}" height="1" fill="${color}"/>`;
+        if (x < W) { start = x; color = grid[y][x]; }
+      }
+    }
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" shape-rendering="crispEdges">${rects}</svg>`;
+}
+
+function Wallpaper({ mode }) {
+  const svg = React.useMemo(() => buildMavericksSvg(), []);
+  if (mode !== 'mavericks') return null;
+  return (
+    <div
+      className="wallpaper-layer"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
+}
+
 // ── Gallery view (used by categories with view: 'gallery') ────────────────
 // Renders items as a thumbnail grid. Each tile reads EXIF date from the
 // image and shows the weekday + capture date as caption. Clicking a tile
@@ -554,5 +671,6 @@ Object.assign(window, {
   AboutPage, ResumePage, ContactPage, GithubPage,
   ReadmePage, NotesPage, TrashPage, FolderPage, PostPage,
   GalleryPage, GalleryTile, ImagePage,
+  Wallpaper,
   PixelAvatar, ContactCard, Repo,
 });
