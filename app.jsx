@@ -51,6 +51,27 @@ const APPS = {
       w: 480, h: 480,
     },
   ])),
+
+  // Per-post viewer windows — one per item in each category. Opened from
+  // FolderPage when a user clicks a post.
+  ...Object.fromEntries(
+    CONFIG.posts.categories.flatMap((c) =>
+      (c.items || [])
+        .filter((item) => item.file)
+        .map((item) => [
+          `post-${c.id}-${item.id}`,
+          {
+            id: `post-${c.id}-${item.id}`,
+            title: `${c.folder}/${item.file}`,
+            icon: 'file',
+            render: () => (
+              <PostPage basePath={CONFIG.posts.basePath} folder={c.folder} file={item.file} />
+            ),
+            w: 720, h: 600,
+          },
+        ])
+    )
+  ),
 };
 
 const DOCK_ITEMS = [
@@ -153,7 +174,13 @@ function App() {
   }, []);
 
   // Window manager
-  const launchApp = (appId) => {
+  const launchRef = React.useRef(null);
+  React.useEffect(() => {
+    window.__launch = (id) => launchRef.current && launchRef.current(id);
+    return () => { delete window.__launch; };
+  }, []);
+
+  const launchApp = React.useCallback((appId) => {
     const app = APPS[appId];
     if (!app) return;
     const existing = windows.find((w) => w.appId === appId);
@@ -178,7 +205,10 @@ function App() {
     setWindows((ws) => [...ws, newWin]);
     setZCounter((z) => z + 1);
     setActiveId(id);
-  };
+  }, [windows, zCounter]);
+
+  // Keep the window-global launcher pointed at the latest closure.
+  launchRef.current = launchApp;
 
   const closeWin = (id) => {
     setWindows((ws) => ws.filter((w) => w.id !== id));

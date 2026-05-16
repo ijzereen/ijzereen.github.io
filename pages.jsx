@@ -317,13 +317,53 @@ function FolderPage({ categoryId }) {
         <ul style={{ paddingLeft: 18, margin: 0 }}>
           {items.map((item) => (
             <li key={item.id} style={{ marginBottom: 8 }}>
-              <strong>{localize(item.title, lang)}</strong>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (window.__launch) window.__launch(`post-${cat.id}-${item.id}`);
+                }}
+                style={{ color: 'var(--accent)', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                <strong>{localize(item.title, lang)}</strong>
+              </a>
               {item.date && <span className="cap"> · {item.date}</span>}
             </li>
           ))}
         </ul>
       )}
     </div>
+  );
+}
+
+// Fetches a markdown file from Post/<folder>/<file>, strips YAML frontmatter,
+// renders the body through marked.js. Shown in its own window.
+function PostPage({ basePath, folder, file }) {
+  const [html, setHtml] = React.useState('');
+  const [error, setError] = React.useState(null);
+  const url = `${basePath}/${folder}/${file}`;
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch(url)
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
+      .then((text) => {
+        if (cancelled) return;
+        const body = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n*/, '');
+        const out = window.marked ? window.marked.parse(body) : body;
+        setHtml(out);
+      })
+      .catch((e) => { if (!cancelled) setError(e.message); });
+    return () => { cancelled = true; };
+  }, [url]);
+
+  if (error) {
+    return <div className="win-content"><p>load failed: {error}</p><p className="cap">{url}</p></div>;
+  }
+  return (
+    <div
+      className="win-content post-content"
+      dangerouslySetInnerHTML={{ __html: html || '<p class="cap">loading…</p>' }}
+    />
   );
 }
 
@@ -366,6 +406,6 @@ function PixelAvatar({ size = 64 }) {
 
 Object.assign(window, {
   AboutPage, ResumePage, ContactPage, GithubPage,
-  ReadmePage, NotesPage, TrashPage, FolderPage,
+  ReadmePage, NotesPage, TrashPage, FolderPage, PostPage,
   PixelAvatar, ContactCard, Repo,
 });

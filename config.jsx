@@ -46,7 +46,8 @@ const CONFIG = {
         items: [
           { id: '2025-08-11-lexical-search',
             title: '2025-08-11-Lexical-Search',
-            date: '2025-08-11' },
+            date: '2025-08-11',
+            file: '2025-08-11-Lexical-Search.md' },
         ] },
       { id: 'book',    folder: 'Book',    icon: 'folder', label: 'Book',    items: [] },
     ],

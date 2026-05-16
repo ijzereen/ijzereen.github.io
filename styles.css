@@ -307,6 +307,42 @@ body.mode-modern.lang-ko .tl-item .when {
   padding: 18px 22px 22px;
 }
 
+/* Markdown post body — rendered by marked.js into .post-content */
+.post-content h1 { font-size: 22px; margin: 4px 0 14px; line-height: 1.25; }
+.post-content h2 {
+  font-size: 18px; margin: 22px 0 10px;
+  padding-bottom: 4px; border-bottom: var(--pixel) solid var(--ink);
+}
+.post-content h3 { font-size: 16px; margin: 18px 0 8px; }
+.post-content p  { line-height: 1.6; margin: 10px 0; }
+.post-content ul, .post-content ol { padding-left: 24px; margin: 10px 0; }
+.post-content li { margin: 4px 0; line-height: 1.5; }
+.post-content a  { color: var(--accent); }
+.post-content img { max-width: 100%; }
+.post-content code {
+  background: var(--chrome-2); padding: 1px 6px;
+  border: 1px solid var(--ink); font-family: 'VT323', monospace;
+  font-size: 0.95em;
+}
+.post-content pre {
+  background: var(--chrome-2); padding: 12px; overflow: auto;
+  border: var(--pixel) solid var(--ink);
+  box-shadow: 4px 4px 0 0 var(--shadow);
+  margin: 12px 0;
+}
+.post-content pre code { background: transparent; padding: 0; border: none; }
+.post-content blockquote {
+  border-left: var(--pixel) solid var(--ink);
+  background: var(--chrome-2);
+  padding: 6px 12px; margin: 12px 0;
+}
+.post-content table { border-collapse: collapse; margin: 12px 0; }
+.post-content th, .post-content td {
+  border: 1px solid var(--ink); padding: 4px 10px; text-align: left;
+}
+.post-content th { background: var(--chrome-2); }
+.post-content hr { border: 0; border-top: var(--pixel) solid var(--ink); margin: 18px 0; }
+
 /* Custom scrollbars to match the chrome */
 .win-body::-webkit-scrollbar { width: 16px; height: 16px; }
 .win-body::-webkit-scrollbar-track {
