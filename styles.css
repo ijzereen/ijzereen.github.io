@@ -1155,9 +1155,11 @@ body.mode-modern .m-page { inset: 32px 0 0 0; }
   image-rendering: crisp-edges;
 }
 .wallpaper-layer .wallpaper-img { object-fit: cover; }
-.desktop > .desktop-icons,
-.desktop > .win,
-.desktop > .desktop-icon { position: relative; z-index: 1; }
+/* Wallpaper sits at z-index 0; icons and windows already have higher
+   stacking (windows via inline z-index from win.z, icons via DOM order
+   after wallpaper-layer), so no override needed. The old rule here
+   forced position:relative on .win which broke absolute positioning
+   and made drag-up stop at the natural flow y of each window. */
 
 /* ── Retro FX ─────────────────────────────────────────────────────────────
    Bound to body classes from app.jsx — toggle via Tweaks panel.
