@@ -347,37 +347,36 @@ body.mode-modern.lang-ko .tl-item .when {
 }
 
 /* Markdown post body — rendered by marked.js into .post-content */
-/* Post body headings — Silkscreen. Already loaded for the chrome (dock,
-   topbar, win-titlebar), uses angular pixel glyphs so digits are square
-   and never collide with letters (no more 5-vs-s confusion that VT323
-   had). Korean per-glyph falls through Galmuri11 then Noto Sans KR. */
+/* Post body headings — Press Start 2P. NES-era 8x8 pixel grid with
+   uncompromisingly angular digits (the 5 is straight strokes, can't be
+   confused with curved s). Strong retro game UI feel. Single weight.
+   Korean per-glyph falls through Galmuri11 then Noto Sans KR. Generous
+   line-height because square glyphs crowd at tight leading. */
 .post-content h1,
 .post-content h2,
 .post-content h3 {
-  font-family: 'Silkscreen', 'Galmuri11', 'Noto Sans KR', monospace;
+  font-family: 'Press Start 2P', 'Galmuri11', 'Noto Sans KR', monospace;
+  font-weight: 400;
   letter-spacing: 0;
   text-shadow: none;
   color: var(--ink);
 }
 .post-content h1 {
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 1.3;
-  margin: 6px 0 18px;
-  padding-bottom: 8px;
+  font-size: 20px;
+  line-height: 1.45;
+  margin: 6px 0 22px;
+  padding-bottom: 10px;
   border-bottom: 2px solid var(--ink);
 }
 .post-content h2 {
-  font-weight: 700;
-  font-size: 19px;
-  line-height: 1.35;
-  margin: 28px 0 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 30px 0 14px;
 }
 .post-content h3 {
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 1.4;
-  margin: 22px 0 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 22px 0 10px;
   color: var(--ink-soft);
 }
 .post-content p  { line-height: 1.6; margin: 10px 0; }
