@@ -9,7 +9,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "designMode": "pixel",
   "lang": "ko",
   "crt": true,
-  "scanlines": 11,
+  "scanlines": 0,
   "glow": true,
   "noise": false,
   "flicker": false,
@@ -166,13 +166,17 @@ function App() {
   }, [t.designMode]);
 
   // Retro FX: toggle body classes and bind --scanline-alpha for intensity.
+  // Scanlines render as a separate overlay (body.scanlines-on::after) so
+  // turning the slider to 0 fully removes the layer + its animation while
+  // the .crt vignette stays.
   React.useEffect(() => {
     document.body.classList.toggle('crt', !!t.crt);
     document.body.classList.toggle('glow', !!t.glow);
     document.body.classList.toggle('noise', !!t.noise);
     document.body.classList.toggle('flicker', !!t.flicker);
-    const alpha = Math.max(0, Math.min(100, Number(t.scanlines) || 0)) / 100;
-    document.documentElement.style.setProperty('--scanline-alpha', alpha.toFixed(3));
+    const intensity = Math.max(0, Math.min(100, Number(t.scanlines) || 0));
+    document.body.classList.toggle('scanlines-on', !!t.crt && intensity > 0);
+    document.documentElement.style.setProperty('--scanline-alpha', (intensity / 100).toFixed(3));
   }, [t.crt, t.glow, t.noise, t.flicker, t.scanlines]);
 
   // Apply language to <html lang> + body class for font fallback

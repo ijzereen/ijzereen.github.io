@@ -1139,9 +1139,17 @@ body.mode-modern .m-page { inset: 32px 0 0 0; }
    .flicker → subtle global brightness flicker
 */
 
+/* Vignette only — always present when .crt is on. */
 body.crt::after {
   content: '';
   position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+}
+/* Scanlines — stacked on top of the vignette only when the slider is > 0
+   (toggled via .scanlines-on from app.jsx). Code kept so flipping the
+   slider back up re-enables the layer + roll animation. */
+body.crt.scanlines-on::after {
   background:
     repeating-linear-gradient(
       to bottom,
@@ -1151,7 +1159,6 @@ body.crt::after {
       transparent 3px
     ),
     radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
-  mix-blend-mode: multiply;
   animation: crt-scan 9s linear infinite;
 }
 @keyframes crt-scan {
@@ -1215,7 +1222,7 @@ body.glow.mode-modern .win {
 
 /* Respect reduced-motion preference — kill scrolling/flicker animations. */
 @media (prefers-reduced-motion: reduce) {
-  body.crt::after,
+  body.crt.scanlines-on::after,
   body.noise::before,
   body.flicker { animation: none; }
 }
