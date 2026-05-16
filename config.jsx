@@ -13,6 +13,12 @@
 // for structural items like post categories.
 // ─────────────────────────────────────────────────────────────────────────
 
+// Pull a category's items from the auto-generated posts-data.js manifest.
+// Falls back to an empty array if the script hasn't been run yet.
+function _postItems(catId) {
+  return (window.POSTS_DATA && window.POSTS_DATA[catId]) || [];
+}
+
 const CONFIG = {
   os: {
     name: 'PIXEL/OS',
@@ -32,29 +38,24 @@ const CONFIG = {
     showBootSplash: true,
   },
 
-  // Each category becomes a folder icon on the desktop. Add items as you
-  // write new posts — { id, title (string or {en, ko}), date, file? }.
+  // Each category becomes a folder icon on the desktop. The items[] for
+  // every category is populated from window.POSTS_DATA, which is generated
+  // by scripts/index-posts.py from the actual contents of Post/<folder>/.
+  // To add a new post or drawing: drop the file in Post/<folder>/ and run
+  //   python3 scripts/index-posts.py
   posts: {
     basePath: 'Post',
-    // Mirrors Post/ on disk — folder names kept verbatim (no translation),
-    // containment matches the filesystem.
     categories: [
       { id: 'drawing', folder: 'Drawing', icon: 'folder', label: 'Drawing',
-        view: 'gallery',
-        items: [
-          { id: 'img-3508', file: 'IMG_3508.jpeg' },
-          { id: 'img-3553', file: 'IMG_3553.jpeg' },
-        ] },
-      { id: 'movie',   folder: 'Movie',   icon: 'folder', label: 'Movie',   items: [] },
-      { id: 'game',    folder: 'Game',    icon: 'folder', label: 'Game',    items: [] },
+        view: 'gallery', items: _postItems('drawing') },
+      { id: 'movie',   folder: 'Movie',   icon: 'folder', label: 'Movie',
+        items: _postItems('movie') },
+      { id: 'game',    folder: 'Game',    icon: 'folder', label: 'Game',
+        items: _postItems('game') },
       { id: 'blog',    folder: 'Blog',    icon: 'folder', label: 'Blog',
-        items: [
-          { id: '2025-08-11-lexical-search',
-            title: '2025-08-11-Lexical-Search',
-            date: '2025-08-11',
-            file: '2025-08-11-Lexical-Search.md' },
-        ] },
-      { id: 'book',    folder: 'Book',    icon: 'folder', label: 'Book',    items: [] },
+        items: _postItems('blog') },
+      { id: 'book',    folder: 'Book',    icon: 'folder', label: 'Book',
+        items: _postItems('book') },
     ],
   },
 };
