@@ -3,46 +3,33 @@
 <head>
     {% include head.html title=page.title css="base,biohazard" %}
 </head>
-<body>
+<body class="pages-home">
 
-<div class="scene">
-    <div class="wall"></div>
-    <div class="desk">
-        <div class="desk-stain stain-1"></div>
-        <div class="desk-stain stain-2"></div>
-        <div class="desk-stain stain-3"></div>
-    </div>
+<main class="workspace">
+    <article class="sheet" role="document">
+        <div class="doc">
+            <h1 class="doc-title">IJZEREEN</h1>
+            <p class="doc-sub" data-type="어디서 무엇이 되어 다시 만나랴"></p>
 
-    <div class="obj macbook"
-         data-target="{{ '/blog/' | relative_url }}"
-         data-name="MACBOOK">
-        <span class="label">MACBOOK</span>
-        {% include svg/macbook.svg %}
-    </div>
+            <hr class="doc-rule">
 
-    <div class="obj folder"
-         data-target="{{ '/portfolio/' | relative_url }}"
-         data-name="DOSSIER">
-        <span class="label">DOSSIER</span>
-        {% include svg/folder.svg %}
-    </div>
-</div>
+            <nav class="doc-nav">
+                <a class="doc-link" href="{{ '/blog/' | relative_url }}">
+                    <span class="mark">—</span>
+                    <span class="lk-name">WRITING</span>
+                    <span class="lk-gloss">기록과 생각</span>
+                </a>
+                <a class="doc-link" href="{{ '/portfolio/' | relative_url }}">
+                    <span class="mark">—</span>
+                    <span class="lk-name">WORK</span>
+                    <span class="lk-gloss">만든 것들</span>
+                </a>
+            </nav>
 
-<div class="flashlight"></div>
-<div class="vignette"></div>
-<div class="grain"></div>
-
-<div class="cursor"><span></span></div>
-
-<div class="inspect" id="inspect">
-    <div class="inspect-back">ESC</div>
-    <div class="inspect-stage" id="inspectStage"></div>
-    <div class="inspect-meta">
-        <h1 id="inspectName"></h1>
-        <p id="inspectDesc"></p>
-        <div class="inspect-cta"></div>
-    </div>
-</div>
+            <span class="caret" aria-hidden="true"></span>
+        </div>
+    </article>
+</main>
 
 <script src="{{ '/assets/js/biohazard.js' | relative_url }}"></script>
 </body>

@@ -1,106 +1,106 @@
 ---
 ---
-/* 포트폴리오 — 모던 도시에르 (서류 톤은 유지하되 모던하게) */
+/* 포트폴리오 — Apple Pages 문서 (흰 종이) */
 
-body {
-    background:
-        radial-gradient(ellipse at 50% 0%, #1a1410 0%, #08060a 70%);
-    padding: 0 0 80px;
-}
-
+/* 문서 종이 */
 .dossier {
     position: relative;
-    max-width: 880px;
-    margin: 64px auto 0;
-    padding: 64px 60px;
-    background: var(--bg-paper);
-    color: #2a2114;
+    max-width: 820px;
+    margin: 48px auto 80px;
+    padding: clamp(52px, 7vh, 88px) clamp(40px, 6vw, 80px);
+    background: var(--pg-paper);
+    color: var(--pg-ink);
+    border-radius: 3px;
     box-shadow:
-        0 0 0 1px rgba(90,74,42,0.6),
-        0 30px 80px rgba(0,0,0,0.7),
-        inset 0 0 60px rgba(140,110,60,0.12);
-    font-family: var(--font-body);
-    background-image:
-        repeating-linear-gradient(0deg, rgba(90,70,40,0.04) 0 1px, transparent 1px 28px),
-        radial-gradient(ellipse at 50% 0%, rgba(140,110,60,0.16), transparent 60%);
-    z-index: 3;
-}
-.dossier::after {
-    content: "FILE · " attr(data-id);
-    position: absolute; bottom: 22px; right: 32px;
-    font-family: var(--font-display);
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #8a7048;
-    opacity: .8;
+        0 0 0 1px rgba(0, 0, 0, 0.045),
+        0 2px 6px rgba(0, 0, 0, 0.06),
+        0 24px 64px rgba(0, 0, 0, 0.12);
+    line-height: 1.7;
 }
 
+/* 제목 / 부제 */
 .dossier h1 {
-    font-family: var(--font-display);
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 4px;
-    color: #2a2114;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
+    margin-bottom: 6px;
+    color: var(--pg-ink);
 }
 .dossier .subtitle {
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #8a7048;
-    margin-bottom: 40px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(90,70,40,0.3);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--pg-gray);
+    margin-bottom: 44px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--pg-rule);
 }
 
+/* 섹션 헤딩 */
 .dossier h2 {
-    font-family: var(--font-display);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 4px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 36px 0 14px;
-    padding-left: 12px;
-    border-left: 3px solid var(--warn);
-    color: #2a2114;
+    margin: 48px 0 16px;
+    color: var(--pg-gray);
 }
-.dossier p { line-height: 1.8; font-size: 14px; margin-bottom: 12px; }
-.dossier ul { padding-left: 20px; margin-bottom: 16px; }
-.dossier li { line-height: 1.8; font-size: 13px; margin-bottom: 4px; }
-.dossier strong { color: #6a1818; }
-.dossier a { color: #6a1818; border-bottom: 1px solid rgba(106,24,24,0.4); transition: border-color .2s; }
-.dossier a:hover { border-bottom-color: #6a1818; }
-.dossier code {
-    background: rgba(90,70,40,0.16);
-    padding: 1px 6px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    border-radius: 2px;
+.dossier h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 28px 0 10px;
+    color: var(--pg-ink);
 }
 
+.dossier p { font-size: 15px; margin-bottom: 14px; color: #3a3a3c; }
+.dossier ul { padding-left: 20px; margin-bottom: 18px; }
+.dossier li { font-size: 15px; margin-bottom: 6px; color: #3a3a3c; }
+.dossier strong { color: var(--pg-ink); font-weight: 600; }
+
+.dossier a {
+    color: var(--pg-link);
+    transition: text-decoration-color .2s;
+    text-decoration: underline;
+    text-decoration-color: rgba(11, 107, 203, 0.32);
+    text-underline-offset: 2px;
+}
+.dossier a:hover { text-decoration-color: var(--pg-link); }
+
+.dossier code {
+    background: var(--pg-code-bg);
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    border-radius: 4px;
+    color: #d12f6f;
+}
+
+.dossier hr {
+    border: none;
+    border-top: 1px solid var(--pg-rule);
+    margin: 36px 0;
+}
+
+/* 필드 (키–값) */
 .field {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 130px 1fr;
     gap: 16px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(90,70,40,0.18);
-    font-size: 13px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--pg-rule);
+    font-size: 15px;
 }
 .field .k {
-    font-family: var(--font-display);
-    color: #8a7048;
-    letter-spacing: 2px;
-    font-size: 10px;
-    text-transform: uppercase;
+    color: var(--pg-gray);
+    font-size: 13px;
+    letter-spacing: 0.01em;
     align-self: center;
 }
-.field .v { color: #2a2114; }
+.field .v { color: var(--pg-ink); }
 
-@media (max-width: 720px) {
-    .dossier { margin: 24px 14px 0; padding: 36px 22px; }
-    .dossier h1 { font-size: 26px; }
-    .field { grid-template-columns: 90px 1fr; gap: 8px; }
+@media (max-width: 600px) {
+    .dossier { margin: 24px 12px 56px; border-radius: 2px; }
+    .field { grid-template-columns: 96px 1fr; gap: 10px; font-size: 14px; }
 }

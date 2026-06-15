@@ -1,68 +1,39 @@
 ---
 ---
+/* 홈 — 부제를 타이핑해 "편집 중인 Pages 문서" 느낌을 살린다. */
 (function () {
-    const root = document.documentElement;
-    const cursor = document.querySelector('.cursor');
-    const inspect = document.getElementById('inspect');
-    const stage = document.getElementById('inspectStage');
-    const nameEl = document.getElementById('inspectName');
-    const descEl = document.getElementById('inspectDesc');
-    const objs = document.querySelectorAll('.obj');
+    const sub   = document.querySelector('.doc-sub');
+    const nav   = document.querySelector('.doc-nav');
+    const caret = document.querySelector('.caret');
+    if (!sub) return;
 
-    let current = null;
+    const text   = sub.getAttribute('data-type') || '';
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function onMove(e) {
-        const x = e.touches ? e.touches[0].clientX : e.clientX;
-        const y = e.touches ? e.touches[0].clientY : e.clientY;
-        root.style.setProperty('--mx', x + 'px');
-        root.style.setProperty('--my', y + 'px');
-    }
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove, { passive: true });
-
-    objs.forEach(o => {
-        o.addEventListener('mouseenter', () => {
-            cursor && cursor.classList.add('over-obj');
-        });
-        o.addEventListener('mouseleave', () => {
-            cursor && cursor.classList.remove('over-obj');
-        });
-        o.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openInspect(o);
-        });
-    });
-
-    function openInspect(obj) {
-        current = obj;
-        stage.innerHTML = '';
-        const clone = obj.cloneNode(true);
-        clone.classList.remove('obj');
-        clone.classList.add('obj-clone');
-        clone.style.position = 'static';
-        clone.style.transform = '';
-        const lbl = clone.querySelector('.label');
-        if (lbl) lbl.remove();
-        stage.appendChild(clone);
-
-        nameEl.textContent = obj.dataset.name || '';
-        descEl.textContent = obj.dataset.desc || '';
-        inspect.classList.add('active');
+    function reveal() {
+        if (nav)   nav.classList.add('show');
+        if (caret) caret.classList.add('show');
     }
 
-    function closeInspect() {
-        inspect.classList.remove('active');
-        stage.innerHTML = '';
-        current = null;
+    /* 모션 최소화 환경 — 즉시 표시 */
+    if (reduce) {
+        sub.textContent = text;
+        reveal();
+        return;
     }
 
-    inspect.addEventListener('click', () => {
-        if (current && current.dataset.target) {
-            window.location.href = current.dataset.target;
+    /* 한 글자씩 타이핑 → 끝나면 본문(네비)·커서 등장 */
+    sub.classList.add('typing');
+    let i = 0;
+    function step() {
+        sub.textContent = text.slice(0, i);
+        if (i < text.length) {
+            i++;
+            setTimeout(step, 52 + Math.random() * 46);
+        } else {
+            sub.classList.remove('typing');
+            setTimeout(reveal, 260);
         }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeInspect();
-    });
+    }
+    setTimeout(step, 520);
 })();

@@ -18,3 +18,6 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
 end
 
 gem "wdm", "~> 0.2.0", :platforms => [:mingw, :x64_mingw, :mswin]
+
+# Ruby 4.0+에서 표준 라이브러리에서 분리됨
+gem "logger"
