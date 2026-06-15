@@ -4,6 +4,7 @@ author: Ijzereen
 date: 2025-08-11 20:30:00 +0900
 categories: ["NLP", "AI"]
 tags: [bm25s, Kkma, OKT, Kiwi]
+published: false
 ---
 
 ## Lexical Search
