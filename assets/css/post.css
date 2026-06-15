@@ -7,7 +7,7 @@ body { line-height: 1.75; }
 /* 문서 종이 */
 article {
     position: relative;
-    max-width: 740px;
+    max-width: var(--doc-width, 740px);
     margin: 48px auto 80px;
     padding: clamp(52px, 7vh, 88px) clamp(40px, 6vw, 76px);
     background: var(--pg-paper);

@@ -5,7 +5,7 @@
 /* 문서 종이 */
 .dossier {
     position: relative;
-    max-width: 820px;
+    max-width: var(--doc-width, 820px);
     margin: 48px auto 80px;
     padding: clamp(52px, 7vh, 88px) clamp(40px, 6vw, 80px);
     background: var(--pg-paper);
