@@ -1,5 +1,5 @@
 ---
-title: "DMZ PeaceTrain Peace Maker후기"
+title: "DMZ PeaceTrain Peace Maker 자원봉사 후기..."
 author: 정철원
 date: 2026-06-15 22:30:00 +0900
 categories: ["Daily"]
