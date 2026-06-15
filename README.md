@@ -39,10 +39,28 @@ tags: [tag1, tag2]
 ```
 
 - **URL**: `/blog/:slug/` (파일명 slug 자동 소문자화)
-- **이미지**: `assets/img/posts/YYYY-MM-DD/` 에 넣고 `![설명](/assets/img/posts/...)`
 - **코드블록**: ```` ```python ```` 처럼 언어 지정 → VSCode 다크 카드로 렌더
 - **수식**: 인라인 `$...$`, 블록 `$$...$$` (MathJax)
 - 인덱스(`/blog/`)에는 날짜·카테고리·제목·태그가 자동으로 목록에 추가된다.
+
+### 이미지 · 동영상 · 임베드
+
+| 종류 | 작성법 | 메모 |
+| --- | --- | --- |
+| **이미지** | `![설명](/assets/img/posts/YYYY-MM-DD/x.jpg)` | 파일은 `assets/img/posts/날짜/`에. 파일명에 공백·Liquid 금지. 절대경로(`/`)면 VSCode Preview·배포 둘 다 OK |
+| **캡션** | 이미지 줄 아래 `*설명*` | 기울임 캡션처럼 표시 |
+| **유튜브** | `<div class="video"><iframe src="https://www.youtube.com/embed/ID" allowfullscreen></iframe></div>` | `.video` 래퍼가 16:9 반응형 처리 |
+| **동영상 파일** | `<video controls width="100%" src="/assets/.../clip.mp4"></video>` | ⚠️ 100MB 초과 시 push 차단. 긴 영상은 유튜브로 |
+| **인스타그램** | 게시물 `…` → 퍼가기 코드 붙여넣기 (아래) | 공개 계정만. `embed.js`는 글당 1개면 됨 |
+
+```html
+<!-- 인스타그램 임베드 -->
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/게시물ID/" data-instgrm-version="14"></blockquote>
+<script async src="//www.instagram.com/embed.js"></script>
+```
+
+> ⚠️ 동영상·인스타·iframe은 **VSCode Preview에선 안 보인다** (보안 차단). 로컬 `jekyll serve`나 배포본에서 확인.
+> 임베드 스타일(가운데 정렬·반응형)은 `assets/css/post.css` 하단에 정의돼 있다.
 
 포트폴리오는 `portfolio.md` 를 마크다운으로 직접 수정.
 키–값 필드는 `<div class="field"><span class="k">키</span><span class="v">값</span></div>`.

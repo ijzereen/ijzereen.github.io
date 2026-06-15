@@ -161,6 +161,44 @@ article {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.10);
 }
 
+/* 임베드 — 동영상 / 인스타 공통 (가운데 정렬·반응형) */
+.post-body iframe,
+.post-body video {
+    display: block;
+    max-width: 100%;
+    margin: 28px auto;
+    border: 0;
+    border-radius: 8px;
+}
+
+/* 16:9 반응형 래퍼 — 유튜브 등: <div class="video"><iframe ...></iframe></div> */
+.post-body .video {
+    position: relative;
+    width: 100%;
+    margin: 28px 0;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.10);
+}
+.post-body .video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+}
+
+/* 인스타그램 임베드 — 인용구 스타일 제거 + 가운데 정렬 */
+.post-body blockquote.instagram-media {
+    border: none;
+    padding: 0;
+    margin: 28px auto !important;
+    color: inherit;
+    background: none;
+}
+
 /* 푸터 */
 .post-footer {
     margin-top: 56px;

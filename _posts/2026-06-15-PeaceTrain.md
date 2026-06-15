@@ -6,6 +6,9 @@ categories: ["Daily"]
 tags: [밴드]
 ---
 
+<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DWlJyOaj13_/" data-instgrm-version="14"></blockquote>
+<script async src="//www.instagram.com/embed.js"></script>
+
 안녕 친구들아
 
 이번에 DMZ PeaceTrain 페스티벌에 자원봉사자( 피스메이커 )로 다녀온 raw 후기를 ,,, 작성해보겠어 ...
