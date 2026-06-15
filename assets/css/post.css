@@ -153,7 +153,9 @@ article {
 .highlight .vc, .highlight .vg, .highlight .vi { color: #9cdcfe; }
 
 .post-body img {
-    max-width: 100%;
+    max-width: min(100%, 640px);   /* 본문은 넓어도 사진은 640px까지만 */
+    max-height: 82vh;              /* 세로 사진이 화면을 넘지 않게 */
+    width: auto;
     height: auto;
     display: block;
     margin: 28px auto;
