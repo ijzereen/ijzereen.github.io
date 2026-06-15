@@ -9,43 +9,15 @@ permalink: /portfolio/
 <div class="subtitle">Creator · AI / LLM Engineer</div>
 
 <div class="field"><span class="k">이름</span><span class="v">정철원 (Cheolwon Jeong)</span></div>
-<div class="field"><span class="k">역할</span><span class="v">Creator · AI / LLM Engineer</span></div>
+<div class="field"><span class="k">역할</span><span class="v">로드 중 ...</span></div>
 <div class="field"><span class="k">관심 도메인</span><span class="v">AI · 교육 (Education)</span></div>
 <div class="field"><span class="k">이메일</span><span class="v"><a href="mailto:{{ site.email }}">{{ site.email }}</a></span></div>
 <div class="field"><span class="k">GitHub</span><span class="v"><a href="https://github.com/{{ site.github.username }}" target="_blank">@{{ site.github.username }}</a></span></div>
-
-## About
-
-가슴 뛰는 일을 좇아, 세상에 임팩트를 만드는 **Creator**입니다. 그 방법을 고민하며, AI와 교육은 가장 빠르고 넓게 임팩트를 낼 수 있다고 생각해 두 도메인에 집중해왔습니다.
-
-공군 복무 중에는 LLM 기반 목표 추천 시스템과 이미지 생성 서비스를 End-to-End로 설계·구현했고, 그 이전에는 교육·콘텐츠 도메인에서 LLM 기반 저작 도구와 학습 데이터 구조를 다루며 사용자의 경험에 직접 닿는 가치를 만들어왔습니다.
-
-## Tech Stack
-
-- **Languages** — Python, C, C++
-- **Backend** — FastAPI, Celery, RabbitMQ
-- **AI / LLM** — LangChain, LangGraph, Agent Design (Knowledge / SQL / Lexical), Prompt Engineering, Context Engineering
-- **ML / 예측** — XGBoost, LightGBM, LSTM, Croston(SBA), Target Encoding, Time-Series Cross-Validation
-- **Model Serving** — vLLM, Ollama
-- **Database** — PostgreSQL, pgvector, SQLite
-- **Storage** — MinIO
-- **Infra** — Docker, Docker Compose
-- **Architecture** — Layered Architecture (BFF / API / Worker / Model Server), Webhook-based Async Processing, On-Device System
 
 ## Experience
 
 ### 공군 지능정보체계관리단 · AI체계개발병
 2024.10 – 2026.07
-
-**부품 수요 예측 기반 사전 발주 시스템** · 2024.12 – 2025.12
-
-- 전 공군을 대상으로 **단독 설계·개발**하여 실제 부품 구매(발주) 업무에 적용·운영. 약 **14만 건** 규모의 부품 소모 이력 데이터 기반
-- 과거 소모 실적·수요량으로 향후 1년 필요 수량을 예측해 사전 발주를 가능케 함 — 발주 여부 판단(**Classification**) + 발주량 산정(**Regression**)의 2단계 구조 설계
-- 약 95%가 미발생(0)인 극심한 간헐적·희소 수요에 대응: **Croston(SBA 보정)**으로 수요 발생 간격·크기를 분리 추정해 피처화하고, **ADI·CV²** 기준으로 수요를 4유형(Smooth/Intermittent/Erratic/Lumpy)으로 분류
-- 전처리·인코딩 개선: 빈도 5% 미만 희소 범주를 통합해 차원 축소, 순서 의미를 잘못 학습하던 Ordinal Encoding을 **Target Encoding**으로 전환해 성능 개선
-- 시계열 검증 재설계: 과거 5년(20분기) → 다음 1년(4분기) **슬라이딩 윈도우**로 데이터 누수(Data Leakage)를 차단하고 운영의 "과거→미래" 상황과 검증 조건을 일치
-- 통계(Croston)·ML(XGBoost·LightGBM)·딥러닝(LSTM)을 분류·회귀 양면으로 비교해 부품 소모 패턴에 적합한 방식 선정
-- **발주 발생 여부 예측 정확도를 약 50% → 약 68%로 향상**
 
 **AirWards — AI 이미지 생성 기능 개발** (Image Generate / Edit / Remove Background)
 
@@ -58,6 +30,16 @@ permalink: /portfolio/
 - 외부 패키지 저장소·LLM API는 물론 군 내부망 자원조차 접근 불가한 환경에서, 로컬 LLM(vLLM·Ollama) 기반 On-Device 추론 시스템을 직접 구축해 보안·망분리 요구사항 충족
 - LangGraph 기반 상태 워크플로우로 목표 추천 파이프라인을 설계, 검색·추론·검증 단계를 명시적 상태 전이로 분리해 디버깅·확장이 용이한 구조 마련
 - SQL Agent + Lexical Agent의 Hybrid 검색으로 정형 데이터 조회와 비정형 텍스트 검색을 통합, Self-Correction(Relevancy Check)으로 추천 정확도 향상
+
+**부품 수요 예측 기반 사전 발주 시스템** · 2024.12 – 2025.12
+
+- 전 공군을 대상으로 **단독 설계·개발**하여 실제 부품 구매(발주) 업무에 적용·운영. 약 **14만 건** 규모의 부품 소모 이력 데이터 기반
+- 과거 소모 실적·수요량으로 향후 1년 필요 수량을 예측해 사전 발주를 가능케 함 — 발주 여부 판단(**Classification**) + 발주량 산정(**Regression**)의 2단계 구조 설계
+- 약 95%가 미발생(0)인 극심한 간헐적·희소 수요에 대응: **Croston(SBA 보정)**으로 수요 발생 간격·크기를 분리 추정해 피처화하고, **ADI·CV²** 기준으로 수요를 4유형(Smooth/Intermittent/Erratic/Lumpy)으로 분류
+- 전처리·인코딩 개선: 빈도 5% 미만 희소 범주를 통합해 차원 축소, 순서 의미를 잘못 학습하던 Ordinal Encoding을 **Target Encoding**으로 전환해 성능 개선
+- 시계열 검증 재설계: 과거 5년(20분기) → 다음 1년(4분기) **슬라이딩 윈도우**로 데이터 누수(Data Leakage)를 차단하고 운영의 "과거→미래" 상황과 검증 조건을 일치
+- 통계(Croston)·ML(XGBoost·LightGBM)·딥러닝(LSTM)을 분류·회귀 양면으로 비교해 부품 소모 패턴에 적합한 방식 선정
+- **발주 발생 여부 예측 정확도를 약 50% → 약 68%로 향상**
 
 ### 청년교육사회적협동조합 씨드콥 · Research Engineer
 2024.03 – 2024.10
@@ -92,7 +74,3 @@ permalink: /portfolio/
 ## Education
 
 <div class="field"><span class="k">한국교원대학교</span><span class="v">컴퓨터교육과 · 2022.03 ~ 재학</span></div>
-
-## Contact
-
-협업이나 문의는 <a href="mailto:{{ site.email }}">{{ site.email }}</a> 로 부탁드립니다.
