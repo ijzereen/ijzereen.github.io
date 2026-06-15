@@ -200,7 +200,6 @@ article {
     background: none;
     width: calc(100% - 2px) !important;
     max-width: 540px !important;
-    min-width: 326px !important;
     margin: 28px auto !important;
 }
 
@@ -237,6 +236,9 @@ article {
 .post-footer a:hover { color: var(--pg-ink); }
 
 @media (max-width: 600px) {
-    article { margin: 24px 12px 56px; border-radius: 2px; }
+    article { margin: 24px 12px 56px; padding: 40px 20px; border-radius: 2px; }
     .post-body { font-size: 15.5px; }
+    /* 임베드가 좁은 화면을 넘지 않도록 */
+    .post-body .instagram-media,
+    .post-body iframe { max-width: 100% !important; }
 }
