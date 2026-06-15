@@ -1,32 +1,12 @@
 ---
 ---
-/* 홈 — Apple Pages 문서 편집 스타일 (회색 워크스페이스 + 흰 종이) */
-
-:root {
-    --pg-canvas:  #e8e8ec;   /* 워크스페이스 회색 */
-    --pg-paper:   #ffffff;   /* 문서 종이 */
-    --pg-ink:     #1d1d1f;   /* 본문 잉크 */
-    --pg-gray:    #86868b;   /* 보조 회색 */
-    --pg-faint:   #c7c7cc;   /* 옅은 마커 */
-    --pg-link:    #0b6bcb;   /* 문서 링크 블루 */
-    --pg-link-hi: #d6e8ff;   /* 텍스트 선택 하이라이트 */
-    --pg-rule:    #e6e6e9;   /* 구분선 */
-    --pg-font:    -apple-system, BlinkMacSystemFont, system-ui, 'SF Pro Text',
-                  'Helvetica Neue', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif;
-}
+/* 홈 — Apple Pages 문서 편집 스타일 (회색 워크스페이스 + 흰 종이)
+   공통 토큰 · 리셋 · 배경 · 선택색은 base.css 에서 상속 */
 
 html, body {
-    height: auto;
-    min-height: 100%;
-    background: var(--pg-canvas);
-    color: var(--pg-ink);
-    font-family: var(--pg-font);
     overflow-x: hidden;
     user-select: none;
-    -webkit-font-smoothing: antialiased;
 }
-
-::selection { background: var(--pg-link-hi); color: var(--pg-ink); }
 
 /* ── 워크스페이스 ─────────────────────────────────────────────── */
 .workspace {
