@@ -190,13 +190,16 @@ article {
     border-radius: 0;
 }
 
-/* 인스타그램 임베드 — 인용구 스타일 제거 + 가운데 정렬 */
+/* 인스타그램 임베드 — 인용구 스타일 제거 + 너비 최대(540px)로 채워 가운데 정렬 */
 .post-body blockquote.instagram-media {
     border: none;
     padding: 0;
-    margin: 28px auto !important;
     color: inherit;
     background: none;
+    width: calc(100% - 2px) !important;
+    max-width: 540px !important;
+    min-width: 326px !important;
+    margin: 28px auto !important;
 }
 
 /* 댓글 (Disqus) */
