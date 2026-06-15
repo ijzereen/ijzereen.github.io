@@ -25,6 +25,7 @@ permalink: /portfolio/
 - **Languages** — Python, C, C++
 - **Backend** — FastAPI, Celery, RabbitMQ
 - **AI / LLM** — LangChain, LangGraph, Agent Design (Knowledge / SQL / Lexical), Prompt Engineering, Context Engineering
+- **ML / 예측** — XGBoost, LightGBM, LSTM, Croston(SBA), Target Encoding, Time-Series Cross-Validation
 - **Model Serving** — vLLM, Ollama
 - **Database** — PostgreSQL, pgvector, SQLite
 - **Storage** — MinIO
@@ -35,6 +36,16 @@ permalink: /portfolio/
 
 ### 공군 지능정보체계관리단 · AI체계개발병
 2024.10 – 2026.07
+
+**부품 수요 예측 기반 사전 발주 시스템** · 2024.12 – 2025.12
+
+- 전 공군을 대상으로 **단독 설계·개발**하여 실제 부품 구매(발주) 업무에 적용·운영. 약 **14만 건** 규모의 부품 소모 이력 데이터 기반
+- 과거 소모 실적·수요량으로 향후 1년 필요 수량을 예측해 사전 발주를 가능케 함 — 발주 여부 판단(**Classification**) + 발주량 산정(**Regression**)의 2단계 구조 설계
+- 약 95%가 미발생(0)인 극심한 간헐적·희소 수요에 대응: **Croston(SBA 보정)**으로 수요 발생 간격·크기를 분리 추정해 피처화하고, **ADI·CV²** 기준으로 수요를 4유형(Smooth/Intermittent/Erratic/Lumpy)으로 분류
+- 전처리·인코딩 개선: 빈도 5% 미만 희소 범주를 통합해 차원 축소, 순서 의미를 잘못 학습하던 Ordinal Encoding을 **Target Encoding**으로 전환해 성능 개선
+- 시계열 검증 재설계: 과거 5년(20분기) → 다음 1년(4분기) **슬라이딩 윈도우**로 데이터 누수(Data Leakage)를 차단하고 운영의 "과거→미래" 상황과 검증 조건을 일치
+- 통계(Croston)·ML(XGBoost·LightGBM)·딥러닝(LSTM)을 분류·회귀 양면으로 비교해 부품 소모 패턴에 적합한 방식 선정
+- **발주 발생 여부 예측 정확도를 약 50% → 약 68%로 향상**
 
 **AirWards — AI 이미지 생성 기능 개발** (Image Generate / Edit / Remove Background)
 
