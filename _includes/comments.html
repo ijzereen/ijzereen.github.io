@@ -1,0 +1,23 @@
+{%- comment -%} giscus 댓글 + 반응(좋아요). repo_id·category_id 둘 다 설정 시에만 로드.
+   data-mapping="pathname" → 글 경로별로 Discussion 자동 매핑 {%- endcomment -%}
+{%- if site.giscus_repo_id and site.giscus_repo_id != "" and site.giscus_category_id and site.giscus_category_id != "" -%}
+<section class="comments">
+    <h2 class="comments-title">댓글 · 좋아요</h2>
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ site.giscus_repo }}"
+            data-repo-id="{{ site.giscus_repo_id }}"
+            data-category="{{ site.giscus_category }}"
+            data-category-id="{{ site.giscus_category_id }}"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="ko"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+{%- endif -%}

@@ -85,6 +85,8 @@ tags: [tag1, tag2]
 | **포트폴리오** 스타일 | `assets/css/portfolio.css` | 문서 타이포·필드 |
 | 포트폴리오 내용 | `portfolio.md` | 마크다운 본문 |
 | 사이트 제목/저자/소셜 | `_config.yml` | `title`, `author`, `social` 등 |
+| 조회수 분석 | `_config.yml` → `goatcounter_code` | 대시보드 https://ijzereen.goatcounter.com |
+| 댓글/좋아요 | `_config.yml` → `giscus_*` | giscus(GitHub Discussions) 댓글 + 👍반응. giscus.app에서 값 발급 |
 
 > 모든 흰 종이(`.sheet` / `.terminal` / `.dossier` / `article`)는 동일한
 > 그림자·둥근 모서리·여백 패턴을 쓴다. 종이 느낌을 바꾸려면 각 CSS의 해당 컨테이너에서.

@@ -43,6 +43,8 @@
         {{ content }}
     </div>
 
+    {% include comments.html %}
+
     <footer class="post-footer">
         <div class="tags">
             {% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}

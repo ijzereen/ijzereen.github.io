@@ -13,6 +13,13 @@ description: IJZEREEN의 기술 블로그 겸 포트폴리오.
 # 예: "ijzereen" → 대시보드 https://ijzereen.goatcounter.com  (비우면 비활성, 로컬 빌드는 집계 제외)
 goatcounter_code: "ijzereen"
 
+# Comments — giscus (GitHub Discussions). https://giscus.app 에서 값 발급 후 입력.
+# repo_id·category_id 둘 다 채워야 활성화. 좋아요=giscus 반응(👍).
+giscus_repo: "ijzereen/ijzereen.github.io"
+giscus_repo_id: "R_kgDOPbhS4A"
+giscus_category: "Announcements"
+giscus_category_id: "DIC_kwDOPbhS4M4C_NBo"
+
 # Author Information
 author: Ijzereen
 email: ijzereen@gmail.com
