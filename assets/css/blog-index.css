@@ -4,7 +4,7 @@
 
 /* 문서 종이 */
 .terminal {
-    max-width: var(--doc-width, 760px);
+    max-width: var(--doc-width, 1200px);
     margin: 48px auto 80px;
     padding: clamp(48px, 7vh, 84px) clamp(36px, 6vw, 76px);
     background: var(--pg-paper);

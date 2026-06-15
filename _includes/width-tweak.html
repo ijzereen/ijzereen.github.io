@@ -20,7 +20,7 @@
     var range  = wrap.querySelector('.wt-range');
     var val    = wrap.querySelector('.wt-val');
     var reset  = wrap.querySelector('.wt-reset');
-    var DEFAULT = 760;
+    var DEFAULT = 1200;
 
     function read()  { try { return localStorage.getItem('docWidth'); } catch (e) { return null; } }
     function label(v){ val.textContent = v ? v + 'px' : '기본'; }
