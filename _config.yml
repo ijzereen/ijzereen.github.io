@@ -9,6 +9,10 @@ title: IJZEREEN
 tagline: Writing & Work
 description: IJZEREEN의 기술 블로그 겸 포트폴리오.
 
+# Analytics — GoatCounter 사이트 코드만 넣으면 켜짐.
+# 예: "ijzereen" → 대시보드 https://ijzereen.goatcounter.com  (비우면 비활성, 로컬 빌드는 집계 제외)
+goatcounter_code: "ijzereen"
+
 # Author Information
 author: Ijzereen
 email: ijzereen@gmail.com

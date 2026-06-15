@@ -18,3 +18,9 @@
 {%- for sheet in sheets -%}
 <link rel="stylesheet" href="{{ '/assets/css/' | append: sheet | append: '.css' | relative_url }}">
 {%- endfor %}
+
+{%- comment -%} GoatCounter 조회수 분석 — 프로덕션 빌드 + 코드 설정 시에만 로드 (로컬 개발은 집계 안 됨) {%- endcomment -%}
+{%- if site.goatcounter_code and jekyll.environment == "production" %}
+<script data-goatcounter="https://{{ site.goatcounter_code }}.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{%- endif %}
