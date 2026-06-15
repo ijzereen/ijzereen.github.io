@@ -13,7 +13,7 @@ Apple Pages 문서 편집 화면 톤의 개인 블로그 / 포트폴리오.
 
 | 경로 | 설명 | 진입점 | 레이아웃 | CSS |
 | --- | --- | --- | --- | --- |
-| `/` | 홈 (편집 중인 문서) | `index.html` | `_layouts/biohazard.html` | `assets/css/biohazard.css` |
+| `/` | 홈 (편집 중인 문서) | `index.html` | `_layouts/home.html` | `assets/css/home.css` |
 | `/blog/` | 블로그 인덱스(목차) | `blog.html` | `_layouts/blog-index.html` | `assets/css/blog-index.css` |
 | `/blog/:slug/` | 개별 포스트 | `_posts/*.md` | `_layouts/post.html` | `assets/css/post.css` |
 | `/portfolio/` | 포트폴리오 문서 | `portfolio.md` | `_layouts/portfolio.html` | `assets/css/portfolio.css` |
@@ -57,9 +57,9 @@ tags: [tag1, tag2]
 | **본문 폰트** | `assets/css/base.css` | `--pg-font`(본문=시스템), `--font-mono`(코드) |
 | 웹폰트 로드 추가/제거 | `_includes/head.html` | `<link ... fonts.googleapis ...>` |
 | **상단 바**(라이트 톱바) | `assets/css/base.css` → `.top-bar` | 라벨/제목은 각 레이아웃의 `{% include topbar.html %}` 인자 |
-| **홈** 레이아웃/문구 | `_layouts/biohazard.html` | 제목, 부제(`.doc-sub` 의 `data-type`), 링크(`.doc-link`) |
-| 홈 스타일 | `assets/css/biohazard.css` | 종이 크기·여백·커서 등 |
-| 홈 부제 타이핑 속도 | `assets/js/biohazard.js` | `setTimeout` 값 |
+| **홈** 레이아웃/문구 | `_layouts/home.html` | 제목, 부제(`.doc-sub` 의 `data-type`), 링크(`.doc-link`) |
+| 홈 스타일 | `assets/css/home.css` | 종이 크기·여백·커서 등 |
+| 홈 부제 타이핑 속도 | `assets/js/home.js` | `setTimeout` 값 |
 | **블로그 인덱스** 모양 | `assets/css/blog-index.css` | 제목·목록 행·태그 스타일 |
 | 블로그 인덱스 제목/부제 | `_layouts/blog-index.html` | `term-title` / `term-sub` 텍스트 |
 | **포스트** 본문 타이포 | `assets/css/post.css` | 제목/본문/표/인용구/이미지 |

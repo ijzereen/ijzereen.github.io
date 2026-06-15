@@ -7,7 +7,7 @@
 
 | 경로 | 설명 | 진입점 | 레이아웃 |
 | --- | --- | --- | --- |
-| `/` | 홈 — 편집 중인 문서 한 장 | `index.html` | `_layouts/biohazard.html` |
+| `/` | 홈 — 편집 중인 문서 한 장 | `index.html` | `_layouts/home.html` |
 | `/portfolio/` | 포트폴리오 문서 | `portfolio.md` | `_layouts/portfolio.html` |
 | `/blog/` | 기술블로그 인덱스(목차) | `blog.html` | `_layouts/blog-index.html` |
 | `/blog/:slug/` | 개별 포스트 | `_posts/*.md` | `_layouts/post.html` |
@@ -21,7 +21,7 @@ ijzereen.github.io/
 ├── blog.html               # 블로그 인덱스 진입점
 │
 ├── _layouts/               # 레이아웃 (얇음 — 마크업만)
-│   ├── biohazard.html      # 홈 (문서 종이 + 타이핑 부제)
+│   ├── home.html      # 홈 (문서 종이 + 타이핑 부제)
 │   ├── portfolio.html
 │   ├── blog-index.html
 │   └── post.html
@@ -35,12 +35,12 @@ ijzereen.github.io/
 ├── assets/
 │   ├── css/                # 페이지별 CSS
 │   │   ├── base.css        # 공통 토큰(:root)/리셋/톱바/선택색
-│   │   ├── biohazard.css   # 홈
+│   │   ├── home.css   # 홈
 │   │   ├── portfolio.css   # 포트폴리오 문서
 │   │   ├── blog-index.css  # 인덱스 목차
 │   │   └── post.css        # 포스트(코드 하이라이트 포함)
 │   ├── js/
-│   │   └── biohazard.js    # 홈 부제 타이핑 + 커서
+│   │   └── home.js    # 홈 부제 타이핑 + 커서
 │   └── img/
 │       ├── posts/          # 포스트 이미지
 │       └── favicons/
@@ -74,12 +74,12 @@ ijzereen.github.io/
 
 ## 🏠 홈 — 편집 중인 문서
 
-`_layouts/biohazard.html` + `assets/css/biohazard.css` + `assets/js/biohazard.js`.
+`_layouts/home.html` + `assets/css/home.css` + `assets/js/home.js`.
 
 - 회색 워크스페이스 위 흰 종이 한 장, 좌측 정렬 문서 본문.
-- 제목 `IJZEREEN`, 부제는 `data-type` 속성의 문구를 **한 글자씩 타이핑**(`biohazard.js`).
+- 제목 `IJZEREEN`, 부제는 `data-type` 속성의 문구를 **한 글자씩 타이핑**(`home.js`).
   타이핑이 끝나면 본문(네비)·깜빡이는 커서가 등장한다.
-- 링크 추가/변경은 `biohazard.html` 의 `.doc-nav` 안 `.doc-link` 를 편집:
+- 링크 추가/변경은 `home.html` 의 `.doc-nav` 안 `.doc-link` 를 편집:
   ```html
   <a class="doc-link" href="{{ '/경로/' | relative_url }}">
       <span class="mark">—</span>
@@ -87,7 +87,7 @@ ijzereen.github.io/
       <span class="lk-gloss">설명</span>
   </a>
   ```
-- 부제 문구는 `.doc-sub` 의 `data-type` 값, 타이핑 속도는 `biohazard.js` 의 `setTimeout` 값.
+- 부제 문구는 `.doc-sub` 의 `data-type` 값, 타이핑 속도는 `home.js` 의 `setTimeout` 값.
 - `prefers-reduced-motion` 환경에서는 타이핑 없이 즉시 표시된다.
 
 ## 📝 글 작성
