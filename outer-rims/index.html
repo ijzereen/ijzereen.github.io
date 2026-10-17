@@ -225,7 +225,8 @@ h2{font-size:clamp(25px,3.3vw,38px);font-weight:900;line-height:1.36;letter-spac
 .evi-nums div{background:var(--panel);border:1px solid var(--edge);border-radius:4px;padding:10px 12px;display:flex;flex-direction:column;min-width:0}
 .evi-nums strong{font-size:22px;font-weight:900;color:var(--key);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .evi-nums span{font-size:13px;color:var(--text-3);line-height:1.4}
-.evi a{font-size:14px;color:var(--text-3);overflow-wrap:anywhere}
+.evi a.evi-link{color:var(--text);font-weight:700;text-decoration:underline;text-decoration-color:var(--key);text-underline-offset:4px;text-decoration-thickness:2px}
+.evi a.evi-link:hover{color:var(--key)}
 .sp{background:var(--panel);border:1px solid var(--edge-2);border-radius:8px;box-shadow:var(--shadow);padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
 .sp-head{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-2);min-width:0}
 .sp-badge{background:var(--key);color:var(--on-key);font-family:var(--hud);font-size:10px;letter-spacing:.18em;padding:6px 10px;--cut:5px;flex:none}
@@ -304,6 +305,7 @@ h2{font-size:clamp(25px,3.3vw,38px);font-weight:900;line-height:1.36;letter-spac
 .stepper b{font-size:16px}
 .stepper .when{font-family:var(--hud);font-size:10px;letter-spacing:.16em;color:var(--key)}
 .stepper .what{font-size:14px;color:var(--text-2);line-height:1.55}
+.stepper .what a{color:var(--key);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 @media (max-width:640px){
   .stepper{grid-template-columns:minmax(0,1fr);gap:20px}
   .stepper li{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:14px;padding-right:0}
@@ -479,7 +481,7 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
           <h1>엔트리 1:1 <span class="hl">멘토</span> 모집</h1>
           <p class="subtitle">교원대 학생들 대상으로만 모집합니다</p>
         </div>
-        <p class="sub">초5~중2 학생과 1:1 화상으로 만나 8주 동안 엔트리 수업을 해요.</p>
+        <p class="sub">초5~중2 학생과 1:1 화상으로 8주 동안 엔트리로 수업합니다.</p>
         <p class="pay cut"><small>PAY</small><b>시급 3만원</b><span>수업 1시간 기준</span></p>
         <div class="cta-row">
           <a class="btn btn-key cut" href="#apply">지원하기 <span class="arr">→</span></a>
@@ -551,22 +553,22 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
         <div class="benefit">
           <span class="ic cut"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M15.5 14.5h2.5"/></svg></span>
           <h3>시급 3만원</h3>
-          <p>수업 1시간에 3만원이에요. 학생 3명을 맡으면 월 약 36만원, 6명이면 약 72만원이에요.</p>
+          <p>학생 3명만 맡아도 월 약 36만원, 6명이면 약 72만원을 받을 수 있습니다.</p>
         </div>
         <div class="benefit">
           <span class="ic cut"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.1c2.3.2 3.9 1.8 4.5 4.9"/></svg></span>
-          <h3>학생은 회사가 모아요</h3>
-          <p>과외 구하러 다닐 필요 없어요. 회사가 무료 진단까지 마친 학생을 시간표에 맞춰 배정해요.</p>
+          <h3>학생은 회사가</h3>
+          <p>과외 구하러 다닐 필요 없이, 회사가 사전 진단을 마친 학생을 시간표에 맞춰 배정합니다.</p>
         </div>
         <div class="benefit">
           <span class="ic cut"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg></span>
           <h3>엔트리, 몰라도 돼요</h3>
-          <p>수업 전에 엔트리부터 가르쳐 드려요. 8회차 교안과 학부모 리포트 양식도 다 준비돼 있어요.</p>
+          <p>수업 전 엔트리를 알려드리고, 8회차 교안과 학부모 리포트 양식도 다 준비되어 있습니다.</p>
         </div>
         <div class="benefit">
           <span class="ic cut"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.5l5-3v9l-5-3z"/></svg></span>
           <h3>녹화로 피드백해요</h3>
-          <p>수업 녹화본을 같이 보며 짚어 드려요. 임용 수업 실연 연습으로도 그대로 쓸 수 있어요.</p>
+          <p>수업 녹화본이 남고 피드백도 진행됩니다. 임용 수업 실연 연습으로 사용할 수 있습니다.</p>
         </div>
       </div>
     </div>
@@ -577,8 +579,8 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
       <div class="class-copy">
         <p class="hud">The class</p>
         <h2>초5~중2에게 엔트리를 가르쳐요</h2>
-        <p>회사가 만든 교안을 따라 엔트리로 코딩 기초를 1:1로 가르치면 돼요. 학생 수준은 회사가 무료 진단으로 먼저 파악해서 알려 드려요.</p>
-        <p>대상은 초5~6이 중심이고 중1~2까지 맡아요. 중학교 정보 교과서도 모두 엔트리로 가르치기 때문에, 중학생에게는 학교 수업을 제대로 다지는 시간이 돼요.</p>
+        <p>회사가 만든 교안을 따라 엔트리로 코딩 기초를 가르칩니다. 1:1 화상 수업으로 진행되고, 회사가 사전 진단으로 학생 수준을 먼저 파악해 드립니다.</p>
+        <p>초5~6을 중심으로 중1~2까지가 수업 대상입니다. 특히 엔트리를 사용하는 중학교 정보 교과서를 반영해 중학생이 학교 수업을 제대로 다질 수 있도록 설계했습니다.</p>
       </div>
       <div class="lesson">
         <div class="lesson-head"><h3>한 번의 수업 60분</h3><span class="tag">1:1 · ONLINE</span></div>
@@ -603,20 +605,19 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
         <div class="sos-copy">
           <p class="hud">SOS signal</p>
           <h2>모를 땐 SOS 버튼 하나만 누르세요</h2>
-          <p>채팅창에 상황을 적을 필요 없어요. SOS는 수업 중 대화를 실시간으로 듣고 있다가, 버튼을 누르는 순간 방금 오간 말을 바로 생각해서 도와줘요.</p>
+          <p>수업 중에 막혀도 괜찮습니다. 채팅창에 상황을 적지 않아도 수업 중 대화를 실시간으로 듣고 있습니다. SOS 버튼을 누르는 순간 방금 오간 말을 고려해서 바로 도움을 줍니다.</p>
           <ol class="steps3">
-            <li><span class="num cut">01</span><div><b>계속 듣기</b><span>멘토와 학생의 말을 실시간 음성 인식(STT)으로 받아써요.</span></div></li>
-            <li><span class="num cut">02</span><div><b>버튼 하나</b><span>막히면 SOS만 눌러요. 따로 타이핑할 건 없어요.</span></div></li>
-            <li><span class="num cut">03</span><div><b>바로 제안</b><span>방금 대화와 오늘 교안을 읽고 질문, 힌트, 쉬운 예제를 띄워요. 자주 눌러도 괜찮아요.</span></div></li>
+            <li><span class="num cut">01</span><div><b>계속 듣기</b><span>멘토와 학생의 말이 실시간 음성 인식(STT)으로 저장됩니다.</span></div></li>
+            <li><span class="num cut">02</span><div><b>SOS 버튼 누르기</b><span>막히면 바로 SOS 버튼을 누르세요.</span></div></li>
+            <li><span class="num cut">03</span><div><b>바로 제안</b><span>방금 대화와 오늘 교안을 보고 질문, 힌트, 쉬운 예제 등 멘토에게 도움을 제공합니다.</span></div></li>
           </ol>
           <div class="evi">
-            <p><b>스탠퍼드대 연구(2024)</b>에서 튜터 약 900명에게 수업 중 도움 버튼을 주자, 학생이 단원을 익힌 비율이 올랐어요. 경험이 적은 튜터일수록 효과가 컸어요.</p>
+            <p><a class="evi-link" href="https://arxiv.org/abs/2410.03017" target="_blank" rel="noopener">스탠퍼드대 연구</a>에 따르면, 튜터 약 900명에게 수업 중 도움 버튼을 주자, 학생이 단원을 익힌 비율이 올랐습니다. 특히 경험이 적은 튜터일수록 효과가 컸습니다.</p>
             <div class="evi-nums">
               <div><strong>+4%p</strong><span>전체</span></div>
               <div><strong>+7%p</strong><span>경력이 짧은 튜터</span></div>
               <div><strong>+9%p</strong><span>평가가 낮던 튜터</span></div>
             </div>
-            <a href="https://arxiv.org/abs/2410.03017" target="_blank" rel="noopener">Wang 외, Tutor CoPilot, arXiv:2410.03017 ↗</a>
           </div>
         </div>
 
@@ -641,17 +642,6 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
           </div>
         </div>
       </div>
-
-      <div class="pipe">
-        <p class="hud">How it works</p>
-        <ol class="pipe-row" aria-label="SOS가 동작하는 순서">
-          <li><span class="pt">MIC</span><b>수업 음성</b><span>줌 수업에서 멘토와 학생의 목소리를 그대로 받아요</span></li>
-          <li><span class="pt">STT</span><b>실시간 받아쓰기</b><span>말하는 동안 바로 글자로 바꾸고, 누가 말했는지 나눠요</span></li>
-          <li><span class="pt">CONTEXT</span><b>방금 대화 + 오늘 교안</b><span>SOS를 누른 순간 직전 대화와 오늘 배우는 내용을 함께 모아요</span></li>
-          <li><span class="pt">AI</span><b>제안 3개</b><span>질문하기, 힌트 주기, 쉬운 예제를 바로 띄워요</span></li>
-        </ol>
-        <p class="pipe-note">학부모 동의를 받은 수업에서만 켜지고, 받아쓴 대화는 SOS 제안과 수업 피드백에만 써요.</p>
-      </div>
     </div>
   </section>
 
@@ -659,14 +649,14 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
     <div class="wrap">
       <div class="sec-head">
         <p class="hud">Mission brief</p>
-        <h2>엔트리 1:1 수업 멘토</h2>
+        <h2>엔트리 1:1 수업 멘토 모집 개요</h2>
       </div>
       <div class="job-grid">
         <div class="post">
           <section>
             <h3>주요 업무</h3>
             <ul class="bullets">
-              <li>초5~중2 학생과 1:1 화상 엔트리 수업 (주 1회 60분, 8회)<small>학생 수준 진단은 회사가 미리 해요</small></li>
+              <li>초5~중2 학생과 1:1 화상 엔트리 수업 (주 1회 60분, 8회)<small>회사에서 학생 수준 사전 진단</small></li>
               <li>매주 학부모 리포트 작성 (양식 제공)</li>
               <li>수업 전 교안 확인, 녹화 피드백 참여</li>
             </ul>
@@ -674,10 +664,10 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
           <section>
             <h3>자격 요건</h3>
             <ul class="bullets">
-              <li>한국교원대 재학생 누구나<small>학과, 학년 상관없어요</small></li>
-              <li>12월 중순부터 8주 동안 매주 같은 시간에 수업할 수 있는 분<small>설 연휴 주는 보강으로 조정해요</small></li>
+              <li>한국교원대 재학생 누구나<small>학과, 학년 무관</small></li>
+              <li>12월 중순부터 8주 동안 매주 같은 시간에 수업할 수 있는 분<small>설 연휴 휴강, 보강 일정 조율</small></li>
             </ul>
-            <p class="callout"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.4"/></svg><span><b>엔트리를 몰라도 괜찮아요.</b> 수업 전에 회사가 엔트리부터 가르쳐 드려요.</span></p>
+            <p class="callout"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.4"/></svg><span><b>엔트리를 몰라도,</b> 수업 전 엔트리부터 알려드립니다.</span></p>
           </section>
           <section>
             <h3>우대 사항</h3>
@@ -685,24 +675,24 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
               <li>엔트리로 작품을 만들어 본 분</li>
               <li>방과후, 캠프, 과외 등에서 초등 고학년을 가르쳐 본 분</li>
               <li>아이들의 엉뚱한 아이디어를 재밌어하는 분</li>
-              <li>파이썬도 가르칠 수 있는 분<small>중학생이 원하면 엔트리에서 파이썬으로 이어 가요</small></li>
+              <li>파이썬도 가르칠 수 있는 분<small>학생이 원하면 엔트리에서 파이썬으로 넘어갈 수 있습니다.</small></li>
             </ul>
           </section>
           <section>
             <h3>근무 조건</h3>
             <dl class="cond">
               <div><dt>급여</dt><dd>시급 3만원<small>매달 정산, 사업소득 3.3% 원천징수</small></dd></div>
-              <div><dt>장소</dt><dd>집에서 화상 수업<small>회사 줌 계정으로 열고 녹화해요</small></dd></div>
-              <div><dt>기간</dt><dd>12월 중순부터 8주<small>재등록한 학생은 1학기에도 이어서 맡을 수 있어요</small></dd></div>
+              <div><dt>장소</dt><dd>집에서 화상 수업</dd></div>
+              <div><dt>기간</dt><dd>12월 중순부터 8주<small>재등록 학생은 이어서 수업 가능</small></dd></div>
               <div><dt>학생 수</dt><dd>원하는 만큼<small class="fun">방학 때 한번 땡겨볼까요?</small></dd></div>
             </dl>
           </section>
           <section>
             <h3>채용 절차</h3>
             <ol class="stepper">
-              <li><span class="dot"></span><span class="when">STEP 01</span><b>지원서 제출</b><span class="what">10월 24일(토)까지, 이 페이지에서 바로 써요</span></li>
-              <li><span class="dot"></span><span class="when">STEP 02</span><b>면접</b><span class="what">대면 또는 화상 중 편한 쪽으로. 지원서를 보고 개별 연락드려요</span></li>
-              <li><span class="dot"></span><span class="when">STEP 03</span><b>합격 안내</b><span class="what">면접 후 개별로 알려 드려요. 수업은 12월 중순부터</span></li>
+              <li><span class="dot"></span><span class="when">STEP 01</span><b>지원서 제출</b><span class="what">10월 24일(토) 마감, 이 페이지에서 <a href="#apply">바로 지원</a></span></li>
+              <li><span class="dot"></span><span class="when">STEP 02</span><b>면접</b><span class="what">대면 또는 화상 면접 선택 가능, 지원서 검토 후 개별 연락</span></li>
+              <li><span class="dot"></span><span class="when">STEP 03</span><b>합격 안내</b><span class="what">면접 결과 개별 연락, 12월 중순 수업 시작</span></li>
             </ol>
           </section>
         </div>
@@ -763,13 +753,13 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
     <div class="wrap">
       <div class="apply-intro">
         <p class="hud">Apply</p>
-        <h2>올겨울, 같이 가르칠 <span class="hl">10명 이상</span>을 찾아요</h2>
-        <p>10월 24일(토)까지 이 페이지에서 바로 지원할 수 있어요. 이름, 연락처, 학과, 학년만 적으면 돼요. 자세한 이야기는 면접에서 나눠요.</p>
+        <h2>올 겨울, 코딩 가르칠 <span class="hl">선생님</span>을 찾습니다</h2>
+        <p>10월 24일(토)까지 이 페이지에서 바로 지원해 보세요. 이력서 없이 이름, 연락처, 학과, 학년만 적으면 지원할 수 있습니다. 자세한 이야기는 면접에서 나눠요.</p>
         <ul class="notes">
-          <li><span><b class="em">시급 3만원</b>, 수업 1시간 기준이에요</span></li>
-          <li>한국교원대 재학생이면 학과, 학년 상관없어요</li>
-          <li>엔트리를 몰라도 지원할 수 있어요</li>
-          <li>면접은 대면 또는 화상 중 편한 쪽으로 봐요</li>
+          <li><span><b class="em">시급 3만원</b>, 수업 1시간 기준</span></li>
+          <li>한국교원대 재학생이라면 학과, 학년 무관</li>
+          <li>엔트리를 몰라도 지원 가능</li>
+          <li>대면 또는 화상 면접 중 선택 가능</li>
         </ul>
         <div class="contact">
           <small>문의 · 전화나 문자 모두 괜찮아요</small>
@@ -811,7 +801,7 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
                 <dl>
                   <dt>수집 항목</dt><dd>이름, 휴대폰 번호, 학과·학년</dd>
                   <dt>이용 목적</dt><dd>멘토 선발과 면접 안내</dd>
-                  <dt>보관 기간</dt><dd>선발이 끝나면 불합격자 정보는 바로 지우고, 합격자 정보는 활동이 끝날 때까지 보관해요</dd>
+                  <dt>보관 기간</dt><dd>선발이 끝나면 불합격자 정보는 바로 폐기, 합격자 정보는 활동 종료 시까지 보관</dd>
                 </dl>
                 <label class="check" for="f-consent"><input type="checkbox" id="f-consent" name="consent" aria-describedby="err-consent"><span>개인정보 수집·이용에 동의해요<small>동의하지 않을 수 있지만, 그러면 지원할 수 없어요</small></span></label>
               </div>
