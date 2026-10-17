@@ -866,6 +866,7 @@ const CONFIG = {
   contactEmail: "ijzereen@gmail.com", // 지원서를 받을 메일
   emailEndpoint: "https://formsubmit.co/ajax/ijzereen@gmail.com", // '지원서 제출하기'를 누르면 이 메일로 바로 전송 (FormSubmit)
   kakaoUrl: "",                       // 카카오톡 오픈채팅 링크 (선택)
+  gaId: "",                           // 구글 애널리틱스 4 측정 ID (예: "G-ABC123XYZ"). 비워 두면 GA는 꺼져 있어요
   googleForm: {
     // 구글폼과 연결하면 '지원서 제출하기'로 응답이 구글폼(시트)에 바로 쌓여요.
     // 비워 두면 지원서를 복사해 메일로 보내는 방식으로 동작해요.
@@ -880,6 +881,42 @@ const CONFIG = {
 /* ===================================== */
 (function () {
   function $(id) { return document.getElementById(id); }
+
+  /* Where this visitor came from (UTM), kept for the visit */
+  var utm = (function () {
+    var keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content"], out = {};
+    try {
+      var q = new URLSearchParams(location.search);
+      keys.forEach(function (k) { var v = q.get(k); if (v) out[k] = v.slice(0, 60); });
+      if (Object.keys(out).length) sessionStorage.setItem("or-utm", JSON.stringify(out));
+      else out = JSON.parse(sessionStorage.getItem("or-utm") || "{}") || {};
+    } catch (e) {}
+    return out;
+  })();
+  function utmLabel() {
+    return utm.utm_source ? [utm.utm_source, utm.utm_medium, utm.utm_campaign].filter(Boolean).join(" / ") : "직접 방문";
+  }
+
+  /* Google Analytics 4: loads only when CONFIG.gaId is set */
+  if (/^G-[A-Z0-9]+$/.test(CONFIG.gaId || "")) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", CONFIG.gaId);
+    var gs = document.createElement("script");
+    gs.async = true;
+    gs.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.gaId);
+    document.head.appendChild(gs);
+  }
+  function track(name, params) {
+    try { if (typeof window.gtag === "function") window.gtag("event", name, params || {}); } catch (e) {}
+  }
+  document.querySelectorAll('a[href="#apply"]').forEach(function (a) {
+    a.addEventListener("click", function () {
+      var sec = a.closest("section,header,.mbar");
+      track("apply_cta_click", { cta_location: sec ? (sec.id || sec.className.split(" ")[0]) : "page" });
+    });
+  });
 
   /* Contact */
   var email = (CONFIG.contactEmail || "").trim();
@@ -990,6 +1027,7 @@ const CONFIG = {
       var v = d[pair[0]];
       lines.push(pair[1] + ": " + (v ? v : "-"));
     });
+    lines.push("유입 경로: " + utmLabel());
     lines.push("개인정보 수집·이용: 동의 (" + today() + ")");
     return lines.join("\n");
   }
@@ -1073,6 +1111,7 @@ const CONFIG = {
       "휴대폰 번호": d.phone,
       "학과": d.dept,
       "학년": d.year,
+      "유입 경로": utmLabel(),
       "개인정보 수집·이용": "동의 (" + today() + ")"
     };
     function finish() { btn.disabled = false; btn.textContent = label; }
@@ -1082,9 +1121,11 @@ const CONFIG = {
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(payload)
       }).then(function (r) { return r.json(); }).then(function (j) {
-        if (String(j && j.success) === "true") { showSent(); }
-        else { showReview(d); }
-      }).catch(function () { showReview(d); }).then(finish, finish);
+        if (String(j && j.success) === "true") {
+          track("generate_lead", { method: "email", lead_source: utm.utm_source || "direct" });
+          showSent();
+        } else { track("apply_fallback", { reason: "not_sent" }); showReview(d); }
+      }).catch(function () { track("apply_fallback", { reason: "network" }); showReview(d); }).then(finish, finish);
     } catch (e) { finish(); showReview(d); }
   }
 
