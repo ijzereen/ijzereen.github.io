@@ -801,6 +801,7 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
                 <dl>
                   <dt>수집 항목</dt><dd>이름, 휴대폰 번호, 학과·학년</dd>
                   <dt>이용 목적</dt><dd>멘토 선발과 면접 안내</dd>
+                  <dt>전달 방식</dt><dd>메일 전송 서비스(FormSubmit)를 거쳐 담당자 메일로 전달</dd>
                   <dt>보관 기간</dt><dd>선발이 끝나면 불합격자 정보는 바로 폐기, 합격자 정보는 활동 종료 시까지 보관</dd>
                 </dl>
                 <label class="check" for="f-consent"><input type="checkbox" id="f-consent" name="consent" aria-describedby="err-consent"><span>개인정보 수집·이용에 동의해요<small>동의하지 않을 수 있지만, 그러면 지원할 수 없어요</small></span></label>
@@ -810,7 +811,7 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
           </div>
           <div class="form-actions">
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            <button type="submit" class="btn btn-key btn-block cut">작성 완료</button>
+            <button type="submit" class="btn btn-key btn-block cut" id="submit-btn">지원서 제출하기</button>
           </div>
         </form>
 
@@ -841,8 +842,8 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
         <div class="done" id="done" hidden>
           <span class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           <h3 id="done-title" tabindex="-1">지원서를 보냈어요</h3>
-          <p>새 탭에 '응답이 기록되었습니다'가 보이면 지원이 끝난 거예요. 지원서를 확인하고 적어 주신 번호로 면접 일정을 연락드릴게요.</p>
-          <p class="hint">새 탭에서 제출이 안 됐다면 <a id="resend-link" href="#apply" target="_blank" rel="noopener">여기를 눌러 다시 열어 주세요</a>.</p>
+          <p>지원서 확인 후 적어 주신 번호로 면접 일정을 연락드릴게요.</p>
+          <p class="hint" id="done-google" hidden>새 탭에 '응답이 기록되었습니다'가 보이면 접수된 거예요. 제출이 안 됐다면 <a id="resend-link" href="#apply" target="_blank" rel="noopener">여기를 눌러 다시 열어 주세요</a>.</p>
         </div>
       </div>
     </div>
@@ -862,7 +863,8 @@ footer b{font-family:var(--hud);font-weight:400;font-size:12px;letter-spacing:.1
 /* ===== CONFIG: 여기만 바꾸면 돼요 ===== */
 const CONFIG = {
   contactPhone: "010-3451-4102",     // 문의 번호
-  contactEmail: "ijzereen@gmail.com", // 구글폼 연결 전에 지원서를 받을 메일
+  contactEmail: "ijzereen@gmail.com", // 지원서를 받을 메일
+  emailEndpoint: "https://formsubmit.co/ajax/ijzereen@gmail.com", // '지원서 제출하기'를 누르면 이 메일로 바로 전송 (FormSubmit)
   kakaoUrl: "",                       // 카카오톡 오픈채팅 링크 (선택)
   googleForm: {
     // 구글폼과 연결하면 '지원서 제출하기'로 응답이 구글폼(시트)에 바로 쌓여요.
@@ -1055,8 +1057,45 @@ const CONFIG = {
       return;
     }
     status.textContent = "";
-    showReview(d);
+    if (hasGoogle || !CONFIG.emailEndpoint) { showReview(d); return; }
+    sendByEmail(d);
   });
+
+  /* Send straight to the inbox; if that fails, fall back to copy-and-email */
+  function sendByEmail(d) {
+    var btn = $("submit-btn"), label = btn.textContent;
+    btn.disabled = true; btn.textContent = "보내는 중…";
+    var payload = {
+      _subject: "[Outer Rims 멘토 지원] " + d.name + " · " + d.dept + " " + d.year,
+      _template: "table",
+      _captcha: "false",
+      "이름": d.name,
+      "휴대폰 번호": d.phone,
+      "학과": d.dept,
+      "학년": d.year,
+      "개인정보 수집·이용": "동의 (" + today() + ")"
+    };
+    function finish() { btn.disabled = false; btn.textContent = label; }
+    try {
+      fetch(CONFIG.emailEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (String(j && j.success) === "true") { showSent(); }
+        else { showReview(d); }
+      }).catch(function () { showReview(d); }).then(finish, finish);
+    } catch (e) { finish(); showReview(d); }
+  }
+
+  function showSent() {
+    form.hidden = true; review.hidden = true; done.hidden = false;
+    $("done-google").hidden = true;
+    clearDraft();
+    $("apply").scrollIntoView({ block: "start" });
+    $("done-title").focus({ preventScroll: true });
+    redrawSoon();
+  }
 
   function showReview(d) {
     var text = toText(d);
@@ -1096,6 +1135,7 @@ const CONFIG = {
   $("send-link").addEventListener("click", function () {
     setTimeout(function () {
       review.hidden = true; done.hidden = false;
+      $("done-google").hidden = false;
       clearDraft();
       $("done-title").focus({ preventScroll: true });
       redrawSoon();
